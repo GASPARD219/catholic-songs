@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INDIRIMBO ZA GATOLIKA</title>
+    
+    <!-- PWA META TAGS -->
+    <meta name="theme-color" content="#4b0082">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="Shakira indirimbo za Gatolika">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="./icons/icon-192.png">
+    
+    <style>
+        /* ===== GENERAL STYLES ===== */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            min-height: 100vh;
+        }
+        
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, #4b0082, #6a5acd);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        #songCount {
+            margin-top: 15px;
+            font-size: 16px;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.1);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+        }
+        
+        .header-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .header-actions button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .header-actions button.admin-btn {
+            background: #28a745;
+            color: white;
+        }
+        
+        .header-actions button.contact-btn {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .header-actions button.pwa-btn {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .header-actions button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* ===== SEARCH BOX ===== */
+        .search-box {
+            text-align: center;
+            padding: 25px 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .search-box input {
+            flex: 2;
+            min-width: 250px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: #4b0082;
+            outline: none;
+        }
+        
+        .search-box select {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .search-box button {
+            padding: 15px 25px;
+            background: #4b0082;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .search-box button:hover {
+            background: #5a0d9c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* ===== SECTION NAV ===== */
+        #sectionNav {
+            background: linear-gradient(135deg, #6a5acd, #9370db);
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            position: sticky;
+            top: 140px;
+            z-index: 99;
+        }
+        
+        #sectionNav button {
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-size: 14px;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+        
+        #sectionNav button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        #sectionNav button:active {
+            background: #4b0082;
+        }
+        
+        /* ===== SECTIONS ===== */
+        .section {
+            display: none;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section h2 {
+            color: #4b0082;
+            border-bottom: 3px solid #4b0082;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 32px;
+            position: relative;
+        }
+        
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: #6a5acd;
+        }
+        
+        /* ===== SONGS LIST ===== */
+        .songs-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+        
+        .song {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 6px solid #4b0082;
+            transition: all 0.3s;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .song:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-left-color: #6a5acd;
+        }
+        
+        .song-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .song-title {
+            color: #333;
+            margin: 0;
+            font-size: 22px;
+            line-height: 1.4;
+            flex: 1;
+        }
+        
+        .song-date {
+            color: #666;
+            font-size: 14px;
+            white-space: nowrap;
+            margin-left: 15px;
+            background: #f8f9fa;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+        
+        .song-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .song-section, .song-size, .download-count {
+            background: #e9ecef;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        .song-section {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .song-size {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .download-count {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .song-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            gap: 8px;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #45a049, #3d8b40);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .play-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #17a2b8, #138496);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+            gap: 8px;
+        }
+        
+        .play-btn:hover {
+            background: linear-gradient(135deg, #138496, #117a8b);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .no-songs {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 60px;
+            grid-column: 1 / -1;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #dee2e6;
+            font-size: 18px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ===== PWA STYLES ===== */
+        .offline-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #856404;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        
+        .pwa-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4b0082;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            display: none;
+            max-width: 300px;
+            font-size: 14px;
+        }
+        
+        .pwa-notification button {
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: white;
+            color: #4b0082;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .header-actions button {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .search-box {
+                flex-direction: column;
+                padding: 20px;
+                top: 0;
+            }
+            
+            .search-box input,
+            .search-box select,
+            .search-box button {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            #sectionNav {
+                top: 200px;
+                padding: 10px;
+            }
+            
+            #sectionNav button {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+            
+            .songs-list {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .song-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .song-date {
+                margin-left: 0;
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body onload="initApp()">
+    <!-- Header -->
+    <header>
+        <h1>INDIRIMBO ZA GATOLIKA</h1>
+        <p id="songCount">SHAKA INDIRIMBO UKURIKIJE IZINA CYANGWA IGICE CYA MISSA</p>
+        <div class="header-actions">
+            <button class="admin-btn" onclick="window.location.href='admin.html'">
+                <span>🔑</span> Admin Login
+            </button>
+            <button class="contact-btn" onclick="showContactInfo()">
+                <span>📞</span> Twandikire
+            </button>
+            <button id="pwaButton" class="pwa-btn" style="display: none;" onclick="showPWAInfo()">
+                <span>📱</span> App
+            </button>
+        </div>
+    </header>
+
+    <!-- Search Box -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Shaka indirimbo ku izina..." 
+               oninput="searchSongs()" autocomplete="off">
+        <select id="sectionFilter" onchange="filterBySection()">
+            <option value="">-- Shaka ukurikije igice --</option>
+            <option>Gutangira</option>
+            <option>Nyagasani Tubabarire</option>
+            <option>Imana nisingizwe mu ijuru</option>
+            <option>Zaburi</option>
+            <option>Alleluya</option>
+            <option>Indanga kwemera</option>
+            <option>Ibisabisho</option>
+            <option>Gutura</option>
+            <option>Nyirubutagatifu</option>
+            <option>Ntama w'Imana</option>
+            <option>Gusangira</option>
+            <option>Gushimira</option>
+            <option>Gusoza</option>
+            <option>Bikiramariya</option>
+            <option>Abatagatifu bose</option>
+            <option>Gushyingirwa</option>
+            <option>Ibitaramo</option>
+            <option>Adiventi</option>
+            <option>Noheli</option>
+            <option>Igisibo</option>
+            <option>Pasika</option>
+            <option>Asensiyo</option>
+            <option>Rohomutagatifu</option>
+            <option>Other More songs</option>
+        </select>
+        <button onclick="clearFilters()">Subira</button>
+    </div>
+
+    <!-- Section Navigation -->
+    <nav id="sectionNav">
+        <!-- Navigation buttons will be added here -->
+    </nav>
+
+    <!-- Sections Container -->
+    <div id="sectionsContainer">
+        <!-- Songs will be displayed here -->
+    </div>
+
+    <!-- PWA Notification -->
+    <div id="pwaNotification" class="pwa-notification">
+        <span id="pwaMessage"></span>
+        <button onclick="hidePWANotification()">OK</button>
+    </div>
+
+    <script>
+        // ===== GLOBAL VARIABLES =====
+        let allSongs = [];
+        let currentSearchTerm = '';
+        let currentFilterSection = '';
+        let deferredPrompt = null;
+        let songUpdateInterval = null;
+        
+        // ===== INITIALIZATION =====
+        function initApp() {
+            loadSongs();
+            createNavigation();
+            
+            // Register Service Worker for offline support
+            registerServiceWorker();
+            
+            // Setup install prompt
+            setupInstallPrompt();
+            
+            // Check online status
+            updateOnlineStatus();
+            
+            // Check for song updates every 10 seconds
+            songUpdateInterval = setInterval(checkForSongUpdates, 10000);
+            
+            // Check for updates when page gains focus
+            window.addEventListener('focus', checkForSongUpdates);
+        }
+        
+        // ===== PWA FUNCTIONS =====
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered');
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            }
+        }
+        
+        function setupInstallPrompt() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show PWA button after 10 seconds
+                setTimeout(() => {
+                    document.getElementById('pwaButton').style.display = 'inline-flex';
+                }, 10000);
+            });
+        }
+        
+        function showPWAInfo() {
+            const message = `📱 UKORESHA APP YA INDIRIMBO
+
+Ushobora:
+1. Kwinjiza app ku phone yawe
+2. Gukoresha nta internet (offline)
+3. Kubona notifications
+4. Gufunguka nk'app
+
+Urashaka kuyinjiiza?`;
+            
+            if (confirm(message)) {
+                installPWA();
+            }
+        }
+        
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showPWAAlert('✅ App yinjiye neza!');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                showPWAAlert('⚠️ App ntabwo ishobora kwinjizwa muri browser iyi.');
+            }
+        }
+        
+        function updateOnlineStatus() {
+            const songCount = document.getElementById('songCount');
+            const originalText = songCount.textContent.replace(' (Offline)', '');
+            
+            window.addEventListener('online', () => {
+                if (songCount.textContent.includes('Offline')) {
+                    songCount.textContent = originalText;
+                }
+                showPWAAlert('🔵 Ubu uri online');
+                checkForSongUpdates();
+            });
+            
+            window.addEventListener('offline', () => {
+                if (!songCount.textContent.includes('Offline')) {
+                    songCount.textContent = originalText + ' (Offline)';
+                }
+                showPWAAlert('⚠️ Ubu uri offline - Indirimbo zakushe zirabaho');
+            });
+            
+            // Initial check
+            if (!navigator.onLine) {
+                songCount.textContent = originalText + ' (Offline)';
+            }
+        }
+        
+        function showPWAAlert(message) {
+            const notification = document.getElementById('pwaNotification');
+            document.getElementById('pwaMessage').textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        function hidePWANotification() {
+            document.getElementById('pwaNotification').style.display = 'none';
+        }
+        
+        // ===== SONG MANAGEMENT =====
+        function loadSongs() {
+            allSongs = JSON.parse(localStorage.getItem('catholicSongs') || '[]');
+            
+            // Debug: Log loaded songs
+            console.log('🎵 Songs loaded:', allSongs.length);
+            allSongs.forEach((song, i) => {
+                console.log(`${i+1}. ${song.title} - Downloads: ${song.downloadCount || 0}`);
+            });
+            
+            if (allSongs.length === 0) {
+                document.getElementById('sectionsContainer').innerHTML = `
+                    <div class="no-songs" style="grid-column: 1 / -1; text-align: center; padding: 60px; color: #666;">
+                        <p>Nta ndirimbo zishyizweho.</p>
+                        <p>Admin azazishyiramo mu gihe gito.</p>
+                        <p style="font-size: 14px; margin-top: 20px; color: #4b0082;">
+                            🔔 Kanda "Admin Login" niba uri admin.
+                        </p>
+                    </div>
+                `;
+                updateSongCount();
+                return;
+            }
+            
+            updateSongCount();
+            displayAllSongs();
+        }
+        
+        function checkForSongUpdates() {
+            const lastUpdate = localStorage.getItem('lastSongUpdate') || '0';
+            const currentSongs = JSON.parse(localStorage.getItem('catholicSongs') || '[]');
+            
+            // Check if songs have changed
+            if (currentSongs.length !== allSongs.length) {
+                console.log('🔄 New songs detected!');
+                allSongs = currentSongs;
+                displayAllSongs();
+                updateSongCount();
+                showPWAAlert('✅ Hari indirimbo nshya!');
+            }
+            
+            // Update timestamp
+            localStorage.setItem('lastSongUpdate', Date.now().toString());
+        }
+        
+        function updateSongCount() {
+            const countElement = document.getElementById('songCount');
+            if (countElement) {
+                let text = `Indirimbo: ${allSongs.length} | Ibigice: 24`;
+                if (!navigator.onLine) {
+                    text += ' (Offline)';
+                }
+                countElement.textContent = text;
+            }
+        }
+        
+        function displayAllSongs() {
+            const container = document.getElementById('sectionsContainer');
+            
+            // Group songs by section
+            const sections = {};
+            allSongs.forEach(song => {
+                if (!sections[song.section]) {
+                    sections[song.section] = [];
+                }
+                sections[song.section].push(song);
+            });
+            
+            // If no songs, show message
+            if (Object.keys(sections).length === 0) {
+                container.innerHTML = `
+                    <div class="section active">
+                        <h2>Indirimbo</h2>
+                        <div class="no-songs">
+                            <p>Nta ndirimbo zishyizweho.</p>
+                            <p>Admin azazishyiramo vuba.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            for (const [sectionName, sectionSongs] of Object.entries(sections)) {
+                html += `
+                    <div class="section" id="section-${sectionName.replace(/\s+/g, '-')}">
+                        <h2>${sectionName} <span style="font-size: 16px; color: #666;">(${sectionSongs.length})</span></h2>
+                        <div class="songs-list">
+                `;
+                
+                sectionSongs.forEach(song => {
+                    html += `
+                        <div class="song" id="user-song-${song.id}">
+                            <div class="song-header">
+                                <h3 class="song-title">${song.title}</h3>
+                                <span class="song-date">${song.dateAdded || 'Vuba'}</span>
+                            </div>
+                            <div class="song-meta">
+                                <span class="song-section">${song.section}</span>
+                                <span class="song-size">${song.fileSize || 'NTA'}</span>
+                                <span class="download-count" id="count-${song.id}">🔽 ${song.downloadCount || 0}</span>
+                            </div>
+                            <div class="song-actions">
+                                <button class="download-btn" onclick="downloadSong('${song.id}')">
+                                    <span>⬇️</span> Download
+                                </button>
+                                <button class="play-btn" onclick="previewSong('${song.id}')">
+                                    <span>👁️</span> Reba
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+            
+            // Show first section by default
+            if (Object.keys(sections).length > 0) {
+                showSection(Object.keys(sections)[0]);
+            }
+        }
+        
+        function createNavigation() {
+            const sections = [
+                'Gutangira', 'Nyagasani Tubabarire', 'Imana nisingizwe mu ijuru',
+                'Zaburi', 'Alleluya', 'Indanga kwemera', 'Ibisabisho', 'Gutura',
+                'Nyirubutagatifu', 'Ntama w\'Imana', 'Gusangira', 'Gushimira',
+                'Gusoza', 'Bikiramariya', 'Abatagatifu bose', 'Gushyingirwa',
+                'Ibitaramo', 'Adiventi', 'Noheli', 'Igisibo', 'Pasika', 'Asensiyo',
+                'Rohomutagatifu', 'Other More songs'
+            ];
+            
+            const nav = document.getElementById('sectionNav');
+            nav.innerHTML = '';
+            
+            sections.forEach(section => {
+                const button = document.createElement('button');
+                button.textContent = section;
+                button.onclick = () => showSection(section);
+                nav.appendChild(button);
+            });
+        }
+        
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const section = document.getElementById(`section-${sectionName.replace(/\s+/g, '-')}`);
+            if (section) {
+                section.classList.add('active');
+            }
+            
+            // Update active button
+            document.querySelectorAll('#sectionNav button').forEach(btn => {
+                btn.style.background = btn.textContent === sectionName ? '#4b0082' : 'rgba(255,255,255,0.2)';
+            });
+        }
+        
+        // ===== SEARCH AND FILTER =====
+        function searchSongs() {
+            currentSearchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!currentSearchTerm) {
+                displayAllSongs();
+                return;
+            }
+            
+            const filteredSongs = allSongs.filter(song => 
+                song.title.toLowerCase().includes(currentSearchTerm) ||
+                song.section.toLowerCase().includes(currentSearchTerm)
+            );
+            
+            if (filteredSongs.length === 0) {
+                document.getElementById('sectionsContainer').innerHTML = `
+                    <div class="section active">
+                        <h2>Shaka: "${currentSearchTerm}"</h2>
+                        <div class="no-songs">
+                            <p>Nta ndirimbo zihuye na "${currentSearchTerm}".</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                displaySearchResults(filteredSongs);
+            }
+        }
+        
+        function displaySearchResults(songs) {
+            let html = `
+                <div class="section active">
+                    <h2>Shaka: "${currentSearchTerm}" (${songs.length})</h2>
+                    <div class="songs-list">
+            `;
+            
+            songs.forEach(song => {
+                html += `
+                    <div class="song" id="user-song-${song.id}">
+                        <div class="song-header">
+                            <h3 class="song-title">${song.title}</h3>
+                            <span class="song-date">${song.dateAdded || 'Vuba'}</span>
+                        </div>
+                        <div class="song-meta">
+                            <span class="song-section">${song.section}</span>
+                            <span class="song-size">${song.fileSize || 'NTA'}</span>
+                            <span class="download-count" id="count-${song.id}">🔽 ${song.downloadCount || 0}</span>
+                        </div>
+                        <div class="song-actions">
+                            <button class="download-btn" onclick="downloadSong('${song.id}')">
+                                <span>⬇️</span> Download
+                            </button>
+                            <button class="play-btn" onclick="previewSong('${song.id}')">
+                                <span>👁️</span> Reba
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('sectionsContainer').innerHTML = html;
+        }
+        
+        function filterBySection() {
+            const section = document.getElementById('sectionFilter').value;
+            currentFilterSection = section;
+            
+            if (!section) {
+                displayAllSongs();
+                return;
+            }
+            
+            const filteredSongs = allSongs.filter(song => song.section === section);
+            
+            if (filteredSongs.length === 0) {
+                document.getElementById('sectionsContainer').innerHTML = `
+                    <div class="section active">
+                        <h2>${section}</h2>
+                        <div class="no-songs">
+                            <p>Nta ndirimbo zirimo muri "${section}".</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                displaySectionFilterResults(filteredSongs, section);
+            }
+        }
+        
+        function displaySectionFilterResults(songs, sectionName) {
+            let html = `
+                <div class="section active">
+                    <h2>${sectionName} (${songs.length})</h2>
+                    <div class="songs-list">
+            `;
+            
+            songs.forEach(song => {
+                html += `
+                    <div class="song" id="user-song-${song.id}">
+                        <div class="song-header">
+                            <h3 class="song-title">${song.title}</h3>
+                            <span class="song-date">${song.dateAdded || 'Vuba'}</span>
+                        </div>
+                        <div class="song-meta">
+                            <span class="song-section">${song.section}</span>
+                            <span class="song-size">${song.fileSize || 'NTA'}</span>
+                            <span class="download-count" id="count-${song.id}">🔽 ${song.downloadCount || 0}</span>
+                        </div>
+                        <div class="song-actions">
+                            <button class="download-btn" onclick="downloadSong('${song.id}')">
+                                <span>⬇️</span> Download
+                            </button>
+                            <button class="play-btn" onclick="previewSong('${song.id}')">
+                                <span>👁️</span> Reba
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('sectionsContainer').innerHTML = html;
+        }
+        
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('sectionFilter').value = '';
+            currentSearchTerm = '';
+            currentFilterSection = '';
+            displayAllSongs();
+            alert("Byose byasubijwe!");
+        }
+        
+        // ===== SONG ACTIONS =====
+        function downloadSong(songId) {
+            const song = allSongs.find(s => s.id === songId);
+            
+            if (!song) {
+                alert("Indirimbo ntabwo iboneka! Ongera ugerageze.");
+                loadSongs(); // Reload songs
+                return;
+            }
+            
+            // Debug log
+            console.log('📥 Download started:', song.title);
+            console.log('🔢 Current count:', song.downloadCount);
+            
+            // Increment download count
+            song.downloadCount = (song.downloadCount || 0) + 1;
+            
+            // Update in localStorage
+            const songs = JSON.parse(localStorage.getItem('catholicSongs') || '[]');
+            const index = songs.findIndex(s => s.id === songId);
+            
+            if (index !== -1) {
+                songs[index] = song;
+                localStorage.setItem('catholicSongs', JSON.stringify(songs));
+                
+                // Update UI
+                const countElement = document.getElementById(`count-${songId}`);
+                if (countElement) {
+                    countElement.textContent = `🔽 ${song.downloadCount}`;
+                }
+                
+                console.log('✅ Download count updated:', song.downloadCount);
+                
+                // Show success message
+                setTimeout(() => {
+                    alert(`"${song.title}" yamanutse neza!\n🔢 Download count: ${song.downloadCount}`);
+                }, 500);
+            }
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.href = song.fileUrl;
+            link.download = song.title + (song.fileType === 'MP3' ? '.mp3' : 
+                          song.fileType === 'PDF' ? '.pdf' : 
+                          song.fileType === 'JPG' ? '.jpg' :
+                          song.fileType === 'PNG' ? '.png' : '.file');
+            
+            // Trigger download
+            link.click();
+            
+            // Clean up
+            setTimeout(() => {
+                URL.revokeObjectURL(link.href);
+            }, 1000);
+        }
+        
+        function previewSong(songId) {
+            const song = allSongs.find(s => s.id === songId);
+            
+            if (!song) {
+                alert("Indirimbo ntabwo iboneka!");
+                return;
+            }
+            
+            // Check file type
+            if (song.fileType === 'MP3') {
+                // For audio, create audio player
+                const audio = new Audio(song.fileUrl);
+                audio.play().catch(e => {
+                    // If autoplay fails, open in new tab
+                    window.open(song.fileUrl, '_blank');
+                });
+                
+                // Show playing message
+                alert(`"${song.title}" iri kuririmba...`);
+            } else {
+                // For other files, open in new tab
+                window.open(song.fileUrl, '_blank');
+            }
+        }
+        
+        function showContactInfo() {
+            alert("📞 Twandikire:\n\nEmail: gaspardgasangwa76@gmail.com\nTelephone: +250 792 680 361\n\nTurabashimira ntimugire ikibazo ni mutubaze byose!");
+        }
+        
+        // ===== CLEANUP =====
+        window.addEventListener('beforeunload', function() {
+            if (songUpdateInterval) {
+                clearInterval(songUpdateInterval);
+            }
+        });
+    </script>
+</body>
+</html>

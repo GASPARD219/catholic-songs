@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4b0082, #6a5acd);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-container h2 {
+            color: #4b0082;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .login-container input {
+            width: 100%;
+            padding: 15px;
+            margin: 12px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .login-container input:focus {
+            border-color: #4b0082;
+            outline: none;
+        }
+        
+        .login-container button {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0 15px;
+            background: #4b0082;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-container button:hover {
+            background: #5a0d9c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .login-container a {
+            color: #4b0082;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+        
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+        
+        .offline-notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #ffc107;
+            display: none;
+        }
+        
+        .offline-notice.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Injira nk'Admin</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Injira</button>
+        </form>
+        <a href="index.html">Subira kuri page nyamukuru</a>
+        
+        <div id="offlineNotice" class="offline-notice">
+            <strong>⚠️ Icyitonderwa:</strong> Ubu uri offline. Admin dashboard ishobora kutikora neza nta internet.
+        </div>
+    </div>
+
+    <script>
+        // Check online status
+        function checkOnlineStatus() {
+            const notice = document.getElementById('offlineNotice');
+            if (!navigator.onLine) {
+                notice.classList.add('show');
+            } else {
+                notice.classList.remove('show');
+            }
+        }
+        
+        // Initial check
+        checkOnlineStatus();
+        
+        // Listen for online/offline events
+        window.addEventListener('online', checkOnlineStatus);
+        window.addEventListener('offline', checkOnlineStatus);
+        
+        // Admin credentials (CHANGE THESE!)
+        const ADMIN_CREDENTIALS = {
+            username: "GASPARD",
+            password: "gcuvnjcggme"
+        };
+        
+        // Handle login
+        document.getElementById("loginForm").onsubmit = function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            
+            if(username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                // Save admin session
+                localStorage.setItem("isAdmin", "true");
+                localStorage.setItem("adminUser", username);
+                localStorage.setItem("lastLogin", new Date().toLocaleString('rw-RW'));
+                
+                // Check if offline
+                if (!navigator.onLine) {
+                    if (confirm("⚠️ Ubu uri offline! Dashboard ishobora kutikora neza. Urashaka gukomeza?")) {
+                        window.location.href = "admin-dashboard.html";
+                    }
+                } else {
+                    alert("Winjiye neza!");
+                    window.location.href = "admin-dashboard.html";
+                }
+            } else {
+                alert("Username cyangwa password ntabwo ari yo!");
+                document.getElementById("password").value = "";
+            }
+        };
+        
+        // Focus on username field
+        document.getElementById("username").focus();
+    </script>
+</body>
+</html>
