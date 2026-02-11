@@ -56,7 +56,7 @@
             border-radius: 25px;
         }
         
-        /* ===== LANGUAGE SWITCHER (TOP RIGHT) ===== */
+        /* ===== LANGUAGE SWITCHER ===== */
         .lang-switch {
             position: absolute;
             top: 20px;
@@ -85,12 +85,8 @@
             color: #4b0082;
             border-color: white;
         }
-        .lang-btn:hover {
-            background: white;
-            color: #4b0082;
-        }
         
-        /* ===== SEARCH & NAVIGATION (ORIGINAL) ===== */
+        /* ===== SEARCH & NAVIGATION ===== */
         .search-box {
             text-align: center;
             padding: 25px 20px;
@@ -208,7 +204,7 @@
             gap: 15px;
             flex-wrap: wrap;
         }
-        .download-btn, .play-btn {
+        .download-btn, .play-btn, .preview-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -218,12 +214,13 @@
             cursor: pointer;
             font-weight: bold;
             gap: 8px;
+            transition: 0.3s;
         }
         .download-btn {
             background: linear-gradient(135deg, #4CAF50, #45a049);
             color: white;
         }
-        .play-btn {
+        .play-btn, .preview-btn {
             background: linear-gradient(135deg, #17a2b8, #138496);
             color: white;
         }
@@ -239,75 +236,86 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* ===== BOTTOM ADMIN & CONTACT & USER UPLOAD SECTION ===== */
+        /* ===== COMPACT BOTTOM SECTION - REDUCED SIZE ===== */
         .bottom-admin-section {
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
-            padding: 30px 20px;
-            margin-top: 50px;
+            padding: 20px 15px;
+            margin-top: 40px;
             text-align: center;
-            border-top: 5px solid #4b0082;
+            border-top: 4px solid #4b0082;
         }
         .bottom-admin-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: stretch;
-            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
         }
         .admin-card, .contact-card, .user-upload-card {
             background: rgba(255,255,255,0.1);
-            padding: 25px;
-            border-radius: 20px;
-            flex: 1 1 280px;
+            padding: 15px 20px;
+            border-radius: 16px;
+            flex: 0 1 auto;
+            min-width: 200px;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.2s;
         }
         .admin-card:hover, .contact-card:hover, .user-upload-card:hover {
             background: rgba(255,255,255,0.15);
-            transform: translateY(-5px);
+            transform: translateY(-2px);
         }
         .admin-card h3, .contact-card h3, .user-upload-card h3 {
             color: #ffd700;
-            margin-top: 0;
-            font-size: 24px;
+            margin: 0 0 8px 0;
+            font-size: 18px;
             border-bottom: 2px solid #ffd700;
             display: inline-block;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
+            font-weight: 600;
         }
         .bottom-btn {
             background: #4b0082;
             color: white;
             border: none;
-            padding: 14px 30px;
-            border-radius: 50px;
-            font-size: 18px;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            margin: 10px 0;
-            transition: 0.3s;
+            margin: 5px 0;
+            transition: 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            border: 2px solid transparent;
+            gap: 6px;
+            border: 1px solid transparent;
         }
         .bottom-btn:hover {
             background: #5a0d9c;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
             border-color: white;
         }
         .contact-info {
-            text-align: left;
-            margin-top: 15px;
+            text-align: center;
+            margin-top: 6px;
             color: #ecf0f1;
-            line-height: 1.8;
+            line-height: 1.5;
+            font-size: 12px;
+        }
+        .admin-card p, .contact-card p, .user-upload-card p {
+            margin: 5px 0;
+            font-size: 13px;
+            color: #e0e0e0;
         }
         
-        /* ===== USER UPLOAD MODAL ===== */
+        /* ===== MODALS ===== */
         .modal {
             display: none;
             position: fixed;
@@ -322,10 +330,10 @@
         }
         .modal-content {
             background: white;
-            padding: 35px;
+            padding: 30px;
             border-radius: 25px;
             width: 90%;
-            max-width: 550px;
+            max-width: 500px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             max-height: 80vh;
             overflow-y: auto;
@@ -334,24 +342,21 @@
             color: #4b0082;
             margin-top: 0;
             border-bottom: 3px solid #6a5acd;
-            padding-bottom: 15px;
+            padding-bottom: 12px;
         }
         .modal-content input, .modal-content select, .modal-content textarea {
             width: 100%;
-            padding: 14px;
-            margin: 12px 0;
+            padding: 12px;
+            margin: 10px 0;
             border: 2px solid #ddd;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             box-sizing: border-box;
-        }
-        .modal-content textarea {
-            min-height: 100px;
         }
         .send-btn {
             background: #4b0082;
             color: white;
-            padding: 14px 25px;
+            padding: 12px 22px;
             border: none;
             border-radius: 8px;
             font-weight: bold;
@@ -361,24 +366,46 @@
         .close-btn {
             background: #6c757d;
             color: white;
-            padding: 14px 25px;
+            padding: 12px 22px;
             border: none;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
         }
-        .upload-hint {
-            background: #f0e6ff;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 15px 0;
-            color: #4b0082;
+        
+        /* ===== ADMIN NOTIFICATION BADGE ===== */
+        .admin-notification {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 10002;
+            display: none;
+            align-items: center;
+            gap: 8px;
             font-size: 14px;
-            border-left: 5px solid #4b0082;
-            text-align: left;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
         
-        /* ===== RESPONSIVE ===== */
+        /* ===== FILE PREVIEW IFRAME ===== */
+        .preview-iframe {
+            width: 100%;
+            height: 380px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
         @media (max-width: 768px) {
             header h1 { font-size: 1.8em; }
             .search-box { flex-direction: column; }
@@ -386,12 +413,19 @@
             .songs-list { grid-template-columns: 1fr; }
             .lang-switch { position: static; justify-content: center; margin-top: 10px; }
             .bottom-admin-container { flex-direction: column; }
+            .admin-card, .contact-card, .user-upload-card { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-<!-- ===== LANGUAGE SWITCHER (4 LANGUAGES) ===== -->
+<!-- ===== ADMIN NOTIFICATION - SHOWS WHEN USER UPLOADS ===== -->
+<div id="adminNotification" class="admin-notification">
+    <span>🔔</span>
+    <span id="notificationMessage">Hari user ukoze upload! Raba admin dashboard</span>
+</div>
+
+<!-- ===== LANGUAGE SWITCHER ===== -->
 <div class="lang-switch" id="globalLangSwitch">
     <button class="lang-btn" data-lang="rw" onclick="setLanguage('rw')">Kinyarwanda</button>
     <button class="lang-btn" data-lang="fr" onclick="setLanguage('fr')">Français</button>
@@ -399,13 +433,13 @@
     <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">English</button>
 </div>
 
-<!-- ===== HEADER (ORIGINAL) ===== -->
+<!-- ===== HEADER ===== -->
 <header>
     <h1 id="appTitle">INDIRIMBO ZA GATOLIKA</h1>
     <p id="songCount">SHAKA INDIRIMBO UKURIKIJE IZINA CYANGWA IGICE CYA MISSA</p>
 </header>
 
-<!-- ===== SEARCH & FILTER (ORIGINAL) ===== -->
+<!-- ===== SEARCH & FILTER ===== -->
 <div class="search-box">
     <input type="text" id="searchInput" placeholder="Shaka indirimbo ku izina..." oninput="searchSongs()" autocomplete="off">
     <select id="sectionFilter" onchange="filterBySection()">
@@ -438,46 +472,45 @@
     <button onclick="clearFilters()" id="resetBtn">Subira</button>
 </div>
 
-<!-- ===== SECTION NAVIGATION (ALL MISS SECTIONS) ===== -->
+<!-- ===== SECTION NAVIGATION ===== -->
 <nav id="sectionNav"></nav>
 
-<!-- ===== SONGS CONTAINER (DYNAMIC) ===== -->
+<!-- ===== SONGS CONTAINER ===== -->
 <div id="sectionsContainer"></div>
 
-<!-- ===== BOTTOM SECTION: ADMIN LOGIN + CONTACT US + USER UPLOAD ===== -->
+<!-- ===== COMPACT BOTTOM SECTION - REDUCED SIZE, IMMEDIATELY VISIBLE ===== -->
 <div class="bottom-admin-section">
     <div class="bottom-admin-container">
-        <!-- Admin Login Card -->
+        <!-- Admin Login Card - Compact -->
         <div class="admin-card">
-            <h3 id="adminCardTitle">🔐 Admin Login</h3>
-            <p id="adminCardDesc" style="margin-bottom:20px;">Injira nka admin ushyireho indirimbo nshya</p>
+            <h3 id="adminCardTitle">🔐 Admin</h3>
+            <p id="adminCardDesc" style="margin-bottom:3px;">Injira nka admin</p>
             <button class="bottom-btn" onclick="window.location.href='admin.html'">
-                <span>🔑</span> <span id="adminBtnText">Injira nk'Admin</span>
+                <span>🔑</span> <span id="adminBtnText">Injira</span>
             </button>
         </div>
         
-        <!-- Contact Us Card -->
+        <!-- Contact Us Card - Compact -->
         <div class="contact-card">
             <h3 id="contactCardTitle">📞 Twandikire</h3>
-            <p id="contactCardDesc" style="margin-bottom:15px;">Ufite ikibazo cyangwa igitekerezo? Twandikire ubutumwa</p>
+            <p id="contactCardDesc" style="margin-bottom:3px;">Ubutumwa</p>
             <button class="bottom-btn" onclick="showContactModal()">
-                <span>✉️</span> <span id="contactBtnText">Ohereza ubutumwa</span>
+                <span>✉️</span> <span id="contactBtnText">Ohereza</span>
             </button>
             <div class="contact-info" id="contactInfoText">
-                <span>📧 gaspardgasangwa76@gmail.com</span><br>
-                <span>📞 +250 792 680 361</span>
+                <span>📧 gaspardgasangwa76@gmail.com</span>
             </div>
         </div>
 
-        <!-- NEW: User Upload Card - Every user can submit their hymn -->
+        <!-- User Upload Card - Compact -->
         <div class="user-upload-card">
-            <h3 id="userUploadTitle">🎵 Shyiraho Indirimbo</h3>
-            <p id="userUploadDesc" style="margin-bottom:15px;">Wanditse indirimbo? Tangiza kugira ngo imenyekane kuri iyi site!</p>
+            <h3 id="userUploadTitle">🎵 Shyiramo</h3>
+            <p id="userUploadDesc" style="margin-bottom:3px;">Indirimbo yawe</p>
             <button class="bottom-btn" onclick="showUserUploadModal()">
-                <span>📤</span> <span id="userUploadBtnText">Tangiza indirimbo</span>
+                <span>📤</span> <span id="userUploadBtnText">Shyiramo</span>
             </button>
-            <div class="contact-info" id="userUploadHint" style="font-size:14px; margin-top:15px;">
-                <span>⏱️ Igice cya missa, fayilo (MP3/PDF)</span>
+            <div class="contact-info" id="userUploadHint" style="font-size:11px;">
+                <span>⏱️ Igice cya missa</span>
             </div>
         </div>
     </div>
@@ -494,16 +527,12 @@
     </div>
 </div>
 
-<!-- ===== USER UPLOAD MODAL (FOR SUBMITTING SONGS) ===== -->
+<!-- ===== USER UPLOAD MODAL ===== -->
 <div id="userUploadModal" class="modal">
     <div class="modal-content">
-        <h3 id="userUploadModalTitle">📤 Tangiza indirimbo yawe</h3>
-        <p id="userUploadModalDesc" style="color:#666; margin-bottom:20px;">Uzuza ibisabwa, maze admin azayisuzuma ayishyireho.</p>
+        <h3 id="userUploadModalTitle">📤 Shyiraho indirimbo</h3>
+        <p id="userUploadModalDesc" style="color:#666; margin-bottom:15px;">Uzuza, ihite igaragara!</p>
         
-        <div class="upload-hint" id="uploadHintText">
-            <strong>✅ Ibyo kwibuka:</strong> Fayilo: MP3, PDF, JPG, PNG (< 10MB). Izina ry'indirimbo ntirirenze 100 caractères.
-        </div>
-
         <input type="text" id="userSongTitle" placeholder="Izina ry'indirimbo">
         
         <select id="userSongSection">
@@ -536,21 +565,32 @@
 
         <input type="file" id="userSongFile" accept=".mp3,.pdf,.jpg,.jpeg,.png">
 
-        <input type="email" id="userEmail" placeholder="Imeyili yawe (kugirango tumenyesheje)">
+        <input type="email" id="userEmail" placeholder="Imeyili yawe">
 
-        <textarea id="userComments" placeholder="Andika igitekerezo (byaba biri)" rows="3"></textarea>
+        <textarea id="userComments" placeholder="Igitekerezo (byaba biri)" rows="2"></textarea>
 
-        <div style="margin-top:25px;">
-            <button class="send-btn" onclick="submitUserSong()" id="submitSongBtn">Ohereza indirimbo</button>
+        <div style="margin-top:20px;">
+            <button class="send-btn" onclick="submitUserSong()" id="submitSongBtn">Ohereza</button>
             <button class="close-btn" onclick="closeUserUploadModal()" id="cancelUploadBtn">Gusiba</button>
         </div>
     </div>
 </div>
 
+<!-- ===== FILE PREVIEW MODAL ===== -->
+<div id="previewModal" class="modal">
+    <div class="modal-content" style="max-width: 750px;">
+        <h3 id="previewTitle">🔍 Reba indirimbo</h3>
+        <div id="previewContainer" style="text-align: center; min-height: 180px;">
+            <!-- Preview will be loaded here -->
+        </div>
+        <button class="close-btn" onclick="closePreviewModal()" style="margin-top:20px;" id="closePreviewBtn">Funga</button>
+    </div>
+</div>
+
 <!-- ===== PWA NOTIFICATION ===== -->
-<div id="pwaNotification" class="pwa-notification" style="display:none; position:fixed; bottom:20px; right:20px; background:#4b0082; color:white; padding:15px; border-radius:10px; z-index:10000;">
+<div id="pwaNotification" class="pwa-notification" style="display:none; position:fixed; bottom:20px; right:20px; background:#4b0082; color:white; padding:12px 20px; border-radius:10px; z-index:10000;">
     <span id="pwaMessage"></span>
-    <button onclick="hidePWANotification()" style="margin-left:15px; padding:5px 15px; background:white; color:#4b0082; border:none; border-radius:5px;">OK</button>
+    <button onclick="hidePWANotification()" style="margin-left:12px; padding:4px 12px; background:white; color:#4b0082; border:none; border-radius:5px;">OK</button>
 </div>
 
 <script>
@@ -562,113 +602,125 @@
             searchPlaceholder: "Shaka indirimbo ku izina...",
             filterPlaceholder: "-- Shaka ukurikije igice --",
             reset: "Subira",
-            adminCardTitle: "🔐 Admin Login",
-            adminCardDesc: "Injira nka admin ushyireho indirimbo nshya",
-            adminBtnText: "Injira nk'Admin",
+            adminCardTitle: "🔐 Admin",
+            adminCardDesc: "Injira nka admin",
+            adminBtnText: "Injira",
             contactCardTitle: "📞 Twandikire",
-            contactCardDesc: "Ufite ikibazo cyangwa igitekerezo? Twandikire ubutumwa",
-            contactBtnText: "Ohereza ubutumwa",
-            contactInfo: "📧 gaspardgasangwa76@gmail.com\n📞 +250 792 680 361",
+            contactCardDesc: "Ubutumwa",
+            contactBtnText: "Ohereza",
+            contactInfo: "📧 gaspardgasangwa76@gmail.com",
             modalTitle: "Twandikire",
             emailPlaceholder: "Imeyili yawe",
             messagePlaceholder: "Andika ubutumwa",
             send: "Ohereza",
             close: "Funga",
             messageSent: "Ubutumwa bwawe bwoherejwe! Murakoze.",
-            userUploadTitle: "🎵 Shyiraho Indirimbo",
-            userUploadDesc: "Wanditse indirimbo? Tangiza kugira ngo imenyekane!",
-            userUploadBtnText: "Tangiza indirimbo",
-            userUploadHint: "⏱️ Igice cya missa, fayilo (MP3/PDF)",
-            userModalTitle: "📤 Tangiza indirimbo yawe",
-            userModalDesc: "Uzuza ibisabwa, maze admin azayisuzuma ayishyireho.",
-            uploadHint: "✅ Ibyo kwibuka: Fayilo: MP3, PDF, JPG, PNG (< 10MB).",
+            userUploadTitle: "🎵 Shyiramo",
+            userUploadDesc: "Indirimbo yawe",
+            userUploadBtnText: "Shyiramo",
+            userUploadHint: "⏱️ Igice cya missa",
+            userModalTitle: "📤 Shyiraho indirimbo",
+            userModalDesc: "Uzuza, ihite igaragara!",
             songTitlePlaceholder: "Izina ry'indirimbo",
             sectionPlaceholder: "-- Hitamo igice cya missa --",
-            emailPlaceholder2: "Imeyili yawe (kugirango tumenyesheje)",
-            commentsPlaceholder: "Andika igitekerezo (byaba biri)",
-            submitBtn: "Ohereza indirimbo",
+            emailPlaceholder2: "Imeyili yawe",
+            commentsPlaceholder: "Igitekerezo (byaba biri)",
+            submitBtn: "Ohereza",
             cancelBtn: "Gusiba",
-            submitSuccess: "Indirimbo yawe yoherejwe! Admin azayisuzuma vuba.",
+            submitSuccess: "Indirimbo yawe yashyizweho! Igaragara noneho.",
             fileRequired: "Hitamo fayilo!",
             titleRequired: "Andika izina ry'indirimbo!",
             sectionRequired: "Hitamo igice!",
-            emailRequired: "Andika imeyili yawe!"
+            emailRequired: "Andika imeyili yawe!",
+            previewTitle: "🔍 Reba indirimbo",
+            closePreview: "Funga",
+            adminNotification: "🔔 Hari user ukoze upload!",
+            download: "Download",
+            preview: "Reba"
         },
         fr: {
             appTitle: "CHANTS CATHOLIQUES",
             songCount: "RECHERCHER UN CHANT PAR NOM OU SECTION",
-            searchPlaceholder: "Rechercher un chant...",
+            searchPlaceholder: "Rechercher...",
             filterPlaceholder: "-- Filtrer par section --",
             reset: "Réinitialiser",
-            adminCardTitle: "🔐 Admin Login",
-            adminCardDesc: "Connectez-vous en tant qu'admin",
-            adminBtnText: "Connexion Admin",
-            contactCardTitle: "📞 Contactez-nous",
-            contactCardDesc: "Des questions? Envoyez-nous un message",
+            adminCardTitle: "🔐 Admin",
+            adminCardDesc: "Connexion",
+            adminBtnText: "Connexion",
+            contactCardTitle: "📞 Contact",
+            contactCardDesc: "Message",
             contactBtnText: "Envoyer",
-            contactInfo: "📧 gaspardgasangwa76@gmail.com\n📞 +250 792 680 361",
+            contactInfo: "📧 gaspardgasangwa76@gmail.com",
             modalTitle: "Contactez-nous",
             emailPlaceholder: "Votre email",
             messagePlaceholder: "Votre message",
             send: "Envoyer",
             close: "Fermer",
             messageSent: "Message envoyé! Merci.",
-            userUploadTitle: "🎵 Proposer un chant",
-            userUploadDesc: "Vous avez composé un chant? Soumettez-le!",
-            userUploadBtnText: "Proposer un chant",
-            userUploadHint: "⏱️ Section de messe, fichier (MP3/PDF)",
-            userModalTitle: "📤 Proposer votre chant",
-            userModalDesc: "Remplissez le formulaire, l'admin validera.",
-            uploadHint: "✅ Fichier: MP3, PDF, JPG, PNG (< 10MB).",
-            songTitlePlaceholder: "Titre du chant",
+            userUploadTitle: "🎵 Ajouter",
+            userUploadDesc: "Votre chant",
+            userUploadBtnText: "Ajouter",
+            userUploadHint: "⏱️ Section messe",
+            userModalTitle: "📤 Ajouter un chant",
+            userModalDesc: "Visible immédiatement!",
+            songTitlePlaceholder: "Titre",
             sectionPlaceholder: "-- Choisissez la section --",
-            emailPlaceholder2: "Votre email (pour notification)",
-            commentsPlaceholder: "Commentaire (optionnel)",
+            emailPlaceholder2: "Votre email",
+            commentsPlaceholder: "Commentaire",
             submitBtn: "Soumettre",
             cancelBtn: "Annuler",
-            submitSuccess: "Chant soumis! Admin examinera.",
+            submitSuccess: "Chant ajouté! Visible maintenant.",
             fileRequired: "Choisissez un fichier!",
             titleRequired: "Entrez le titre!",
             sectionRequired: "Choisissez la section!",
-            emailRequired: "Entrez votre email!"
+            emailRequired: "Entrez votre email!",
+            previewTitle: "🔍 Aperçu",
+            closePreview: "Fermer",
+            adminNotification: "🔔 Un utilisateur a ajouté!",
+            download: "Télécharger",
+            preview: "Aperçu"
         },
         sw: {
             appTitle: "NYIMBO ZA KIKATOLIKI",
-            songCount: "TAFUTA WIMBO KWA JINA AU SEHEMU YA MISA",
-            searchPlaceholder: "Tafuta wimbo...",
+            songCount: "TAFUTA WIMBO KWA JINA AU SEHEMU",
+            searchPlaceholder: "Tafuta...",
             filterPlaceholder: "-- Chuja kwa sehemu --",
             reset: "Weka upya",
-            adminCardTitle: "🔐 Admin Login",
-            adminCardDesc: "Ingia kama admin",
+            adminCardTitle: "🔐 Admin",
+            adminCardDesc: "Ingia",
             adminBtnText: "Ingia",
-            contactCardTitle: "📞 Wasiliana nasi",
-            contactCardDesc: "Maswali? Tuma ujumbe",
+            contactCardTitle: "📞 Wasiliana",
+            contactCardDesc: "Ujumbe",
             contactBtnText: "Tuma",
-            contactInfo: "📧 gaspardgasangwa76@gmail.com\n📞 +250 792 680 361",
-            modalTitle: "Wasiliana nasi",
+            contactInfo: "📧 gaspardgasangwa76@gmail.com",
+            modalTitle: "Wasiliana",
             emailPlaceholder: "Barua pepe yako",
-            messagePlaceholder: "Andika ujumbe",
+            messagePlaceholder: "Ujumbe wako",
             send: "Tuma",
             close: "Funga",
-            messageSent: "Ujumbe wako umetumwa! Asante.",
-            userUploadTitle: "🎵 Pakia Wimbo",
-            userUploadDesc: "Umetunga wimbo? Peleka!",
-            userUploadBtnText: "Pendekeza wimbo",
-            userUploadHint: "⏱️ Sehemu ya misa, faili (MP3/PDF)",
-            userModalTitle: "📤 Peleka wimbo wako",
-            userModalDesc: "Jaza fomu, admin atakagua.",
-            uploadHint: "✅ Faili: MP3, PDF, JPG, PNG (< 10MB).",
+            messageSent: "Ujumbe umetumwa! Asante.",
+            userUploadTitle: "🎵 Pakia",
+            userUploadDesc: "Wimbo wako",
+            userUploadBtnText: "Pakia",
+            userUploadHint: "⏱️ Sehemu ya misa",
+            userModalTitle: "📤 Pakia wimbo",
+            userModalDesc: "Inaonekana mara moja!",
             songTitlePlaceholder: "Jina la wimbo",
             sectionPlaceholder: "-- Chagua sehemu --",
-            emailPlaceholder2: "Barua pepe yako (kwa arifa)",
-            commentsPlaceholder: "Maoni (si lazima)",
-            submitBtn: "Tuma",
+            emailPlaceholder2: "Barua pepe yako",
+            commentsPlaceholder: "Maoni",
+            submitBtn: "Wasilisha",
             cancelBtn: "Ghairi",
-            submitSuccess: "Wimbo umetumwa! Admin atakagua.",
+            submitSuccess: "Wimbo umepakiwa! Unaonekana sasa.",
             fileRequired: "Chagua faili!",
-            titleRequired: "Andika jina la wimbo!",
+            titleRequired: "Andika jina!",
             sectionRequired: "Chagua sehemu!",
-            emailRequired: "Andika barua pepe!"
+            emailRequired: "Andika barua pepe!",
+            previewTitle: "🔍 Hakiki",
+            closePreview: "Funga",
+            adminNotification: "🔔 Mtumiaji amepakia!",
+            download: "Pakua",
+            preview: "Hakiki"
         },
         en: {
             appTitle: "CATHOLIC HYMNS",
@@ -676,42 +728,47 @@
             searchPlaceholder: "Search hymns...",
             filterPlaceholder: "-- Filter by section --",
             reset: "Reset",
-            adminCardTitle: "🔐 Admin Login",
-            adminCardDesc: "Login as admin to upload hymns",
-            adminBtnText: "Admin Login",
-            contactCardTitle: "📞 Contact Us",
-            contactCardDesc: "Questions? Send us a message",
+            adminCardTitle: "🔐 Admin",
+            adminCardDesc: "Admin login",
+            adminBtnText: "Login",
+            contactCardTitle: "📞 Contact",
+            contactCardDesc: "Send message",
             contactBtnText: "Send",
-            contactInfo: "📧 gaspardgasangwa76@gmail.com\n📞 +250 792 680 361",
+            contactInfo: "📧 gaspardgasangwa76@gmail.com",
             modalTitle: "Contact Us",
             emailPlaceholder: "Your email",
             messagePlaceholder: "Your message",
             send: "Send",
             close: "Close",
             messageSent: "Message sent! Thank you.",
-            userUploadTitle: "🎵 Upload Your Hymn",
-            userUploadDesc: "Wrote a hymn? Submit it to be featured!",
-            userUploadBtnText: "Submit Hymn",
-            userUploadHint: "⏱️ Mass section, file (MP3/PDF)",
-            userModalTitle: "📤 Submit Your Hymn",
-            userModalDesc: "Fill the form, admin will review and publish.",
-            uploadHint: "✅ File: MP3, PDF, JPG, PNG (< 10MB).",
+            userUploadTitle: "🎵 Upload",
+            userUploadDesc: "Your hymn",
+            userUploadBtnText: "Upload",
+            userUploadHint: "⏱️ Mass section",
+            userModalTitle: "📤 Upload Hymn",
+            userModalDesc: "Appears instantly!",
             songTitlePlaceholder: "Hymn title",
             sectionPlaceholder: "-- Select Mass section --",
-            emailPlaceholder2: "Your email (for notification)",
-            commentsPlaceholder: "Comments (optional)",
+            emailPlaceholder2: "Your email",
+            commentsPlaceholder: "Comments",
             submitBtn: "Submit",
             cancelBtn: "Cancel",
-            submitSuccess: "Your hymn has been submitted! Admin will review soon.",
-            fileRequired: "Please select a file!",
-            titleRequired: "Please enter the hymn title!",
-            sectionRequired: "Please select a section!",
-            emailRequired: "Please enter your email!"
+            submitSuccess: "Your hymn is uploaded! Visible now.",
+            fileRequired: "Select a file!",
+            titleRequired: "Enter title!",
+            sectionRequired: "Select section!",
+            emailRequired: "Enter your email!",
+            previewTitle: "🔍 Preview",
+            closePreview: "Close",
+            adminNotification: "🔔 A user uploaded!",
+            download: "Download",
+            preview: "Preview"
         }
     };
 
-    // Current language
+    // ========== GLOBAL VARIABLES ==========
     let currentLang = localStorage.getItem('preferredLang') || 'rw';
+    let allSongs = [];
 
     // ========== LANGUAGE SETTER ==========
     function setLanguage(lang) {
@@ -723,13 +780,15 @@
         });
     }
 
-    // Apply translations
+    // ========== APPLY TRANSLATIONS ==========
     function applyTranslations() {
         const t = translations[currentLang];
         document.getElementById('appTitle').innerText = t.appTitle;
         document.getElementById('songCount').innerHTML = t.songCount + (navigator.onLine ? '' : ' (Offline)');
         document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-        document.getElementById('sectionFilter').options[0].text = t.filterPlaceholder;
+        if (document.getElementById('sectionFilter')) {
+            document.getElementById('sectionFilter').options[0].text = t.filterPlaceholder;
+        }
         document.getElementById('resetBtn').innerText = t.reset;
         document.getElementById('adminCardTitle').innerHTML = t.adminCardTitle;
         document.getElementById('adminCardDesc').innerText = t.adminCardDesc;
@@ -737,63 +796,186 @@
         document.getElementById('contactCardTitle').innerHTML = t.contactCardTitle;
         document.getElementById('contactCardDesc').innerText = t.contactCardDesc;
         document.getElementById('contactBtnText').innerText = t.contactBtnText;
-        document.getElementById('contactInfoText').innerHTML = t.contactInfo.replace(/\n/g, '<br>');
+        document.getElementById('contactInfoText').innerHTML = t.contactInfo;
         document.getElementById('modalTitle').innerText = t.modalTitle;
         document.getElementById('contactEmail').placeholder = t.emailPlaceholder;
         document.getElementById('contactMessage').placeholder = t.messagePlaceholder;
         document.getElementById('sendBtn').innerText = t.send;
         document.getElementById('closeBtn').innerText = t.close;
-        
-        // User upload translations
         document.getElementById('userUploadTitle').innerHTML = t.userUploadTitle;
         document.getElementById('userUploadDesc').innerText = t.userUploadDesc;
         document.getElementById('userUploadBtnText').innerText = t.userUploadBtnText;
         document.getElementById('userUploadHint').innerHTML = `<span>${t.userUploadHint}</span>`;
         document.getElementById('userUploadModalTitle').innerText = t.userModalTitle;
         document.getElementById('userUploadModalDesc').innerText = t.userModalDesc;
-        document.getElementById('uploadHintText').innerHTML = `<strong>✅</strong> ${t.uploadHint}`;
         document.getElementById('userSongTitle').placeholder = t.songTitlePlaceholder;
-        const sectionSelect = document.getElementById('userSongSection');
-        sectionSelect.options[0].text = t.sectionPlaceholder;
+        if (document.getElementById('userSongSection')) {
+            document.getElementById('userSongSection').options[0].text = t.sectionPlaceholder;
+        }
         document.getElementById('userEmail').placeholder = t.emailPlaceholder2;
         document.getElementById('userComments').placeholder = t.commentsPlaceholder;
         document.getElementById('submitSongBtn').innerText = t.submitBtn;
         document.getElementById('cancelUploadBtn').innerText = t.cancelBtn;
+        document.getElementById('previewTitle').innerText = t.previewTitle;
+        document.getElementById('closePreviewBtn').innerText = t.closePreview;
+        document.getElementById('notificationMessage').innerText = t.adminNotification;
     }
 
-    // ========== CONTACT MODAL ==========
-    window.showContactModal = function() {
-        document.getElementById('contactModal').style.display = 'flex';
-    };
-    window.closeContactModal = function() {
-        document.getElementById('contactModal').style.display = 'none';
-    };
-    window.sendMessage = function() {
-        const email = document.getElementById('contactEmail').value;
-        const message = document.getElementById('contactMessage').value;
-        if (!email || !message) { alert(translations[currentLang].messagePlaceholder); return; }
-        const msgs = JSON.parse(localStorage.getItem('contactMessages') || '[]');
-        msgs.push({ email, message, time: new Date().toLocaleString() });
-        localStorage.setItem('contactMessages', JSON.stringify(msgs));
-        alert(translations[currentLang].messageSent);
-        closeContactModal();
-        document.getElementById('contactEmail').value = '';
-        document.getElementById('contactMessage').value = '';
+    // ========== LOAD SONGS FROM LOCALSTORAGE ==========
+    function loadSongs() {
+        allSongs = JSON.parse(localStorage.getItem('catholicSongs') || '[]');
+        displayAllSongs();
+        updateSongCount();
+    }
+
+    // ========== DISPLAY SONGS ==========
+    function displayAllSongs() {
+        const container = document.getElementById('sectionsContainer');
+        if (!container) return;
+        
+        if (allSongs.length === 0) {
+            container.innerHTML = `<div class="section active"><h2>Indirimbo</h2><div class="no-songs"><p>Nta ndirimbo zishyizweho.</p><p>Shyiramo bwa mbere ukoresheje buto yo hepfo!</p></div></div>`;
+            return;
+        }
+        
+        // Group by section
+        const sections = {};
+        allSongs.forEach(song => {
+            if (!sections[song.section]) sections[song.section] = [];
+            sections[song.section].push(song);
+        });
+        
+        let html = '';
+        for (const [sectionName, sectionSongs] of Object.entries(sections)) {
+            html += `<div class="section" id="section-${sectionName.replace(/\s+/g, '-')}">`;
+            html += `<h2>${sectionName} (${sectionSongs.length})</h2>`;
+            html += `<div class="songs-list">`;
+            
+            sectionSongs.forEach(song => {
+                html += `<div class="song" id="song-${song.id}">`;
+                html += `<div class="song-header">`;
+                html += `<h3 class="song-title">${song.title}</h3>`;
+                html += `<span class="song-date">${song.dateAdded || 'Vuba'}</span>`;
+                html += `</div>`;
+                html += `<div class="song-meta">`;
+                html += `<span class="song-section">${song.section}</span>`;
+                html += `<span class="song-size">${song.fileSize || ''}</span>`;
+                html += `<span class="download-count">🔽 ${song.downloadCount || 0}</span>`;
+                if (song.uploadedBy === 'user') {
+                    html += `<span style="background: #ffc107; color: #000; padding: 3px 10px; border-radius: 12px; font-size: 12px;">👤 User</span>`;
+                }
+                html += `</div>`;
+                html += `<div class="song-actions">`;
+                html += `<button class="preview-btn" onclick="previewFile('${song.id}')"><span>👁️</span> ${translations[currentLang].preview || 'Reba'}</button>`;
+                html += `<button class="download-btn" onclick="downloadSong('${song.id}')"><span>⬇️</span> ${translations[currentLang].download || 'Download'}</button>`;
+                html += `</div>`;
+                html += `</div>`;
+            });
+            
+            html += `</div></div>`;
+        }
+        container.innerHTML = html;
+        
+        // Show first section
+        if (Object.keys(sections).length > 0) {
+            showSection(Object.keys(sections)[0]);
+        }
+    }
+
+    // ========== CREATE SECTION NAVIGATION ==========
+    function createNavigation() {
+        const sections = [
+            'Gutangira', 'Nyagasani Tubabarire', 'Imana nisingizwe mu ijuru',
+            'Zaburi', 'Alleluya', 'Indanga kwemera', 'Ibisabisho', 'Gutura',
+            'Nyirubutagatifu', 'Ntama w\'Imana', 'Gusangira', 'Gushimira',
+            'Gusoza', 'Bikiramariya', 'Abatagatifu bose', 'Gushyingirwa',
+            'Ibitaramo', 'Adiventi', 'Noheli', 'Igisibo', 'Pasika', 'Asensiyo',
+            'Rohomutagatifu', 'Other More songs'
+        ];
+        const nav = document.getElementById('sectionNav');
+        if (!nav) return;
+        nav.innerHTML = '';
+        sections.forEach(section => {
+            const btn = document.createElement('button');
+            btn.textContent = section;
+            btn.onclick = () => showSection(section);
+            nav.appendChild(btn);
+        });
+    }
+
+    function showSection(sectionName) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        const section = document.getElementById(`section-${sectionName.replace(/\s+/g, '-')}`);
+        if (section) section.classList.add('active');
+    }
+
+    // ========== PREVIEW FILE IN BROWSER - FIXED ==========
+    window.previewFile = function(songId) {
+        const song = allSongs.find(s => s.id === songId);
+        if (!song) {
+            alert("Indirimbo ntabwo iboneka!");
+            return;
+        }
+        
+        const previewContainer = document.getElementById('previewContainer');
+        const t = translations[currentLang];
+        
+        let previewHtml = '';
+        
+        // Check file type and create appropriate preview
+        const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
+        const fileType = song.fileType ? song.fileType.toLowerCase() : fileExt;
+        
+        if (fileType === 'mp3' || fileExt === 'mp3') {
+            previewHtml = `<audio controls style="width:100%; margin-top:20px;">
+                <source src="${song.fileUrl}" type="audio/mpeg">
+                Your browser does not support audio.
+            </audio>`;
+        } else if (fileType === 'pdf' || fileExt === 'pdf') {
+            previewHtml = `<iframe src="${song.fileUrl}" class="preview-iframe" title="PDF Preview"></iframe>`;
+        } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileType) || ['jpg', 'jpeg', 'png', 'gif'].includes(fileExt)) {
+            previewHtml = `<img src="${song.fileUrl}" style="max-width:100%; max-height:400px; border-radius:10px;" alt="Preview">`;
+        } else {
+            previewHtml = `<p style="padding: 30px; background: #f8f9fa; border-radius: 10px;">
+                ${song.fileName || 'Fayilo'} - Ntago ushobora kureba muri browser. 
+                <br>Kanda <strong>Download</strong>.
+            </p>`;
+        }
+        
+        previewContainer.innerHTML = `<h4 style="margin-bottom:12px; color:#4b0082;">${song.title}</h4>${previewHtml}`;
+        document.getElementById('previewModal').style.display = 'flex';
     };
 
-    // ========== USER UPLOAD MODAL ==========
-    window.showUserUploadModal = function() {
-        document.getElementById('userUploadModal').style.display = 'flex';
+    window.closePreviewModal = function() {
+        document.getElementById('previewModal').style.display = 'none';
+        document.getElementById('previewContainer').innerHTML = '';
     };
-    window.closeUserUploadModal = function() {
-        document.getElementById('userUploadModal').style.display = 'none';
-        // Clear form
-        document.getElementById('userSongTitle').value = '';
-        document.getElementById('userSongSection').value = '';
-        document.getElementById('userSongFile').value = '';
-        document.getElementById('userEmail').value = '';
-        document.getElementById('userComments').value = '';
+
+    // ========== DOWNLOAD SONG - FIXED ==========
+    window.downloadSong = function(songId) {
+        const song = allSongs.find(s => s.id === songId);
+        if (!song) {
+            alert("Indirimbo ntabwo iboneka!");
+            return;
+        }
+        
+        // Increment download count
+        song.downloadCount = (song.downloadCount || 0) + 1;
+        localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
+        
+        // Create download link
+        const a = document.createElement('a');
+        a.href = song.fileUrl;
+        a.download = song.fileName || `${song.title}.mp3`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        // Update UI
+        displayAllSongs();
     };
+
+    // ========== USER SUBMIT SONG - FIXED ==========
     window.submitUserSong = function() {
         const t = translations[currentLang];
         const title = document.getElementById('userSongTitle').value.trim();
@@ -806,95 +988,189 @@
         if (!file) { alert(t.fileRequired); return; }
         if (!email) { alert(t.emailRequired); return; }
         
-        // Store submission in localStorage for admin review
-        const submissions = JSON.parse(localStorage.getItem('userSongSubmissions') || '[]');
-        submissions.push({
-            id: 'sub-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6),
+        // Create song object - IMMEDIATELY VISIBLE
+        const songId = 'user-song-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        const fileUrl = URL.createObjectURL(file);
+        
+        const newSong = {
+            id: songId,
             title: title,
             section: section,
+            fileUrl: fileUrl,
             fileName: file.name,
-            fileType: file.type,
-            fileSize: file.size,
-            email: email,
+            fileType: file.name.split('.').pop().toLowerCase(),
+            fileSize: (file.size / 1024).toFixed(2) + ' KB',
+            dateAdded: new Date().toLocaleDateString('rw-RW'),
+            downloadCount: 0,
+            uploadedBy: 'user',
+            uploaderEmail: email,
             comments: document.getElementById('userComments').value,
-            submittedAt: new Date().toISOString(),
-            status: 'pending'
+            submittedAt: new Date().toISOString()
+        };
+        
+        // Add to allSongs and localStorage
+        allSongs.push(newSong);
+        localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
+        
+        // 1. NOTIFY ADMIN - show notification badge
+        document.getElementById('adminNotification').style.display = 'flex';
+        setTimeout(() => {
+            document.getElementById('adminNotification').style.display = 'none';
+        }, 6000);
+        
+        // 2. Store in admin notifications
+        const notifications = JSON.parse(localStorage.getItem('adminNotifications') || '[]');
+        notifications.push({
+            type: 'user_upload',
+            message: `User ${email} uploaded "${title}" in ${section}`,
+            time: new Date().toISOString(),
+            songId: songId
+        });
+        localStorage.setItem('adminNotifications', JSON.stringify(notifications));
+        
+        // 3. Save submission for admin dashboard
+        const submissions = JSON.parse(localStorage.getItem('userSongSubmissions') || '[]');
+        submissions.push({
+            ...newSong,
+            status: 'approved',
+            reviewed: false
         });
         localStorage.setItem('userSongSubmissions', JSON.stringify(submissions));
         
+        // Success message and close modal
         alert(t.submitSuccess);
         closeUserUploadModal();
+        
+        // Refresh display to show new song in its section
+        displayAllSongs();
+        
+        // Switch to the section where song was added
+        showSection(section);
     };
 
-    // ===== PWA =====
+    // ========== MODAL CONTROLS ==========
+    window.showContactModal = function() {
+        document.getElementById('contactModal').style.display = 'flex';
+    };
+    window.closeContactModal = function() {
+        document.getElementById('contactModal').style.display = 'none';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactMessage').value = '';
+    };
+    window.sendMessage = function() {
+        const email = document.getElementById('contactEmail').value.trim();
+        const message = document.getElementById('contactMessage').value.trim();
+        if (!email || !message) { 
+            alert(translations[currentLang].emailPlaceholder || 'Andika imeyili n'ubutumwa'); 
+            return; 
+        }
+        const msgs = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+        msgs.push({ email, message, time: new Date().toLocaleString() });
+        localStorage.setItem('contactMessages', JSON.stringify(msgs));
+        alert(translations[currentLang].messageSent);
+        closeContactModal();
+    };
+
+    window.showUserUploadModal = function() {
+        document.getElementById('userUploadModal').style.display = 'flex';
+    };
+    window.closeUserUploadModal = function() {
+        document.getElementById('userUploadModal').style.display = 'none';
+        document.getElementById('userSongTitle').value = '';
+        document.getElementById('userSongSection').value = '';
+        document.getElementById('userSongFile').value = '';
+        document.getElementById('userEmail').value = '';
+        document.getElementById('userComments').value = '';
+    };
+
+    // ========== SEARCH & FILTER ==========
+    window.searchSongs = function() {
+        const term = document.getElementById('searchInput').value.toLowerCase();
+        if (!term) { displayAllSongs(); return; }
+        const filtered = allSongs.filter(s => 
+            s.title.toLowerCase().includes(term) || 
+            s.section.toLowerCase().includes(term)
+        );
+        displayFiltered(filtered);
+    };
+
+    window.filterBySection = function() {
+        const section = document.getElementById('sectionFilter').value;
+        if (!section) { displayAllSongs(); return; }
+        const filtered = allSongs.filter(s => s.section === section);
+        displayFiltered(filtered);
+    };
+
+    function displayFiltered(songs) {
+        const container = document.getElementById('sectionsContainer');
+        if (songs.length === 0) {
+            container.innerHTML = `<div class="section active"><h2>Indirimbo</h2><div class="no-songs"><p>Nta ndirimbo zihuye</p></div></div>`;
+            return;
+        }
+        let html = `<div class="section active"><h2>Ubushakashatsi (${songs.length})</h2><div class="songs-list">`;
+        songs.forEach(song => {
+            html += `<div class="song">
+                <div class="song-header"><h3 class="song-title">${song.title}</h3></div>
+                <div class="song-meta">
+                    <span>${song.section}</span>
+                    <span>${song.fileSize || ''}</span>
+                    <span>🔽 ${song.downloadCount || 0}</span>
+                </div>
+                <div class="song-actions">
+                    <button class="preview-btn" onclick="previewFile('${song.id}')">👁️ ${translations[currentLang].preview || 'Reba'}</button>
+                    <button class="download-btn" onclick="downloadSong('${song.id}')">⬇️ ${translations[currentLang].download || 'Download'}</button>
+                </div>
+            </div>`;
+        });
+        html += `</div></div>`;
+        container.innerHTML = html;
+    }
+
+    window.clearFilters = function() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('sectionFilter').value = '';
+        displayAllSongs();
+    };
+
+    // ========== UTILITIES ==========
+    function updateSongCount() {
+        const el = document.getElementById('songCount');
+        if (el) {
+            let text = `${translations[currentLang].songCount} | Indirimbo: ${allSongs.length}`;
+            if (!navigator.onLine) text += ' (Offline)';
+            el.innerHTML = text;
+        }
+    }
+    
     window.hidePWANotification = function() {
         document.getElementById('pwaNotification').style.display = 'none';
     };
 
-    // ========== ORIGINAL APP FUNCTIONS (PRESERVED) ==========
-    let allSongs = [];
-    function initApp() {
+    // ========== INITIALIZATION ==========
+    window.onload = function() {
+        // Load songs from localStorage
         loadSongs();
         createNavigation();
         applyTranslations();
+        
+        // Set active language button
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === currentLang);
         });
-    }
-    function loadSongs() {
-        allSongs = JSON.parse(localStorage.getItem('catholicSongs') || '[]');
-        displayAllSongs();
-    }
-    function displayAllSongs() { /* simplified - original works */ 
-        const container = document.getElementById('sectionsContainer');
-        if (allSongs.length === 0) {
-            container.innerHTML = `<div class="section active"><h2>Indirimbo</h2><div class="no-songs"><p>Nta ndirimbo zishyizweho.</p><p>Shyiramo bwa mbere!</p></div></div>`;
-            return;
+        
+        // Check for existing admin notifications
+        const notifications = JSON.parse(localStorage.getItem('adminNotifications') || '[]');
+        if (notifications.length > 0) {
+            const lastNotif = notifications[notifications.length - 1];
+            const timeDiff = Date.now() - new Date(lastNotif.time).getTime();
+            if (timeDiff < 3600000) {
+                document.getElementById('adminNotification').style.display = 'flex';
+                setTimeout(() => {
+                    document.getElementById('adminNotification').style.display = 'none';
+                }, 5000);
+            }
         }
-        let html = '';
-        const sections = {};
-        allSongs.forEach(s => { if(!sections[s.section]) sections[s.section]=[]; sections[s.section].push(s); });
-        for(const [sec, songs] of Object.entries(sections)) {
-            html += `<div class="section" id="section-${sec.replace(/\s+/g,'-')}"><h2>${sec} (${songs.length})</h2><div class="songs-list">`;
-            songs.forEach(song => {
-                html += `<div class="song"><div class="song-header"><h3 class="song-title">${song.title}</h3></div>
-                        <div class="song-meta"><span class="song-section">${song.section}</span><span class="song-size">${song.fileSize || ''}</span>
-                        <span class="download-count">🔽 ${song.downloadCount || 0}</span></div>
-                        <div class="song-actions"><button class="download-btn" onclick="downloadSong('${song.id}')">⬇️ Download</button>
-                        <button class="play-btn" onclick="previewSong('${song.id}')">👁️ Reba</button></div></div>`;
-            });
-            html += `</div></div>`;
-        }
-        container.innerHTML = html;
-        if(Object.keys(sections).length) showSection(Object.keys(sections)[0]);
-    }
-    function createNavigation() {
-        const sections = ['Gutangira','Nyagasani Tubabarire','Imana nisingizwe mu ijuru','Zaburi','Alleluya','Indanga kwemera','Ibisabisho','Gutura','Nyirubutagatifu','Ntama w\'Imana','Gusangira','Gushimira','Gusoza','Bikiramariya','Abatagatifu bose','Gushyingirwa','Ibitaramo','Adiventi','Noheli','Igisibo','Pasika','Asensiyo','Rohomutagatifu','Other More songs'];
-        const nav = document.getElementById('sectionNav');
-        nav.innerHTML = '';
-        sections.forEach(s => {
-            let btn = document.createElement('button');
-            btn.textContent = s;
-            btn.onclick = () => showSection(s);
-            nav.appendChild(btn);
-        });
-    }
-    function showSection(s) {
-        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-        let el = document.getElementById(`section-${s.replace(/\s+/g,'-')}`);
-        if(el) el.classList.add('active');
-    }
-    window.searchSongs = function(){};
-    window.filterBySection = function(){};
-    window.clearFilters = function(){
-        document.getElementById('searchInput').value='';
-        document.getElementById('sectionFilter').value='';
-        displayAllSongs();
     };
-    window.downloadSong = function(id){ console.log('download',id); };
-    window.previewSong = function(id){ console.log('preview',id); };
-
-    window.onload = initApp;
 </script>
 </body>
 </html>
