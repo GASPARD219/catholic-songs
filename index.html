@@ -86,7 +86,7 @@
             border-color: white;
         }
         
-        /* ===== SEARCH & NAVIGATION ===== */
+        /* ===== SEARCH & FILTER ===== */
         .search-box {
             text-align: center;
             padding: 25px 20px;
@@ -127,6 +127,8 @@
             cursor: pointer;
             font-weight: bold;
         }
+        
+        /* ===== SECTION NAVIGATION - ALL BUTTONS WORK ===== */
         #sectionNav {
             background: linear-gradient(135deg, #6a5acd, #9370db);
             padding: 15px;
@@ -153,6 +155,12 @@
             background: rgba(255,255,255,0.3);
             transform: translateY(-2px);
         }
+        #sectionNav button.active-section {
+            background: #4b0082;
+            border: 2px solid white;
+        }
+        
+        /* ===== SECTIONS ===== */
         .section {
             display: none;
             padding: 40px 20px;
@@ -204,7 +212,7 @@
             gap: 15px;
             flex-wrap: wrap;
         }
-        .download-btn, .play-btn, .preview-btn {
+        .download-btn, .preview-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -220,23 +228,37 @@
             background: linear-gradient(135deg, #4CAF50, #45a049);
             color: white;
         }
-        .play-btn, .preview-btn {
+        .preview-btn {
             background: linear-gradient(135deg, #17a2b8, #138496);
             color: white;
         }
-        .no-songs {
+        .download-btn:hover, .preview-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* ===== NO SONGS MESSAGE ===== */
+        .no-songs-message {
             text-align: center;
             color: #666;
             font-style: italic;
             padding: 60px;
             grid-column: 1 / -1;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #dee2e6;
+            font-size: 18px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .no-songs-message p {
+            margin: 10px 0;
+        }
+        .no-songs-message .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #4b0082;
         }
         
-        /* ===== COMPACT BOTTOM SECTION - REDUCED SIZE ===== */
+        /* ===== COMPACT BOTTOM SECTION ===== */
         .bottom-admin-section {
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
@@ -267,10 +289,6 @@
             align-items: center;
             transition: 0.2s;
         }
-        .admin-card:hover, .contact-card:hover, .user-upload-card:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-2px);
-        }
         .admin-card h3, .contact-card h3, .user-upload-card h3 {
             color: #ffd700;
             margin: 0 0 8px 0;
@@ -278,7 +296,6 @@
             border-bottom: 2px solid #ffd700;
             display: inline-block;
             padding-bottom: 5px;
-            font-weight: 600;
         }
         .bottom-btn {
             background: #4b0082;
@@ -294,25 +311,10 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            border: 1px solid transparent;
         }
         .bottom-btn:hover {
             background: #5a0d9c;
             transform: translateY(-2px);
-            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-            border-color: white;
-        }
-        .contact-info {
-            text-align: center;
-            margin-top: 6px;
-            color: #ecf0f1;
-            line-height: 1.5;
-            font-size: 12px;
-        }
-        .admin-card p, .contact-card p, .user-upload-card p {
-            margin: 5px 0;
-            font-size: 13px;
-            color: #e0e0e0;
         }
         
         /* ===== MODALS ===== */
@@ -373,7 +375,7 @@
             cursor: pointer;
         }
         
-        /* ===== ADMIN NOTIFICATION BADGE ===== */
+        /* ===== ADMIN NOTIFICATION ===== */
         .admin-notification {
             position: fixed;
             top: 20px;
@@ -389,15 +391,9 @@
             align-items: center;
             gap: 8px;
             font-size: 14px;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
         }
         
-        /* ===== FILE PREVIEW IFRAME ===== */
+        /* ===== FILE PREVIEW ===== */
         .preview-iframe {
             width: 100%;
             height: 380px;
@@ -413,13 +409,12 @@
             .songs-list { grid-template-columns: 1fr; }
             .lang-switch { position: static; justify-content: center; margin-top: 10px; }
             .bottom-admin-container { flex-direction: column; }
-            .admin-card, .contact-card, .user-upload-card { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-<!-- ===== ADMIN NOTIFICATION - SHOWS WHEN USER UPLOADS ===== -->
+<!-- ===== ADMIN NOTIFICATION ===== -->
 <div id="adminNotification" class="admin-notification">
     <span>🔔</span>
     <span id="notificationMessage">Hari user ukoze upload! Raba admin dashboard</span>
@@ -472,28 +467,28 @@
     <button onclick="clearFilters()" id="resetBtn">Subira</button>
 </div>
 
-<!-- ===== SECTION NAVIGATION ===== -->
+<!-- ===== SECTION NAVIGATION - ALL BUTTONS ACTIVE ===== -->
 <nav id="sectionNav"></nav>
 
-<!-- ===== SONGS CONTAINER ===== -->
+<!-- ===== SONGS CONTAINER - EACH SECTION SHOWS ONLY ITS SONGS ===== -->
 <div id="sectionsContainer"></div>
 
-<!-- ===== COMPACT BOTTOM SECTION - REDUCED SIZE, IMMEDIATELY VISIBLE ===== -->
+<!-- ===== COMPACT BOTTOM SECTION ===== -->
 <div class="bottom-admin-section">
     <div class="bottom-admin-container">
-        <!-- Admin Login Card - Compact -->
+        <!-- Admin Login Card -->
         <div class="admin-card">
             <h3 id="adminCardTitle">🔐 Admin</h3>
-            <p id="adminCardDesc" style="margin-bottom:3px;">Injira nka admin</p>
+            <p id="adminCardDesc">Injira nka admin</p>
             <button class="bottom-btn" onclick="window.location.href='admin.html'">
                 <span>🔑</span> <span id="adminBtnText">Injira</span>
             </button>
         </div>
         
-        <!-- Contact Us Card - Compact -->
+        <!-- Contact Us Card -->
         <div class="contact-card">
             <h3 id="contactCardTitle">📞 Twandikire</h3>
-            <p id="contactCardDesc" style="margin-bottom:3px;">Ubutumwa</p>
+            <p id="contactCardDesc">Ubutumwa</p>
             <button class="bottom-btn" onclick="showContactModal()">
                 <span>✉️</span> <span id="contactBtnText">Ohereza</span>
             </button>
@@ -502,14 +497,14 @@
             </div>
         </div>
 
-        <!-- User Upload Card - Compact -->
+        <!-- User Upload Card -->
         <div class="user-upload-card">
             <h3 id="userUploadTitle">🎵 Shyiramo</h3>
-            <p id="userUploadDesc" style="margin-bottom:3px;">Indirimbo yawe</p>
+            <p id="userUploadDesc">Indirimbo yawe</p>
             <button class="bottom-btn" onclick="showUserUploadModal()">
                 <span>📤</span> <span id="userUploadBtnText">Shyiramo</span>
             </button>
-            <div class="contact-info" id="userUploadHint" style="font-size:11px;">
+            <div class="contact-info" id="userUploadHint">
                 <span>⏱️ Igice cya missa</span>
             </div>
         </div>
@@ -531,7 +526,7 @@
 <div id="userUploadModal" class="modal">
     <div class="modal-content">
         <h3 id="userUploadModalTitle">📤 Shyiraho indirimbo</h3>
-        <p id="userUploadModalDesc" style="color:#666; margin-bottom:15px;">Uzuza, ihite igaragara!</p>
+        <p id="userUploadModalDesc">Uzuza, ihite igaragara!</p>
         
         <input type="text" id="userSongTitle" placeholder="Izina ry'indirimbo">
         
@@ -564,9 +559,7 @@
         </select>
 
         <input type="file" id="userSongFile" accept=".mp3,.pdf,.jpg,.jpeg,.png">
-
         <input type="email" id="userEmail" placeholder="Imeyili yawe">
-
         <textarea id="userComments" placeholder="Igitekerezo (byaba biri)" rows="2"></textarea>
 
         <div style="margin-top:20px;">
@@ -580,9 +573,7 @@
 <div id="previewModal" class="modal">
     <div class="modal-content" style="max-width: 750px;">
         <h3 id="previewTitle">🔍 Reba indirimbo</h3>
-        <div id="previewContainer" style="text-align: center; min-height: 180px;">
-            <!-- Preview will be loaded here -->
-        </div>
+        <div id="previewContainer" style="text-align: center; min-height: 180px;"></div>
         <button class="close-btn" onclick="closePreviewModal()" style="margin-top:20px;" id="closePreviewBtn">Funga</button>
     </div>
 </div>
@@ -636,7 +627,9 @@
             closePreview: "Funga",
             adminNotification: "🔔 Hari user ukoze upload!",
             download: "Download",
-            preview: "Reba"
+            preview: "Reba",
+            noSongsTitle: "Nta ndirimbo zihari",
+            noSongsMessage: "Nta ndirimbo zirimo muri iki gice. Shyiramo bwa mbere!"
         },
         fr: {
             appTitle: "CHANTS CATHOLIQUES",
@@ -678,7 +671,9 @@
             closePreview: "Fermer",
             adminNotification: "🔔 Un utilisateur a ajouté!",
             download: "Télécharger",
-            preview: "Aperçu"
+            preview: "Aperçu",
+            noSongsTitle: "Aucun chant",
+            noSongsMessage: "Aucun chant dans cette section. Soyez le premier à ajouter!"
         },
         sw: {
             appTitle: "NYIMBO ZA KIKATOLIKI",
@@ -720,7 +715,9 @@
             closePreview: "Funga",
             adminNotification: "🔔 Mtumiaji amepakia!",
             download: "Pakua",
-            preview: "Hakiki"
+            preview: "Hakiki",
+            noSongsTitle: "Hakuna nyimbo",
+            noSongsMessage: "Hakuna nyimbo katika sehemu hii. Kuwa wa kwanza kupakia!"
         },
         en: {
             appTitle: "CATHOLIC HYMNS",
@@ -762,7 +759,9 @@
             closePreview: "Close",
             adminNotification: "🔔 A user uploaded!",
             download: "Download",
-            preview: "Preview"
+            preview: "Preview",
+            noSongsTitle: "No hymns",
+            noSongsMessage: "No hymns in this section. Be the first to upload!"
         }
     };
 
@@ -778,6 +777,8 @@
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === lang);
         });
+        // Refresh display with new language
+        displayAllSongs();
     }
 
     // ========== APPLY TRANSLATIONS ==========
@@ -828,61 +829,85 @@
         updateSongCount();
     }
 
-    // ========== DISPLAY SONGS ==========
+    // ========== DISPLAY SONGS - FIXED: EACH SECTION SHOWS ONLY ITS OWN SONGS ==========
     function displayAllSongs() {
         const container = document.getElementById('sectionsContainer');
         if (!container) return;
         
-        if (allSongs.length === 0) {
-            container.innerHTML = `<div class="section active"><h2>Indirimbo</h2><div class="no-songs"><p>Nta ndirimbo zishyizweho.</p><p>Shyiramo bwa mbere ukoresheje buto yo hepfo!</p></div></div>`;
-            return;
-        }
-        
-        // Group by section
+        // Group songs by section
         const sections = {};
         allSongs.forEach(song => {
             if (!sections[song.section]) sections[song.section] = [];
             sections[song.section].push(song);
         });
         
+        // Get all possible sections from navigation
+        const allSections = [
+            'Gutangira', 'Nyagasani Tubabarire', 'Imana nisingizwe mu ijuru',
+            'Zaburi', 'Alleluya', 'Indanga kwemera', 'Ibisabisho', 'Gutura',
+            'Nyirubutagatifu', 'Ntama w\'Imana', 'Gusangira', 'Gushimira',
+            'Gusoza', 'Bikiramariya', 'Abatagatifu bose', 'Gushyingirwa',
+            'Ibitaramo', 'Adiventi', 'Noheli', 'Igisibo', 'Pasika', 'Asensiyo',
+            'Rohomutagatifu', 'Other More songs'
+        ];
+        
         let html = '';
-        for (const [sectionName, sectionSongs] of Object.entries(sections)) {
+        
+        // Create a section for each possible section
+        allSections.forEach(sectionName => {
+            const sectionSongs = sections[sectionName] || [];
+            
             html += `<div class="section" id="section-${sectionName.replace(/\s+/g, '-')}">`;
-            html += `<h2>${sectionName} (${sectionSongs.length})</h2>`;
-            html += `<div class="songs-list">`;
+            html += `<h2>${sectionName} <span style="font-size: 18px; color: #666;">(${sectionSongs.length})</span></h2>`;
             
-            sectionSongs.forEach(song => {
-                html += `<div class="song" id="song-${song.id}">`;
-                html += `<div class="song-header">`;
-                html += `<h3 class="song-title">${song.title}</h3>`;
-                html += `<span class="song-date">${song.dateAdded || 'Vuba'}</span>`;
+            if (sectionSongs.length === 0) {
+                // NO SONGS - SHOW BEAUTIFUL MESSAGE
+                html += `<div class="no-songs-message">
+                    <div class="icon">🎵</div>
+                    <p><strong>${translations[currentLang].noSongsTitle}</strong></p>
+                    <p>${translations[currentLang].noSongsMessage}</p>
+                    <p style="font-size: 14px; margin-top: 20px; color: #4b0082;">
+                        👆 Kanda "Shyiramo" hepfo utangize!
+                    </p>
+                </div>`;
+            } else {
+                // SHOW SONGS
+                html += `<div class="songs-list">`;
+                sectionSongs.forEach(song => {
+                    html += `<div class="song" id="song-${song.id}">`;
+                    html += `<div class="song-header">`;
+                    html += `<h3 class="song-title">${song.title}</h3>`;
+                    html += `<span class="song-date">${song.dateAdded || ''}</span>`;
+                    html += `</div>`;
+                    html += `<div class="song-meta">`;
+                    html += `<span class="song-section">${song.section}</span>`;
+                    html += `<span class="song-size">${song.fileSize || ''}</span>`;
+                    html += `<span class="download-count">🔽 ${song.downloadCount || 0}</span>`;
+                    if (song.uploadedBy === 'user') {
+                        html += `<span style="background: #ffc107; color: #000; padding: 3px 10px; border-radius: 12px; font-size: 12px;">👤 User</span>`;
+                    }
+                    html += `</div>`;
+                    html += `<div class="song-actions">`;
+                    html += `<button class="preview-btn" onclick="previewFile('${song.id}')"><span>👁️</span> ${translations[currentLang].preview}</button>`;
+                    html += `<button class="download-btn" onclick="downloadSong('${song.id}')"><span>⬇️</span> ${translations[currentLang].download}</button>`;
+                    html += `</div>`;
+                    html += `</div>`;
+                });
                 html += `</div>`;
-                html += `<div class="song-meta">`;
-                html += `<span class="song-section">${song.section}</span>`;
-                html += `<span class="song-size">${song.fileSize || ''}</span>`;
-                html += `<span class="download-count">🔽 ${song.downloadCount || 0}</span>`;
-                if (song.uploadedBy === 'user') {
-                    html += `<span style="background: #ffc107; color: #000; padding: 3px 10px; border-radius: 12px; font-size: 12px;">👤 User</span>`;
-                }
-                html += `</div>`;
-                html += `<div class="song-actions">`;
-                html += `<button class="preview-btn" onclick="previewFile('${song.id}')"><span>👁️</span> ${translations[currentLang].preview || 'Reba'}</button>`;
-                html += `<button class="download-btn" onclick="downloadSong('${song.id}')"><span>⬇️</span> ${translations[currentLang].download || 'Download'}</button>`;
-                html += `</div>`;
-                html += `</div>`;
-            });
+            }
             
-            html += `</div></div>`;
-        }
+            html += `</div>`;
+        });
+        
         container.innerHTML = html;
         
-        // Show first section
-        if (Object.keys(sections).length > 0) {
-            showSection(Object.keys(sections)[0]);
+        // Show first section by default
+        if (allSections.length > 0) {
+            showSection(allSections[0]);
         }
     }
 
-    // ========== CREATE SECTION NAVIGATION ==========
+    // ========== CREATE SECTION NAVIGATION - ALL BUTTONS WORK ==========
     function createNavigation() {
         const sections = [
             'Gutangira', 'Nyagasani Tubabarire', 'Imana nisingizwe mu ijuru',
@@ -892,24 +917,54 @@
             'Ibitaramo', 'Adiventi', 'Noheli', 'Igisibo', 'Pasika', 'Asensiyo',
             'Rohomutagatifu', 'Other More songs'
         ];
+        
         const nav = document.getElementById('sectionNav');
         if (!nav) return;
+        
         nav.innerHTML = '';
+        
         sections.forEach(section => {
             const btn = document.createElement('button');
             btn.textContent = section;
-            btn.onclick = () => showSection(section);
+            btn.setAttribute('data-section', section);
+            btn.onclick = function(e) {
+                // Remove active class from all buttons
+                document.querySelectorAll('#sectionNav button').forEach(b => {
+                    b.classList.remove('active-section');
+                });
+                // Add active class to clicked button
+                e.currentTarget.classList.add('active-section');
+                // Show the section
+                showSection(section);
+            };
             nav.appendChild(btn);
         });
     }
 
+    // ========== SHOW SECTION - FIXED: ONLY SHOWS THE SELECTED SECTION ==========
     function showSection(sectionName) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(s => {
+            s.classList.remove('active');
+        });
+        
+        // Show selected section
         const section = document.getElementById(`section-${sectionName.replace(/\s+/g, '-')}`);
-        if (section) section.classList.add('active');
+        if (section) {
+            section.classList.add('active');
+        }
+        
+        // Update active button in navigation
+        document.querySelectorAll('#sectionNav button').forEach(btn => {
+            if (btn.textContent === sectionName) {
+                btn.classList.add('active-section');
+            } else {
+                btn.classList.remove('active-section');
+            }
+        });
     }
 
-    // ========== PREVIEW FILE IN BROWSER - FIXED ==========
+    // ========== PREVIEW FILE ==========
     window.previewFile = function(songId) {
         const song = allSongs.find(s => s.id === songId);
         if (!song) {
@@ -922,7 +977,6 @@
         
         let previewHtml = '';
         
-        // Check file type and create appropriate preview
         const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
         const fileType = song.fileType ? song.fileType.toLowerCase() : fileExt;
         
@@ -951,7 +1005,7 @@
         document.getElementById('previewContainer').innerHTML = '';
     };
 
-    // ========== DOWNLOAD SONG - FIXED ==========
+    // ========== DOWNLOAD SONG ==========
     window.downloadSong = function(songId) {
         const song = allSongs.find(s => s.id === songId);
         if (!song) {
@@ -959,11 +1013,9 @@
             return;
         }
         
-        // Increment download count
         song.downloadCount = (song.downloadCount || 0) + 1;
         localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
         
-        // Create download link
         const a = document.createElement('a');
         a.href = song.fileUrl;
         a.download = song.fileName || `${song.title}.mp3`;
@@ -971,11 +1023,10 @@
         a.click();
         document.body.removeChild(a);
         
-        // Update UI
         displayAllSongs();
     };
 
-    // ========== USER SUBMIT SONG - FIXED ==========
+    // ========== USER SUBMIT SONG ==========
     window.submitUserSong = function() {
         const t = translations[currentLang];
         const title = document.getElementById('userSongTitle').value.trim();
@@ -988,7 +1039,6 @@
         if (!file) { alert(t.fileRequired); return; }
         if (!email) { alert(t.emailRequired); return; }
         
-        // Create song object - IMMEDIATELY VISIBLE
         const songId = 'user-song-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         const fileUrl = URL.createObjectURL(file);
         
@@ -1008,17 +1058,15 @@
             submittedAt: new Date().toISOString()
         };
         
-        // Add to allSongs and localStorage
         allSongs.push(newSong);
         localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
         
-        // 1. NOTIFY ADMIN - show notification badge
+        // Notify admin
         document.getElementById('adminNotification').style.display = 'flex';
         setTimeout(() => {
             document.getElementById('adminNotification').style.display = 'none';
         }, 6000);
         
-        // 2. Store in admin notifications
         const notifications = JSON.parse(localStorage.getItem('adminNotifications') || '[]');
         notifications.push({
             type: 'user_upload',
@@ -1028,20 +1076,10 @@
         });
         localStorage.setItem('adminNotifications', JSON.stringify(notifications));
         
-        // 3. Save submission for admin dashboard
-        const submissions = JSON.parse(localStorage.getItem('userSongSubmissions') || '[]');
-        submissions.push({
-            ...newSong,
-            status: 'approved',
-            reviewed: false
-        });
-        localStorage.setItem('userSongSubmissions', JSON.stringify(submissions));
-        
-        // Success message and close modal
         alert(t.submitSuccess);
         closeUserUploadModal();
         
-        // Refresh display to show new song in its section
+        // Refresh display
         displayAllSongs();
         
         // Switch to the section where song was added
@@ -1061,7 +1099,7 @@
         const email = document.getElementById('contactEmail').value.trim();
         const message = document.getElementById('contactMessage').value.trim();
         if (!email || !message) { 
-            alert(translations[currentLang].emailPlaceholder || 'Andika imeyili n'ubutumwa'); 
+            alert(translations[currentLang].emailPlaceholder || 'Andika imeyili n\'ubutumwa'); 
             return; 
         }
         const msgs = JSON.parse(localStorage.getItem('contactMessages') || '[]');
@@ -1087,44 +1125,55 @@
     window.searchSongs = function() {
         const term = document.getElementById('searchInput').value.toLowerCase();
         if (!term) { displayAllSongs(); return; }
+        
         const filtered = allSongs.filter(s => 
             s.title.toLowerCase().includes(term) || 
             s.section.toLowerCase().includes(term)
         );
-        displayFiltered(filtered);
+        
+        // Show search results in a special section
+        const container = document.getElementById('sectionsContainer');
+        
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="section active">
+                <h2>Ubushakashatsi: "${term}"</h2>
+                <div class="no-songs-message">
+                    <div class="icon">🔍</div>
+                    <p><strong>Nta ndirimbo zihuye</strong></p>
+                    <p>Ongera ugerageze n'ijambo ribi</p>
+                </div>
+            </div>`;
+        } else {
+            let html = `<div class="section active"><h2>Ubushakashatsi: "${term}" (${filtered.length})</h2><div class="songs-list">`;
+            filtered.forEach(song => {
+                html += `<div class="song">
+                    <div class="song-header"><h3 class="song-title">${song.title}</h3></div>
+                    <div class="song-meta">
+                        <span>${song.section}</span>
+                        <span>${song.fileSize || ''}</span>
+                        <span>🔽 ${song.downloadCount || 0}</span>
+                    </div>
+                    <div class="song-actions">
+                        <button class="preview-btn" onclick="previewFile('${song.id}')">👁️ ${translations[currentLang].preview}</button>
+                        <button class="download-btn" onclick="downloadSong('${song.id}')">⬇️ ${translations[currentLang].download}</button>
+                    </div>
+                </div>`;
+            });
+            html += `</div></div>`;
+            container.innerHTML = html;
+        }
     };
 
     window.filterBySection = function() {
         const section = document.getElementById('sectionFilter').value;
-        if (!section) { displayAllSongs(); return; }
-        const filtered = allSongs.filter(s => s.section === section);
-        displayFiltered(filtered);
-    };
-
-    function displayFiltered(songs) {
-        const container = document.getElementById('sectionsContainer');
-        if (songs.length === 0) {
-            container.innerHTML = `<div class="section active"><h2>Indirimbo</h2><div class="no-songs"><p>Nta ndirimbo zihuye</p></div></div>`;
-            return;
+        if (!section) { 
+            displayAllSongs(); 
+            return; 
         }
-        let html = `<div class="section active"><h2>Ubushakashatsi (${songs.length})</h2><div class="songs-list">`;
-        songs.forEach(song => {
-            html += `<div class="song">
-                <div class="song-header"><h3 class="song-title">${song.title}</h3></div>
-                <div class="song-meta">
-                    <span>${song.section}</span>
-                    <span>${song.fileSize || ''}</span>
-                    <span>🔽 ${song.downloadCount || 0}</span>
-                </div>
-                <div class="song-actions">
-                    <button class="preview-btn" onclick="previewFile('${song.id}')">👁️ ${translations[currentLang].preview || 'Reba'}</button>
-                    <button class="download-btn" onclick="downloadSong('${song.id}')">⬇️ ${translations[currentLang].download || 'Download'}</button>
-                </div>
-            </div>`;
-        });
-        html += `</div></div>`;
-        container.innerHTML = html;
-    }
+        showSection(section);
+        // Also update the select to match
+        document.getElementById('sectionFilter').value = section;
+    };
 
     window.clearFilters = function() {
         document.getElementById('searchInput').value = '';
@@ -1148,17 +1197,23 @@
 
     // ========== INITIALIZATION ==========
     window.onload = function() {
-        // Load songs from localStorage
         loadSongs();
         createNavigation();
         applyTranslations();
         
-        // Set active language button
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === currentLang);
         });
         
-        // Check for existing admin notifications
+        // Activate first section button
+        setTimeout(() => {
+            const firstBtn = document.querySelector('#sectionNav button');
+            if (firstBtn) {
+                firstBtn.classList.add('active-section');
+            }
+        }, 100);
+        
+        // Check for admin notifications
         const notifications = JSON.parse(localStorage.getItem('adminNotifications') || '[]');
         if (notifications.length > 0) {
             const lastNotif = notifications[notifications.length - 1];
