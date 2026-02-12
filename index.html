@@ -128,7 +128,7 @@
             font-weight: bold;
         }
         
-        /* ===== SECTION NAVIGATION - ALL BUTTONS WORK ===== */
+        /* ===== SECTION NAVIGATION ===== */
         #sectionNav {
             background: linear-gradient(135deg, #6a5acd, #9370db);
             padding: 15px;
@@ -249,9 +249,6 @@
             border: 2px dashed #dee2e6;
             font-size: 18px;
         }
-        .no-songs-message p {
-            margin: 10px 0;
-        }
         .no-songs-message .icon {
             font-size: 48px;
             margin-bottom: 15px;
@@ -287,7 +284,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: 0.2s;
         }
         .admin-card h3, .contact-card h3, .user-upload-card h3 {
             color: #ffd700;
@@ -326,7 +322,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.8);
             align-items: center;
             justify-content: center;
         }
@@ -335,9 +331,9 @@
             padding: 30px;
             border-radius: 25px;
             width: 90%;
-            max-width: 500px;
+            max-width: 800px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
         .modal-content h3 {
@@ -346,60 +342,32 @@
             border-bottom: 3px solid #6a5acd;
             padding-bottom: 12px;
         }
-        .modal-content input, .modal-content select, .modal-content textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-            box-sizing: border-box;
-        }
-        .send-btn {
-            background: #4b0082;
-            color: white;
-            padding: 12px 22px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-        .close-btn {
-            background: #6c757d;
-            color: white;
-            padding: 12px 22px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        /* ===== ADMIN NOTIFICATION ===== */
-        .admin-notification {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #ff4444;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 40px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 10002;
-            display: none;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
         
         /* ===== FILE PREVIEW ===== */
         .preview-iframe {
             width: 100%;
-            height: 380px;
+            height: 70vh;
+            min-height: 500px;
             border: none;
             border-radius: 10px;
             margin-top: 15px;
+        }
+        .preview-audio {
+            width: 100%;
+            margin-top: 30px;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        .preview-fallback {
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
         }
         
         @media (max-width: 768px) {
@@ -408,14 +376,14 @@
             #sectionNav { top: 200px; }
             .songs-list { grid-template-columns: 1fr; }
             .lang-switch { position: static; justify-content: center; margin-top: 10px; }
-            .bottom-admin-container { flex-direction: column; }
+            .preview-iframe { height: 50vh; }
         }
     </style>
 </head>
 <body>
 
 <!-- ===== ADMIN NOTIFICATION ===== -->
-<div id="adminNotification" class="admin-notification">
+<div id="adminNotification" class="admin-notification" style="position:fixed; top:20px; left:20px; background:#ff4444; color:white; padding:10px 18px; border-radius:40px; display:none; z-index:10002;">
     <span>🔔</span>
     <span id="notificationMessage">Hari user ukoze upload! Raba admin dashboard</span>
 </div>
@@ -467,16 +435,15 @@
     <button onclick="clearFilters()" id="resetBtn">Subira</button>
 </div>
 
-<!-- ===== SECTION NAVIGATION - ALL BUTTONS ACTIVE ===== -->
+<!-- ===== SECTION NAVIGATION ===== -->
 <nav id="sectionNav"></nav>
 
-<!-- ===== SONGS CONTAINER - EACH SECTION SHOWS ONLY ITS SONGS ===== -->
+<!-- ===== SONGS CONTAINER ===== -->
 <div id="sectionsContainer"></div>
 
 <!-- ===== COMPACT BOTTOM SECTION ===== -->
 <div class="bottom-admin-section">
     <div class="bottom-admin-container">
-        <!-- Admin Login Card -->
         <div class="admin-card">
             <h3 id="adminCardTitle">🔐 Admin</h3>
             <p id="adminCardDesc">Injira nka admin</p>
@@ -484,53 +451,43 @@
                 <span>🔑</span> <span id="adminBtnText">Injira</span>
             </button>
         </div>
-        
-        <!-- Contact Us Card -->
         <div class="contact-card">
             <h3 id="contactCardTitle">📞 Twandikire</h3>
             <p id="contactCardDesc">Ubutumwa</p>
             <button class="bottom-btn" onclick="showContactModal()">
                 <span>✉️</span> <span id="contactBtnText">Ohereza</span>
             </button>
-            <div class="contact-info" id="contactInfoText">
-                <span>📧 gaspardgasangwa76@gmail.com</span>
-            </div>
+            <div class="contact-info" id="contactInfoText">📧 gaspardgasangwa76@gmail.com</div>
         </div>
-
-        <!-- User Upload Card -->
         <div class="user-upload-card">
             <h3 id="userUploadTitle">🎵 Shyiramo</h3>
             <p id="userUploadDesc">Indirimbo yawe</p>
             <button class="bottom-btn" onclick="showUserUploadModal()">
                 <span>📤</span> <span id="userUploadBtnText">Shyiramo</span>
             </button>
-            <div class="contact-info" id="userUploadHint">
-                <span>⏱️ Igice cya missa</span>
-            </div>
+            <div class="contact-info" id="userUploadHint">⏱️ Igice cya missa</div>
         </div>
     </div>
 </div>
 
 <!-- ===== CONTACT MODAL ===== -->
 <div id="contactModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width:500px;">
         <h3 id="modalTitle">Twandikire</h3>
-        <input type="email" id="contactEmail" placeholder="Imeyili yawe">
-        <textarea id="contactMessage" placeholder="Andika ubutumwa"></textarea>
-        <button class="send-btn" onclick="sendMessage()" id="sendBtn">Ohereza</button>
-        <button class="close-btn" onclick="closeContactModal()" id="closeBtn">Funga</button>
+        <input type="email" id="contactEmail" placeholder="Imeyili yawe" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px;">
+        <textarea id="contactMessage" placeholder="Andika ubutumwa" rows="4" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px;"></textarea>
+        <button class="send-btn" onclick="sendMessage()" id="sendBtn" style="background:#4b0082; color:white; padding:12px 22px; border:none; border-radius:8px; margin-right:10px;">Ohereza</button>
+        <button class="close-btn" onclick="closeContactModal()" id="closeBtn" style="background:#6c757d; color:white; padding:12px 22px; border:none; border-radius:8px;">Funga</button>
     </div>
 </div>
 
 <!-- ===== USER UPLOAD MODAL ===== -->
 <div id="userUploadModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width:500px;">
         <h3 id="userUploadModalTitle">📤 Shyiraho indirimbo</h3>
-        <p id="userUploadModalDesc">Uzuza, ihite igaragara!</p>
-        
-        <input type="text" id="userSongTitle" placeholder="Izina ry'indirimbo">
-        
-        <select id="userSongSection">
+        <p id="userUploadModalDesc" style="color:#666;">Uzuza, ihite igaragara!</p>
+        <input type="text" id="userSongTitle" placeholder="Izina ry'indirimbo" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px;">
+        <select id="userSongSection" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px;">
             <option value="">-- Hitamo igice cya missa --</option>
             <option>Gutangira</option>
             <option>Nyagasani Tubabarire</option>
@@ -557,31 +514,36 @@
             <option>Rohomutagatifu</option>
             <option>Other More songs</option>
         </select>
-
-        <input type="file" id="userSongFile" accept=".mp3,.pdf,.jpg,.jpeg,.png">
-        <input type="email" id="userEmail" placeholder="Imeyili yawe">
-        <textarea id="userComments" placeholder="Igitekerezo (byaba biri)" rows="2"></textarea>
-
+        <input type="file" id="userSongFile" accept=".mp3,.pdf,.jpg,.jpeg,.png" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px;">
+        <input type="email" id="userEmail" placeholder="Imeyili yawe" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px;">
+        <textarea id="userComments" placeholder="Igitekerezo (byaba biri)" rows="2" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px;"></textarea>
         <div style="margin-top:20px;">
-            <button class="send-btn" onclick="submitUserSong()" id="submitSongBtn">Ohereza</button>
-            <button class="close-btn" onclick="closeUserUploadModal()" id="cancelUploadBtn">Gusiba</button>
+            <button class="send-btn" onclick="submitUserSong()" id="submitSongBtn" style="background:#4b0082; color:white; padding:12px 22px; border:none; border-radius:8px; margin-right:10px;">Ohereza</button>
+            <button class="close-btn" onclick="closeUserUploadModal()" id="cancelUploadBtn" style="background:#6c757d; color:white; padding:12px 22px; border:none; border-radius:8px;">Gusiba</button>
         </div>
     </div>
 </div>
 
-<!-- ===== FILE PREVIEW MODAL ===== -->
+<!-- ===== FILE PREVIEW MODAL - FIXED FOR ALL FORMATS ===== -->
 <div id="previewModal" class="modal">
-    <div class="modal-content" style="max-width: 750px;">
-        <h3 id="previewTitle">🔍 Reba indirimbo</h3>
-        <div id="previewContainer" style="text-align: center; min-height: 180px;"></div>
-        <button class="close-btn" onclick="closePreviewModal()" style="margin-top:20px;" id="closePreviewBtn">Funga</button>
+    <div class="modal-content" style="max-width: 900px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 id="previewTitle" style="margin:0; color:#4b0082;">🔍 Reba indirimbo</h3>
+            <button onclick="closePreviewModal()" style="background:transparent; border:none; font-size:24px; cursor:pointer; color:#666;">&times;</button>
+        </div>
+        <div id="previewContainer" style="text-align: center; min-height: 200px; width:100%;">
+            <!-- Preview will be loaded here - WORKS FOR ALL FORMATS -->
+        </div>
+        <div style="text-align: right; margin-top: 20px;">
+            <button class="close-btn" onclick="closePreviewModal()" id="closePreviewBtn" style="background:#6c757d; color:white; padding:10px 25px; border:none; border-radius:8px;">Funga</button>
+        </div>
     </div>
 </div>
 
 <!-- ===== PWA NOTIFICATION ===== -->
-<div id="pwaNotification" class="pwa-notification" style="display:none; position:fixed; bottom:20px; right:20px; background:#4b0082; color:white; padding:12px 20px; border-radius:10px; z-index:10000;">
+<div id="pwaNotification" style="display:none; position:fixed; bottom:20px; right:20px; background:#4b0082; color:white; padding:12px 20px; border-radius:10px; z-index:10000;">
     <span id="pwaMessage"></span>
-    <button onclick="hidePWANotification()" style="margin-left:12px; padding:4px 12px; background:white; color:#4b0082; border:none; border-radius:5px;">OK</button>
+    <button onclick="this.parentElement.style.display='none'" style="margin-left:12px; padding:4px 12px; background:white; color:#4b0082; border:none; border-radius:5px;">OK</button>
 </div>
 
 <script>
@@ -631,94 +593,6 @@
             noSongsTitle: "Nta ndirimbo zihari",
             noSongsMessage: "Nta ndirimbo zirimo muri iki gice. Shyiramo bwa mbere!"
         },
-        fr: {
-            appTitle: "CHANTS CATHOLIQUES",
-            songCount: "RECHERCHER UN CHANT PAR NOM OU SECTION",
-            searchPlaceholder: "Rechercher...",
-            filterPlaceholder: "-- Filtrer par section --",
-            reset: "Réinitialiser",
-            adminCardTitle: "🔐 Admin",
-            adminCardDesc: "Connexion",
-            adminBtnText: "Connexion",
-            contactCardTitle: "📞 Contact",
-            contactCardDesc: "Message",
-            contactBtnText: "Envoyer",
-            contactInfo: "📧 gaspardgasangwa76@gmail.com",
-            modalTitle: "Contactez-nous",
-            emailPlaceholder: "Votre email",
-            messagePlaceholder: "Votre message",
-            send: "Envoyer",
-            close: "Fermer",
-            messageSent: "Message envoyé! Merci.",
-            userUploadTitle: "🎵 Ajouter",
-            userUploadDesc: "Votre chant",
-            userUploadBtnText: "Ajouter",
-            userUploadHint: "⏱️ Section messe",
-            userModalTitle: "📤 Ajouter un chant",
-            userModalDesc: "Visible immédiatement!",
-            songTitlePlaceholder: "Titre",
-            sectionPlaceholder: "-- Choisissez la section --",
-            emailPlaceholder2: "Votre email",
-            commentsPlaceholder: "Commentaire",
-            submitBtn: "Soumettre",
-            cancelBtn: "Annuler",
-            submitSuccess: "Chant ajouté! Visible maintenant.",
-            fileRequired: "Choisissez un fichier!",
-            titleRequired: "Entrez le titre!",
-            sectionRequired: "Choisissez la section!",
-            emailRequired: "Entrez votre email!",
-            previewTitle: "🔍 Aperçu",
-            closePreview: "Fermer",
-            adminNotification: "🔔 Un utilisateur a ajouté!",
-            download: "Télécharger",
-            preview: "Aperçu",
-            noSongsTitle: "Aucun chant",
-            noSongsMessage: "Aucun chant dans cette section. Soyez le premier à ajouter!"
-        },
-        sw: {
-            appTitle: "NYIMBO ZA KIKATOLIKI",
-            songCount: "TAFUTA WIMBO KWA JINA AU SEHEMU",
-            searchPlaceholder: "Tafuta...",
-            filterPlaceholder: "-- Chuja kwa sehemu --",
-            reset: "Weka upya",
-            adminCardTitle: "🔐 Admin",
-            adminCardDesc: "Ingia",
-            adminBtnText: "Ingia",
-            contactCardTitle: "📞 Wasiliana",
-            contactCardDesc: "Ujumbe",
-            contactBtnText: "Tuma",
-            contactInfo: "📧 gaspardgasangwa76@gmail.com",
-            modalTitle: "Wasiliana",
-            emailPlaceholder: "Barua pepe yako",
-            messagePlaceholder: "Ujumbe wako",
-            send: "Tuma",
-            close: "Funga",
-            messageSent: "Ujumbe umetumwa! Asante.",
-            userUploadTitle: "🎵 Pakia",
-            userUploadDesc: "Wimbo wako",
-            userUploadBtnText: "Pakia",
-            userUploadHint: "⏱️ Sehemu ya misa",
-            userModalTitle: "📤 Pakia wimbo",
-            userModalDesc: "Inaonekana mara moja!",
-            songTitlePlaceholder: "Jina la wimbo",
-            sectionPlaceholder: "-- Chagua sehemu --",
-            emailPlaceholder2: "Barua pepe yako",
-            commentsPlaceholder: "Maoni",
-            submitBtn: "Wasilisha",
-            cancelBtn: "Ghairi",
-            submitSuccess: "Wimbo umepakiwa! Unaonekana sasa.",
-            fileRequired: "Chagua faili!",
-            titleRequired: "Andika jina!",
-            sectionRequired: "Chagua sehemu!",
-            emailRequired: "Andika barua pepe!",
-            previewTitle: "🔍 Hakiki",
-            closePreview: "Funga",
-            adminNotification: "🔔 Mtumiaji amepakia!",
-            download: "Pakua",
-            preview: "Hakiki",
-            noSongsTitle: "Hakuna nyimbo",
-            noSongsMessage: "Hakuna nyimbo katika sehemu hii. Kuwa wa kwanza kupakia!"
-        },
         en: {
             appTitle: "CATHOLIC HYMNS",
             songCount: "SEARCH HYMNS BY NAME OR MASS SECTION",
@@ -762,6 +636,94 @@
             preview: "Preview",
             noSongsTitle: "No hymns",
             noSongsMessage: "No hymns in this section. Be the first to upload!"
+        },
+        fr: {
+            appTitle: "CHANTS CATHOLIQUES",
+            songCount: "RECHERCHER UN CHANT PAR NOM OU SECTION",
+            searchPlaceholder: "Rechercher...",
+            filterPlaceholder: "-- Filtrer par section --",
+            reset: "Réinitialiser",
+            adminCardTitle: "🔐 Admin",
+            adminCardDesc: "Connexion",
+            adminBtnText: "Connexion",
+            contactCardTitle: "📞 Contact",
+            contactCardDesc: "Message",
+            contactBtnText: "Envoyer",
+            contactInfo: "📧 gaspardgasangwa76@gmail.com",
+            modalTitle: "Contactez-nous",
+            emailPlaceholder: "Votre email",
+            messagePlaceholder: "Votre message",
+            send: "Envoyer",
+            close: "Fermer",
+            messageSent: "Message envoyé! Merci.",
+            userUploadTitle: "🎵 Ajouter",
+            userUploadDesc: "Votre chant",
+            userUploadBtnText: "Ajouter",
+            userUploadHint: "⏱️ Section messe",
+            userModalTitle: "📤 Ajouter un chant",
+            userModalDesc: "Visible immédiatement!",
+            songTitlePlaceholder: "Titre",
+            sectionPlaceholder: "-- Choisissez la section --",
+            emailPlaceholder2: "Votre email",
+            commentsPlaceholder: "Commentaire",
+            submitBtn: "Soumettre",
+            cancelBtn: "Annuler",
+            submitSuccess: "Chant ajouté! Visible maintenant.",
+            fileRequired: "Choisissez un fichier!",
+            titleRequired: "Entrez le titre!",
+            sectionRequired: "Choisissez la section!",
+            emailRequired: "Entrez votre email!",
+            previewTitle: "🔍 Aperçu",
+            closePreview: "Fermer",
+            adminNotification: "🔔 Un utilisateur a ajouté!",
+            download: "Télécharger",
+            preview: "Aperçu",
+            noSongsTitle: "Aucun chant",
+            noSongsMessage: "Aucun chant dans cette section. Soyez le premier!"
+        },
+        sw: {
+            appTitle: "NYIMBO ZA KIKATOLIKI",
+            songCount: "TAFUTA WIMBO KWA JINA AU SEHEMU",
+            searchPlaceholder: "Tafuta...",
+            filterPlaceholder: "-- Chuja kwa sehemu --",
+            reset: "Weka upya",
+            adminCardTitle: "🔐 Admin",
+            adminCardDesc: "Ingia",
+            adminBtnText: "Ingia",
+            contactCardTitle: "📞 Wasiliana",
+            contactCardDesc: "Ujumbe",
+            contactBtnText: "Tuma",
+            contactInfo: "📧 gaspardgasangwa76@gmail.com",
+            modalTitle: "Wasiliana",
+            emailPlaceholder: "Barua pepe yako",
+            messagePlaceholder: "Ujumbe wako",
+            send: "Tuma",
+            close: "Funga",
+            messageSent: "Ujumbe umetumwa! Asante.",
+            userUploadTitle: "🎵 Pakia",
+            userUploadDesc: "Wimbo wako",
+            userUploadBtnText: "Pakia",
+            userUploadHint: "⏱️ Sehemu ya misa",
+            userModalTitle: "📤 Pakia wimbo",
+            userModalDesc: "Inaonekana mara moja!",
+            songTitlePlaceholder: "Jina la wimbo",
+            sectionPlaceholder: "-- Chagua sehemu --",
+            emailPlaceholder2: "Barua pepe yako",
+            commentsPlaceholder: "Maoni",
+            submitBtn: "Wasilisha",
+            cancelBtn: "Ghairi",
+            submitSuccess: "Wimbo umepakiwa! Unaonekana sasa.",
+            fileRequired: "Chagua faili!",
+            titleRequired: "Andika jina!",
+            sectionRequired: "Chagua sehemu!",
+            emailRequired: "Andika barua pepe!",
+            previewTitle: "🔍 Hakiki",
+            closePreview: "Funga",
+            adminNotification: "🔔 Mtumiaji amepakia!",
+            download: "Pakua",
+            preview: "Hakiki",
+            noSongsTitle: "Hakuna nyimbo",
+            noSongsMessage: "Hakuna nyimbo katika sehemu hii. Kuwa wa kwanza!"
         }
     };
 
@@ -777,7 +739,6 @@
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === lang);
         });
-        // Refresh display with new language
         displayAllSongs();
     }
 
@@ -806,7 +767,7 @@
         document.getElementById('userUploadTitle').innerHTML = t.userUploadTitle;
         document.getElementById('userUploadDesc').innerText = t.userUploadDesc;
         document.getElementById('userUploadBtnText').innerText = t.userUploadBtnText;
-        document.getElementById('userUploadHint').innerHTML = `<span>${t.userUploadHint}</span>`;
+        document.getElementById('userUploadHint').innerHTML = t.userUploadHint;
         document.getElementById('userUploadModalTitle').innerText = t.userModalTitle;
         document.getElementById('userUploadModalDesc').innerText = t.userModalDesc;
         document.getElementById('userSongTitle').placeholder = t.songTitlePlaceholder;
@@ -822,26 +783,24 @@
         document.getElementById('notificationMessage').innerText = t.adminNotification;
     }
 
-    // ========== LOAD SONGS FROM LOCALSTORAGE ==========
+    // ========== LOAD SONGS ==========
     function loadSongs() {
         allSongs = JSON.parse(localStorage.getItem('catholicSongs') || '[]');
         displayAllSongs();
         updateSongCount();
     }
 
-    // ========== DISPLAY SONGS - FIXED: EACH SECTION SHOWS ONLY ITS OWN SONGS ==========
+    // ========== DISPLAY SONGS ==========
     function displayAllSongs() {
         const container = document.getElementById('sectionsContainer');
         if (!container) return;
         
-        // Group songs by section
         const sections = {};
         allSongs.forEach(song => {
             if (!sections[song.section]) sections[song.section] = [];
             sections[song.section].push(song);
         });
         
-        // Get all possible sections from navigation
         const allSections = [
             'Gutangira', 'Nyagasani Tubabarire', 'Imana nisingizwe mu ijuru',
             'Zaburi', 'Alleluya', 'Indanga kwemera', 'Ibisabisho', 'Gutura',
@@ -852,16 +811,12 @@
         ];
         
         let html = '';
-        
-        // Create a section for each possible section
         allSections.forEach(sectionName => {
             const sectionSongs = sections[sectionName] || [];
-            
             html += `<div class="section" id="section-${sectionName.replace(/\s+/g, '-')}">`;
             html += `<h2>${sectionName} <span style="font-size: 18px; color: #666;">(${sectionSongs.length})</span></h2>`;
             
             if (sectionSongs.length === 0) {
-                // NO SONGS - SHOW BEAUTIFUL MESSAGE
                 html += `<div class="no-songs-message">
                     <div class="icon">🎵</div>
                     <p><strong>${translations[currentLang].noSongsTitle}</strong></p>
@@ -871,7 +826,6 @@
                     </p>
                 </div>`;
             } else {
-                // SHOW SONGS
                 html += `<div class="songs-list">`;
                 sectionSongs.forEach(song => {
                     html += `<div class="song" id="song-${song.id}">`;
@@ -895,19 +849,14 @@
                 });
                 html += `</div>`;
             }
-            
             html += `</div>`;
         });
         
         container.innerHTML = html;
-        
-        // Show first section by default
-        if (allSections.length > 0) {
-            showSection(allSections[0]);
-        }
+        if (allSections.length > 0) showSection(allSections[0]);
     }
 
-    // ========== CREATE SECTION NAVIGATION - ALL BUTTONS WORK ==========
+    // ========== CREATE SECTION NAVIGATION ==========
     function createNavigation() {
         const sections = [
             'Gutangira', 'Nyagasani Tubabarire', 'Imana nisingizwe mu ijuru',
@@ -917,54 +866,32 @@
             'Ibitaramo', 'Adiventi', 'Noheli', 'Igisibo', 'Pasika', 'Asensiyo',
             'Rohomutagatifu', 'Other More songs'
         ];
-        
         const nav = document.getElementById('sectionNav');
         if (!nav) return;
-        
         nav.innerHTML = '';
-        
         sections.forEach(section => {
             const btn = document.createElement('button');
             btn.textContent = section;
             btn.setAttribute('data-section', section);
             btn.onclick = function(e) {
-                // Remove active class from all buttons
-                document.querySelectorAll('#sectionNav button').forEach(b => {
-                    b.classList.remove('active-section');
-                });
-                // Add active class to clicked button
+                document.querySelectorAll('#sectionNav button').forEach(b => b.classList.remove('active-section'));
                 e.currentTarget.classList.add('active-section');
-                // Show the section
                 showSection(section);
             };
             nav.appendChild(btn);
         });
     }
 
-    // ========== SHOW SECTION - FIXED: ONLY SHOWS THE SELECTED SECTION ==========
     function showSection(sectionName) {
-        // Hide all sections
-        document.querySelectorAll('.section').forEach(s => {
-            s.classList.remove('active');
-        });
-        
-        // Show selected section
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         const section = document.getElementById(`section-${sectionName.replace(/\s+/g, '-')}`);
-        if (section) {
-            section.classList.add('active');
-        }
-        
-        // Update active button in navigation
+        if (section) section.classList.add('active');
         document.querySelectorAll('#sectionNav button').forEach(btn => {
-            if (btn.textContent === sectionName) {
-                btn.classList.add('active-section');
-            } else {
-                btn.classList.remove('active-section');
-            }
+            btn.classList.toggle('active-section', btn.textContent === sectionName);
         });
     }
 
-    // ========== PREVIEW FILE ==========
+    // ========== PREVIEW FILE - FIXED: WORKS EVERYWHERE, ALL FORMATS ==========
     window.previewFile = function(songId) {
         const song = allSongs.find(s => s.id === songId);
         if (!song) {
@@ -973,30 +900,86 @@
         }
         
         const previewContainer = document.getElementById('previewContainer');
-        const t = translations[currentLang];
+        if (!previewContainer) return;
         
-        let previewHtml = '';
+        // Clear previous content
+        previewContainer.innerHTML = '';
         
-        const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
+        // Create title
+        const titleEl = document.createElement('h4');
+        titleEl.style.marginBottom = '20px';
+        titleEl.style.color = '#4b0082';
+        titleEl.style.borderBottom = '2px solid #6a5acd';
+        titleEl.style.paddingBottom = '10px';
+        titleEl.textContent = song.title;
+        previewContainer.appendChild(titleEl);
+        
+        // Get file extension
+        const fileName = song.fileName || '';
+        const fileExt = fileName.split('.').pop().toLowerCase();
         const fileType = song.fileType ? song.fileType.toLowerCase() : fileExt;
         
-        if (fileType === 'mp3' || fileExt === 'mp3') {
-            previewHtml = `<audio controls style="width:100%; margin-top:20px;">
-                <source src="${song.fileUrl}" type="audio/mpeg">
-                Your browser does not support audio.
-            </audio>`;
-        } else if (fileType === 'pdf' || fileExt === 'pdf') {
-            previewHtml = `<iframe src="${song.fileUrl}" class="preview-iframe" title="PDF Preview"></iframe>`;
-        } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileType) || ['jpg', 'jpeg', 'png', 'gif'].includes(fileExt)) {
-            previewHtml = `<img src="${song.fileUrl}" style="max-width:100%; max-height:400px; border-radius:10px;" alt="Preview">`;
+        // Create preview based on file type
+        if (fileType === 'mp3' || fileExt === 'mp3' || (song.fileUrl && song.fileUrl.includes('.mp3'))) {
+            // MP3 AUDIO
+            const audio = document.createElement('audio');
+            audio.controls = true;
+            audio.style.width = '100%';
+            audio.style.marginTop = '20px';
+            const source = document.createElement('source');
+            source.src = song.fileUrl;
+            source.type = 'audio/mpeg';
+            audio.appendChild(source);
+            audio.appendChild(document.createTextNode('Your browser does not support audio.'));
+            previewContainer.appendChild(audio);
+            
+        } else if (fileType === 'pdf' || fileExt === 'pdf' || (song.fileUrl && song.fileUrl.includes('.pdf'))) {
+            // PDF DOCUMENT
+            const iframe = document.createElement('iframe');
+            iframe.src = song.fileUrl;
+            iframe.className = 'preview-iframe';
+            iframe.style.width = '100%';
+            iframe.style.height = '70vh';
+            iframe.style.minHeight = '500px';
+            iframe.style.border = 'none';
+            iframe.style.borderRadius = '10px';
+            iframe.style.marginTop = '15px';
+            previewContainer.appendChild(iframe);
+            
+        } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileType) || ['jpg', 'jpeg', 'png', 'gif'].includes(fileExt) || 
+                   (song.fileUrl && (song.fileUrl.includes('.jpg') || song.fileUrl.includes('.jpeg') || song.fileUrl.includes('.png') || song.fileUrl.includes('.gif')))) {
+            // IMAGE
+            const img = document.createElement('img');
+            img.src = song.fileUrl;
+            img.alt = song.title;
+            img.className = 'preview-image';
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '70vh';
+            img.style.objectFit = 'contain';
+            img.style.borderRadius = '10px';
+            img.style.marginTop = '15px';
+            previewContainer.appendChild(img);
+            
         } else {
-            previewHtml = `<p style="padding: 30px; background: #f8f9fa; border-radius: 10px;">
-                ${song.fileName || 'Fayilo'} - Ntago ushobora kureba muri browser. 
-                <br>Kanda <strong>Download</strong>.
-            </p>`;
+            // UNSUPPORTED FORMAT
+            const fallback = document.createElement('div');
+            fallback.className = 'preview-fallback';
+            fallback.style.padding = '40px';
+            fallback.style.background = '#f8f9fa';
+            fallback.style.borderRadius = '10px';
+            fallback.style.textAlign = 'center';
+            fallback.innerHTML = `
+                <p style="font-size: 18px; margin-bottom: 20px;">📁 ${song.fileName || 'Fayilo'}</p>
+                <p style="color: #666; margin-bottom: 20px;">Ntago ushobora kureba iyi fayilo muri browser.</p>
+                <button onclick="downloadSong('${song.id}'); closePreviewModal();" 
+                        style="background: #4CAF50; color: white; border: none; padding: 12px 30px; border-radius: 50px; font-size: 16px; cursor: pointer;">
+                    ⬇️ Download
+                </button>
+            `;
+            previewContainer.appendChild(fallback);
         }
         
-        previewContainer.innerHTML = `<h4 style="margin-bottom:12px; color:#4b0082;">${song.title}</h4>${previewHtml}`;
+        // Show modal
         document.getElementById('previewModal').style.display = 'flex';
     };
 
@@ -1018,7 +1001,7 @@
         
         const a = document.createElement('a');
         a.href = song.fileUrl;
-        a.download = song.fileName || `${song.title}.mp3`;
+        a.download = song.fileName || `${song.title}.${song.fileType || 'mp3'}`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1061,11 +1044,8 @@
         allSongs.push(newSong);
         localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
         
-        // Notify admin
         document.getElementById('adminNotification').style.display = 'flex';
-        setTimeout(() => {
-            document.getElementById('adminNotification').style.display = 'none';
-        }, 6000);
+        setTimeout(() => { document.getElementById('adminNotification').style.display = 'none'; }, 6000);
         
         const notifications = JSON.parse(localStorage.getItem('adminNotifications') || '[]');
         notifications.push({
@@ -1078,11 +1058,7 @@
         
         alert(t.submitSuccess);
         closeUserUploadModal();
-        
-        // Refresh display
         displayAllSongs();
-        
-        // Switch to the section where song was added
         showSection(section);
     };
 
@@ -1099,7 +1075,7 @@
         const email = document.getElementById('contactEmail').value.trim();
         const message = document.getElementById('contactMessage').value.trim();
         if (!email || !message) { 
-            alert(translations[currentLang].emailPlaceholder || 'Andika imeyili n\'ubutumwa'); 
+            alert(translations[currentLang].emailPlaceholder); 
             return; 
         }
         const msgs = JSON.parse(localStorage.getItem('contactMessages') || '[]');
@@ -1131,9 +1107,7 @@
             s.section.toLowerCase().includes(term)
         );
         
-        // Show search results in a special section
         const container = document.getElementById('sectionsContainer');
-        
         if (filtered.length === 0) {
             container.innerHTML = `<div class="section active">
                 <h2>Ubushakashatsi: "${term}"</h2>
@@ -1166,12 +1140,8 @@
 
     window.filterBySection = function() {
         const section = document.getElementById('sectionFilter').value;
-        if (!section) { 
-            displayAllSongs(); 
-            return; 
-        }
+        if (!section) { displayAllSongs(); return; }
         showSection(section);
-        // Also update the select to match
         document.getElementById('sectionFilter').value = section;
     };
 
@@ -1181,7 +1151,6 @@
         displayAllSongs();
     };
 
-    // ========== UTILITIES ==========
     function updateSongCount() {
         const el = document.getElementById('songCount');
         if (el) {
@@ -1190,10 +1159,6 @@
             el.innerHTML = text;
         }
     }
-    
-    window.hidePWANotification = function() {
-        document.getElementById('pwaNotification').style.display = 'none';
-    };
 
     // ========== INITIALIZATION ==========
     window.onload = function() {
@@ -1205,26 +1170,10 @@
             btn.classList.toggle('active', btn.dataset.lang === currentLang);
         });
         
-        // Activate first section button
         setTimeout(() => {
             const firstBtn = document.querySelector('#sectionNav button');
-            if (firstBtn) {
-                firstBtn.classList.add('active-section');
-            }
+            if (firstBtn) firstBtn.classList.add('active-section');
         }, 100);
-        
-        // Check for admin notifications
-        const notifications = JSON.parse(localStorage.getItem('adminNotifications') || '[]');
-        if (notifications.length > 0) {
-            const lastNotif = notifications[notifications.length - 1];
-            const timeDiff = Date.now() - new Date(lastNotif.time).getTime();
-            if (timeDiff < 3600000) {
-                document.getElementById('adminNotification').style.display = 'flex';
-                setTimeout(() => {
-                    document.getElementById('adminNotification').style.display = 'none';
-                }, 5000);
-            }
-        }
     };
 </script>
 </body>
