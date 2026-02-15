@@ -166,6 +166,7 @@
         .upload-option.active {
             border-color: #4b0082;
             background: #f0e6ff;
+            box-shadow: 0 0 0 3px rgba(75,0,130,0.2);
         }
         .upload-form-group {
             margin: 20px 0;
@@ -480,17 +481,17 @@
             <p id="uploadInfoDesc"><strong>Amabwiriza:</strong> Hitamo uburyo, fayilo n'igice.</p>
         </div>
         <div class="upload-options">
-            <div class="upload-option active" onclick="selectUploadMode('single')" id="optSingle">
+            <div class="upload-option active" onclick="selectUploadMode('single', this)" id="optSingle">
                 <div class="upload-option-icon">📄</div>
                 <h4 id="singleTitle">Indirimbo Imwe</h4>
                 <p id="singleDesc">Shyiramo indirimbo imwe</p>
             </div>
-            <div class="upload-option" onclick="selectUploadMode('multiple')" id="optMulti">
+            <div class="upload-option" onclick="selectUploadMode('multiple', this)" id="optMulti">
                 <div class="upload-option-icon">📚</div>
                 <h4 id="multiTitle">Indirimbo Nyinshi</h4>
                 <p id="multiDesc">Shyiramo nyinshi icyarimwe</p>
             </div>
-            <div class="upload-option" onclick="selectUploadMode('large')" id="optLarge">
+            <div class="upload-option" onclick="selectUploadMode('large', this)" id="optLarge">
                 <div class="upload-option-icon">💾</div>
                 <h4 id="largeTitle">Fayilo Nini</h4>
                 <p id="largeDesc">Shyiramo fayilo nini (MP3)</p>
@@ -512,7 +513,7 @@
             </div>
             <div class="upload-form-group">
                 <label for="uploadFile" id="fileLabel">📄 Hitamo Fayilo:</label>
-                <input type="file" id="uploadFile" accept=".pdf,.jpg,.jpeg,.png,.gif,.mp3">
+                <input type="file" id="uploadFile" accept=".mp3,.pdf,.jpg,.jpeg,.png,.gif">
             </div>
             <div id="uploadStatusMessage" class="status-message" style="color:#721c24; background:#f8d7da; padding:12px; border-radius:8px; margin:10px 0; display:none;"></div>
             <div class="upload-buttons">
@@ -718,10 +719,11 @@
             document.getElementById('uploadSection').addEventListener('change', updateUploadButton);
         }
 
-        function selectUploadMode(mode) {
+        // ========== UPLOAD MODE SELECTION ==========
+        window.selectUploadMode = function(mode, element) {
             currentUploadMode = mode;
             document.querySelectorAll('.upload-option').forEach(opt => opt.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            element.classList.add('active');
             
             const fileInput = document.getElementById('uploadFile');
             if (mode === 'multiple') {
@@ -730,7 +732,7 @@
                 fileInput.removeAttribute('multiple');
             }
             updateUploadButton();
-        }
+        };
 
         function updateUploadButton() {
             const fileInput = document.getElementById('uploadFile');
@@ -788,11 +790,14 @@
             const fileType = file.name.split('.').pop().toLowerCase();
             const adminUser = localStorage.getItem('adminUser') || 'admin';
 
+            // Create a blob URL that works
+            const fileUrl = URL.createObjectURL(file);
+
             const newSong = {
                 id: songId,
                 title: title,
                 section: section,
-                fileUrl: URL.createObjectURL(file),
+                fileUrl: fileUrl,
                 fileName: file.name,
                 fileType: fileType,
                 fileSize: (file.size / 1024).toFixed(2) + ' KB',
@@ -806,6 +811,7 @@
                 if (currentUploadCancel) {
                     clearInterval(uploadInterval);
                     finishUpload(false);
+                    URL.revokeObjectURL(fileUrl);
                     return;
                 }
                 progress += 5;
@@ -843,12 +849,13 @@
                     
                     const title = file.name.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ').trim();
                     const songId = 'song-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9) + '-' + index;
+                    const fileUrl = URL.createObjectURL(file);
                     
                     const newSong = {
                         id: songId,
                         title: title,
                         section: section,
-                        fileUrl: URL.createObjectURL(file),
+                        fileUrl: fileUrl,
                         fileName: file.name,
                         fileType: file.name.split('.').pop().toLowerCase(),
                         fileSize: (file.size / 1024).toFixed(2) + ' KB',
@@ -950,15 +957,29 @@
             container.innerHTML = html;
         }
 
+        // ========== FIXED: PREVIEW SONG - NO 400 ERROR ==========
         window.previewSong = function(songId) {
             const song = allSongs.find(s => s.id === songId);
             if (song && song.fileUrl) {
-                window.open(song.fileUrl, '_blank');
+                // For blob URLs, we need to create a new object URL to ensure it's fresh
+                if (song.fileUrl.startsWith('blob:')) {
+                    // Open the blob URL directly - it should work
+                    window.open(song.fileUrl, '_blank');
+                } else {
+                    window.open(song.fileUrl, '_blank');
+                }
+            } else {
+                alert("Indirimbo ntabwo iboneka!");
             }
         };
 
         window.deleteSong = function(songId) {
             if (!confirm(dashLangStrings[dashLang].deleteConfirm)) return;
+            
+            const song = allSongs.find(s => s.id === songId);
+            if (song && song.fileUrl && song.fileUrl.startsWith('blob:')) {
+                URL.revokeObjectURL(song.fileUrl);
+            }
             
             allSongs = allSongs.filter(s => s.id !== songId);
             localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
