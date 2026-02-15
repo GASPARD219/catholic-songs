@@ -259,62 +259,80 @@
             color: #4b0082;
         }
         
-        /* ===== COMPACT BOTTOM SECTION ===== */
-        .bottom-admin-section {
+        /* ===== COMPACT BOTTOM SECTION - FIXED: NO DUPLICATION ===== */
+        .bottom-section {
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
-            padding: 20px 15px;
+            padding: 25px 15px;
             margin-top: 40px;
             text-align: center;
             border-top: 4px solid #4b0082;
         }
-        .bottom-admin-container {
+        .bottom-container {
             max-width: 1100px;
             margin: 0 auto;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            gap: 15px;
+            align-items: stretch;
+            gap: 20px;
         }
-        .admin-card, .contact-card, .user-upload-card {
+        .bottom-card {
             background: rgba(255,255,255,0.1);
-            padding: 15px 20px;
-            border-radius: 16px;
-            flex: 0 1 auto;
-            min-width: 200px;
+            padding: 20px 25px;
+            border-radius: 20px;
+            flex: 1 1 250px;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        .admin-card h3, .contact-card h3, .user-upload-card h3 {
+        .bottom-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+        }
+        .bottom-card h3 {
             color: #ffd700;
-            margin: 0 0 8px 0;
-            font-size: 18px;
+            margin: 0 0 10px 0;
+            font-size: 20px;
             border-bottom: 2px solid #ffd700;
             display: inline-block;
-            padding-bottom: 5px;
+            padding-bottom: 8px;
         }
-        .bottom-btn {
+        .bottom-card p {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #e0e0e0;
+            line-height: 1.4;
+        }
+        .bottom-action-btn {
             background: #4b0082;
             color: white;
             border: none;
-            padding: 8px 18px;
+            padding: 10px 22px;
             border-radius: 40px;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
-            margin: 5px 0;
+            margin: 10px 0 5px;
             transition: 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            border: 1px solid transparent;
         }
-        .bottom-btn:hover {
+        .bottom-action-btn:hover {
             background: #5a0d9c;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+            border-color: white;
+        }
+        .bottom-card .small-info {
+            font-size: 12px;
+            color: #b0c4de;
+            margin-top: 8px;
         }
         
         /* ===== MODALS ===== */
@@ -335,7 +353,7 @@
             padding: 30px;
             border-radius: 25px;
             width: 90%;
-            max-width: 1000px;
+            max-width: 800px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             max-height: 85vh;
             overflow-y: auto;
@@ -346,15 +364,42 @@
             border-bottom: 3px solid #6a5acd;
             padding-bottom: 12px;
         }
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        .send-btn {
+            background: #4b0082;
+            color: white;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .close-btn {
+            background: #6c757d;
+            color: white;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
         
-        /* ===== MUSICAL NOTES / SHEET MUSIC PREVIEW ===== */
+        /* ===== SHEET MUSIC STYLES ===== */
         .sheet-music-container {
             background: #f9f6f0;
             padding: 30px;
             border-radius: 15px;
             margin-top: 20px;
             border: 1px solid #e0d6c0;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
             text-align: center;
         }
         .musical-notes {
@@ -367,7 +412,6 @@
             height: 100px;
             width: 100%;
             margin: 20px 0;
-            position: relative;
         }
         .note-symbol {
             font-size: 36px;
@@ -380,42 +424,23 @@
             max-height: 70vh;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-top: 15px;
-        }
-        .sheet-pdf-viewer {
-            width: 100%;
-            height: 80vh;
-            border: none;
-            border-radius: 10px;
-            margin-top: 15px;
         }
         
-        /* ===== FILE PREVIEW ===== */
-        .preview-iframe {
-            width: 100%;
-            height: 70vh;
-            min-height: 500px;
-            border: none;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-        .preview-audio {
-            width: 100%;
-            margin-top: 30px;
-        }
-        .preview-image {
-            max-width: 100%;
-            max-height: 70vh;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-top: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .preview-fallback {
-            padding: 40px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            text-align: center;
+        /* ===== ADMIN NOTIFICATION ===== */
+        .admin-notification {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 10002;
+            display: none;
+            align-items: center;
+            gap: 8px;
         }
         
         @media (max-width: 768px) {
@@ -424,14 +449,15 @@
             #sectionNav { top: 200px; }
             .songs-list { grid-template-columns: 1fr; }
             .lang-switch { position: static; justify-content: center; margin-top: 10px; }
-            .preview-iframe { height: 50vh; }
+            .bottom-container { flex-direction: column; align-items: center; }
+            .bottom-card { width: 100%; max-width: 300px; }
         }
     </style>
 </head>
 <body>
 
 <!-- ===== ADMIN NOTIFICATION ===== -->
-<div id="adminNotification" style="position:fixed; top:20px; left:20px; background:#ff4444; color:white; padding:10px 18px; border-radius:40px; display:none; z-index:10002; font-weight:bold;">
+<div id="adminNotification" class="admin-notification">
     <span>🔔</span>
     <span id="notificationMessage">Hari user ukoze upload! Raba admin dashboard</span>
 </div>
@@ -489,31 +515,37 @@
 <!-- ===== SONGS CONTAINER ===== -->
 <div id="sectionsContainer"></div>
 
-<!-- ===== COMPACT BOTTOM SECTION ===== -->
-<div class="bottom-admin-section">
-    <div class="bottom-admin-container">
-        <div class="admin-card">
+<!-- ===== BOTTOM SECTION - FIXED: ONLY THREE CARDS, NO DUPLICATION ===== -->
+<div class="bottom-section">
+    <div class="bottom-container">
+        <!-- Admin Login Card -->
+        <div class="bottom-card">
             <h3 id="adminCardTitle">🔐 Admin</h3>
-            <p id="adminCardDesc">Injira nka admin</p>
-            <button class="bottom-btn" onclick="window.location.href='admin.html'">
+            <p id="adminCardDesc">Injira nka admin ushyireho indirimbo</p>
+            <button class="bottom-action-btn" onclick="window.location.href='admin.html'">
                 <span>🔑</span> <span id="adminBtnText">Injira</span>
             </button>
+            <div class="small-info">Ushobora gucunga indirimbo</div>
         </div>
-        <div class="contact-card">
+        
+        <!-- Contact Us Card -->
+        <div class="bottom-card">
             <h3 id="contactCardTitle">📞 Twandikire</h3>
-            <p id="contactCardDesc">Ubutumwa</p>
-            <button class="bottom-btn" onclick="showContactModal()">
+            <p id="contactCardDesc">Ufite ikibazo? Ohereza ubutumwa</p>
+            <button class="bottom-action-btn" onclick="showContactModal()">
                 <span>✉️</span> <span id="contactBtnText">Ohereza</span>
             </button>
-            <div class="contact-info" id="contactInfoText">📧 gaspardgasangwa76@gmail.com</div>
+            <div class="small-info" id="contactInfoText">📧 gaspardgasangwa76@gmail.com</div>
         </div>
-        <div class="user-upload-card">
+
+        <!-- User Upload Card -->
+        <div class="bottom-card">
             <h3 id="userUploadTitle">🎵 Shyiramo</h3>
-            <p id="userUploadDesc">Indirimbo yawe</p>
-            <button class="bottom-btn" onclick="showUserUploadModal()">
+            <p id="userUploadDesc">Shyiramo indirimbo yawe ihite igaragara</p>
+            <button class="bottom-action-btn" onclick="showUserUploadModal()">
                 <span>📤</span> <span id="userUploadBtnText">Shyiramo</span>
             </button>
-            <div class="contact-info" id="userUploadHint">⏱️ Igice cya missa</div>
+            <div class="small-info" id="userUploadHint">⏱️ Ihita igaragara mu gice</div>
         </div>
     </div>
 </div>
@@ -522,10 +554,10 @@
 <div id="contactModal" class="modal">
     <div class="modal-content" style="max-width:500px;">
         <h3 id="modalTitle">Twandikire</h3>
-        <input type="email" id="contactEmail" placeholder="Imeyili yawe" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;">
-        <textarea id="contactMessage" placeholder="Andika ubutumwa" rows="4" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;"></textarea>
-        <button class="send-btn" onclick="sendMessage()" id="sendBtn" style="background:#4b0082; color:white; padding:12px 22px; border:none; border-radius:8px; margin-right:10px; cursor:pointer;">Ohereza</button>
-        <button class="close-btn" onclick="closeContactModal()" id="closeBtn" style="background:#6c757d; color:white; padding:12px 22px; border:none; border-radius:8px; cursor:pointer;">Funga</button>
+        <input type="email" id="contactEmail" placeholder="Imeyili yawe">
+        <textarea id="contactMessage" placeholder="Andika ubutumwa" rows="4"></textarea>
+        <button class="send-btn" onclick="sendMessage()" id="sendBtn">Ohereza</button>
+        <button class="close-btn" onclick="closeContactModal()" id="closeBtn">Funga</button>
     </div>
 </div>
 
@@ -534,8 +566,8 @@
     <div class="modal-content" style="max-width:500px;">
         <h3 id="userUploadModalTitle">📤 Shyiraho indirimbo</h3>
         <p id="userUploadModalDesc" style="color:#666;">Uzuza, ihite igaragara!</p>
-        <input type="text" id="userSongTitle" placeholder="Izina ry'indirimbo" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;">
-        <select id="userSongSection" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;">
+        <input type="text" id="userSongTitle" placeholder="Izina ry'indirimbo">
+        <select id="userSongSection">
             <option value="">-- Hitamo igice cya missa --</option>
             <option>Gutangira</option>
             <option>Nyagasani Tubabarire</option>
@@ -562,28 +594,26 @@
             <option>Rohomutagatifu</option>
             <option>Other More songs</option>
         </select>
-        <input type="file" id="userSongFile" accept=".mp3,.pdf,.jpg,.jpeg,.png,.gif" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;">
-        <input type="email" id="userEmail" placeholder="Imeyili yawe" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;">
-        <textarea id="userComments" placeholder="Igitekerezo (byaba biri)" rows="2" style="width:100%; padding:12px; margin:10px 0; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;"></textarea>
+        <input type="file" id="userSongFile" accept=".mp3,.pdf,.jpg,.jpeg,.png,.gif">
+        <input type="email" id="userEmail" placeholder="Imeyili yawe">
+        <textarea id="userComments" placeholder="Igitekerezo (byaba biri)" rows="2"></textarea>
         <div style="margin-top:20px;">
-            <button class="send-btn" onclick="submitUserSong()" id="submitSongBtn" style="background:#4b0082; color:white; padding:12px 22px; border:none; border-radius:8px; margin-right:10px; cursor:pointer;">Ohereza</button>
-            <button class="close-btn" onclick="closeUserUploadModal()" id="cancelUploadBtn" style="background:#6c757d; color:white; padding:12px 22px; border:none; border-radius:8px; cursor:pointer;">Gusiba</button>
+            <button class="send-btn" onclick="submitUserSong()" id="submitSongBtn">Ohereza</button>
+            <button class="close-btn" onclick="closeUserUploadModal()" id="cancelUploadBtn">Gusiba</button>
         </div>
     </div>
 </div>
 
-<!-- ===== SHEET MUSIC PREVIEW MODAL - SHOWS MUSICAL NOTES ===== -->
+<!-- ===== SHEET MUSIC PREVIEW MODAL ===== -->
 <div id="sheetMusicModal" class="modal">
     <div class="modal-content" style="max-width: 1000px; background: #fffaf0;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h3 style="margin:0; color:#4b0082;">🎵 Inoti z'indirimbo</h3>
-            <button onclick="closeSheetMusicModal()" style="background:transparent; border:none; font-size:28px; cursor:pointer; color:#666; padding:0 10px;">&times;</button>
+            <button onclick="closeSheetMusicModal()" style="background:transparent; border:none; font-size:28px; cursor:pointer; color:#666;">&times;</button>
         </div>
-        <div id="sheetMusicContainer" style="text-align: center; min-height: 400px; width:100%;">
-            <!-- Sheet music will be displayed here -->
-        </div>
+        <div id="sheetMusicContainer" style="text-align: center; min-height: 400px;"></div>
         <div style="text-align: right; margin-top: 20px;">
-            <button class="close-btn" onclick="closeSheetMusicModal()" style="background:#6c757d; color:white; padding:10px 25px; border:none; border-radius:8px; cursor:pointer;">Funga</button>
+            <button class="close-btn" onclick="closeSheetMusicModal()">Funga</button>
         </div>
     </div>
 </div>
@@ -593,13 +623,11 @@
     <div class="modal-content" style="max-width: 900px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h3 id="previewTitle" style="margin:0; color:#4b0082;">🔍 Reba indirimbo</h3>
-            <button onclick="closePreviewModal()" style="background:transparent; border:none; font-size:28px; cursor:pointer; color:#666; padding:0 10px;">&times;</button>
+            <button onclick="closePreviewModal()" style="background:transparent; border:none; font-size:28px; cursor:pointer; color:#666;">&times;</button>
         </div>
-        <div id="previewContainer" style="text-align: center; min-height: 200px; width:100%;">
-            <!-- File preview will be loaded here -->
-        </div>
+        <div id="previewContainer" style="text-align: center; min-height: 200px;"></div>
         <div style="text-align: right; margin-top: 20px;">
-            <button class="close-btn" onclick="closePreviewModal()" id="closePreviewBtn" style="background:#6c757d; color:white; padding:10px 25px; border:none; border-radius:8px; cursor:pointer;">Funga</button>
+            <button class="close-btn" onclick="closePreviewModal()" id="closePreviewBtn">Funga</button>
         </div>
     </div>
 </div>
@@ -620,10 +648,10 @@
             filterPlaceholder: "-- Shaka ukurikije igice --",
             reset: "Subira",
             adminCardTitle: "🔐 Admin",
-            adminCardDesc: "Injira nka admin",
+            adminCardDesc: "Injira nka admin ushyireho indirimbo",
             adminBtnText: "Injira",
             contactCardTitle: "📞 Twandikire",
-            contactCardDesc: "Ubutumwa",
+            contactCardDesc: "Ufite ikibazo? Ohereza ubutumwa",
             contactBtnText: "Ohereza",
             contactInfo: "📧 gaspardgasangwa76@gmail.com",
             modalTitle: "Twandikire",
@@ -633,9 +661,9 @@
             close: "Funga",
             messageSent: "Ubutumwa bwawe bwoherejwe! Murakoze.",
             userUploadTitle: "🎵 Shyiramo",
-            userUploadDesc: "Indirimbo yawe",
+            userUploadDesc: "Shyiramo indirimbo yawe ihite igaragara",
             userUploadBtnText: "Shyiramo",
-            userUploadHint: "⏱️ Igice cya missa",
+            userUploadHint: "⏱️ Ihita igaragara mu gice",
             userModalTitle: "📤 Shyiraho indirimbo",
             userModalDesc: "Uzuza, ihite igaragara!",
             songTitlePlaceholder: "Izina ry'indirimbo",
@@ -665,10 +693,10 @@
             filterPlaceholder: "-- Filter by section --",
             reset: "Reset",
             adminCardTitle: "🔐 Admin",
-            adminCardDesc: "Admin login",
+            adminCardDesc: "Login as admin to manage songs",
             adminBtnText: "Login",
             contactCardTitle: "📞 Contact",
-            contactCardDesc: "Send message",
+            contactCardDesc: "Questions? Send us a message",
             contactBtnText: "Send",
             contactInfo: "📧 gaspardgasangwa76@gmail.com",
             modalTitle: "Contact Us",
@@ -678,15 +706,15 @@
             close: "Close",
             messageSent: "Message sent! Thank you.",
             userUploadTitle: "🎵 Upload",
-            userUploadDesc: "Your hymn",
+            userUploadDesc: "Upload your hymn, it appears instantly",
             userUploadBtnText: "Upload",
-            userUploadHint: "⏱️ Mass section",
+            userUploadHint: "⏱️ Appears in chosen section",
             userModalTitle: "📤 Upload Hymn",
-            userModalDesc: "Appears instantly!",
+            userModalDesc: "Fill form, appears instantly!",
             songTitlePlaceholder: "Hymn title",
             sectionPlaceholder: "-- Select Mass section --",
             emailPlaceholder2: "Your email",
-            commentsPlaceholder: "Comments",
+            commentsPlaceholder: "Comments (optional)",
             submitBtn: "Submit",
             cancelBtn: "Cancel",
             submitSuccess: "Your hymn is uploaded! Visible now.",
@@ -821,13 +849,10 @@
                     html += `</div>`;
                     html += `<div class="song-actions">`;
                     
-                    // Check if this is likely sheet music (PDF or image)
                     const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
                     if (fileExt === 'pdf' || fileExt === 'jpg' || fileExt === 'jpeg' || fileExt === 'png' || fileExt === 'gif') {
-                        // For sheet music, add a dedicated "Inoti" button
                         html += `<button class="sheet-music-btn" onclick="showSheetMusic('${song.id}')"><span>🎵</span> ${translations[currentLang].sheetMusic || 'Inoti'}</button>`;
                     } else {
-                        // For audio, use regular preview
                         html += `<button class="preview-btn" onclick="previewFile('${song.id}')"><span>👁️</span> ${translations[currentLang].preview}</button>`;
                     }
                     
@@ -879,37 +904,27 @@
         });
     }
 
-    // ========== SHOW SHEET MUSIC - DISPLAYS MUSICAL NOTES ==========
+    // ========== SHEET MUSIC ==========
     window.showSheetMusic = function(songId) {
         const song = allSongs.find(s => s.id === songId);
-        if (!song) {
-            alert("Indirimbo ntabwo iboneka!");
-            return;
-        }
+        if (!song) { alert("Indirimbo ntabwo iboneka!"); return; }
         
-        const sheetContainer = document.getElementById('sheetMusicContainer');
-        if (!sheetContainer) return;
+        const container = document.getElementById('sheetMusicContainer');
+        container.innerHTML = '';
         
-        sheetContainer.innerHTML = '';
-        
-        // Title
         const titleEl = document.createElement('h4');
         titleEl.style.marginBottom = '20px';
         titleEl.style.color = '#4b0082';
         titleEl.style.fontSize = '24px';
         titleEl.textContent = song.title;
-        sheetContainer.appendChild(titleEl);
+        container.appendChild(titleEl);
         
-        // Get file extension
         const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
         const fileUrl = song.fileUrl;
-        
-        // Create musical notes display
         const musicDiv = document.createElement('div');
         musicDiv.className = 'sheet-music-container';
         
         if (fileExt === 'pdf') {
-            // PDF sheet music - use Google Docs viewer
             musicDiv.innerHTML = `
                 <div class="musical-notes">🎼 ♪ ♫ ♩</div>
                 <p style="margin-bottom:20px; color:#4b0082;"><strong>Inoti z'indirimbo (PDF)</strong></p>
@@ -917,28 +932,22 @@
                         style="width:100%; height:600px; border:none; border-radius:10px;"></iframe>
             `;
         } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExt)) {
-            // Image sheet music - show the actual musical notes image
             musicDiv.innerHTML = `
                 <div class="musical-notes">🎼 ♪ ♫ ♩</div>
                 <p style="margin-bottom:20px; color:#4b0082;"><strong>Inoti z'indirimbo</strong></p>
-                <img src="${fileUrl}" alt="${song.title}" class="sheet-image" style="max-width:100%; max-height:70vh; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+                <img src="${fileUrl}" alt="${song.title}" class="sheet-image">
             `;
         } else {
-            // Default musical notation display (for songs without actual sheet music file)
             musicDiv.innerHTML = `
                 <div class="musical-notes">🎼 ♪ ♫ ♩ ♪ ♫ ♩</div>
                 <div style="background:#e6e0d0; padding:30px; border-radius:15px; margin:20px 0;">
                     <div style="font-size:36px; color:#4b0082; margin-bottom:20px;">${song.title}</div>
                     <div class="staff-lines"></div>
-                    <div style="display:flex; justify-content:center; gap:15px; margin:20px 0; flex-wrap:wrap;">
-                        <span class="note-symbol">♪</span>
-                        <span class="note-symbol">♫</span>
-                        <span class="note-symbol">♩</span>
-                        <span class="note-symbol">♪</span>
-                        <span class="note-symbol">♫</span>
-                        <span class="note-symbol">♩</span>
+                    <div style="display:flex; justify-content:center; gap:15px; margin:20px 0;">
+                        <span class="note-symbol">♪</span> <span class="note-symbol">♫</span> <span class="note-symbol">♩</span>
+                        <span class="note-symbol">♪</span> <span class="note-symbol">♫</span> <span class="note-symbol">♩</span>
                     </div>
-                    <p style="color:#666; font-style:italic;">Inoti z'iyi ndirimbo zirahari. Kanda Download kugirango uzibone.</p>
+                    <p style="color:#666;">Inoti z'iyi ndirimbo zirahari. Kanda Download kugirango uzibone.</p>
                 </div>
                 <button onclick="downloadSong('${song.id}'); closeSheetMusicModal();" 
                         style="background:#4CAF50; color:white; border:none; padding:12px 30px; border-radius:50px; font-size:16px; cursor:pointer; margin-top:20px;">
@@ -946,8 +955,7 @@
                 </button>
             `;
         }
-        
-        sheetContainer.appendChild(musicDiv);
+        container.appendChild(musicDiv);
         document.getElementById('sheetMusicModal').style.display = 'flex';
     };
 
@@ -959,73 +967,55 @@
     // ========== PREVIEW FILE ==========
     window.previewFile = function(songId) {
         const song = allSongs.find(s => s.id === songId);
-        if (!song) {
-            alert("Indirimbo ntabwo iboneka!");
-            return;
-        }
+        if (!song) { alert("Indirimbo ntabwo iboneka!"); return; }
         
-        const previewContainer = document.getElementById('previewContainer');
-        if (!previewContainer) return;
-        
-        previewContainer.innerHTML = '';
+        const container = document.getElementById('previewContainer');
+        container.innerHTML = '';
         
         const titleEl = document.createElement('h4');
         titleEl.style.marginBottom = '20px';
         titleEl.style.color = '#4b0082';
         titleEl.style.fontSize = '20px';
         titleEl.textContent = song.title;
-        previewContainer.appendChild(titleEl);
+        container.appendChild(titleEl);
         
-        const fileName = song.fileName || '';
-        const fileExt = fileName.split('.').pop().toLowerCase();
+        const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
         const fileUrl = song.fileUrl;
         
         if (fileExt === 'mp3') {
             const audio = document.createElement('audio');
             audio.controls = true;
             audio.style.width = '100%';
-            audio.style.marginTop = '20px';
             const source = document.createElement('source');
             source.src = fileUrl;
             source.type = 'audio/mpeg';
             audio.appendChild(source);
-            previewContainer.appendChild(audio);
-            
+            container.appendChild(audio);
         } else if (fileExt === 'pdf') {
             const iframe = document.createElement('iframe');
             iframe.src = `https://docs.google.com/viewer?url=${encodeURIComponent(fileUrl)}&embedded=true`;
             iframe.style.width = '100%';
             iframe.style.height = '70vh';
             iframe.style.border = 'none';
-            iframe.style.borderRadius = '10px';
-            previewContainer.appendChild(iframe);
-            
+            container.appendChild(iframe);
         } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExt)) {
             const img = document.createElement('img');
             img.src = fileUrl;
-            img.alt = song.title;
             img.style.maxWidth = '100%';
             img.style.maxHeight = '70vh';
-            img.style.objectFit = 'contain';
             img.style.borderRadius = '10px';
-            previewContainer.appendChild(img);
-            
+            container.appendChild(img);
         } else {
-            const fallback = document.createElement('div');
-            fallback.style.padding = '40px';
-            fallback.style.background = '#f8f9fa';
-            fallback.style.borderRadius = '10px';
-            fallback.innerHTML = `
-                <p style="font-size:18px; margin-bottom:20px;">📁 ${song.fileName || 'Fayilo'}</p>
-                <p style="color:#666; margin-bottom:20px;">Ntago ushobora kureba iyi fayilo muri browser.</p>
-                <button onclick="downloadSong('${song.id}'); closePreviewModal();" 
-                        style="background:#4CAF50; color:white; border:none; padding:12px 30px; border-radius:50px; font-size:16px; cursor:pointer;">
-                    ⬇️ Download
-                </button>
+            container.innerHTML += `
+                <div style="padding:40px; background:#f8f9fa; border-radius:10px;">
+                    <p>Ntago ushobora kureba iyi fayilo muri browser.</p>
+                    <button onclick="downloadSong('${song.id}'); closePreviewModal();" 
+                            style="background:#4CAF50; color:white; border:none; padding:12px 30px; border-radius:50px; margin-top:20px; cursor:pointer;">
+                        ⬇️ Download
+                    </button>
+                </div>
             `;
-            previewContainer.appendChild(fallback);
         }
-        
         document.getElementById('previewModal').style.display = 'flex';
     };
 
@@ -1037,10 +1027,7 @@
     // ========== DOWNLOAD SONG ==========
     window.downloadSong = function(songId) {
         const song = allSongs.find(s => s.id === songId);
-        if (!song) {
-            alert("Indirimbo ntabwo iboneka!");
-            return;
-        }
+        if (!song) { alert("Indirimbo ntabwo iboneka!"); return; }
         
         song.downloadCount = (song.downloadCount || 0) + 1;
         localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
@@ -1053,7 +1040,6 @@
         document.body.removeChild(a);
         
         displayAllSongs();
-        alert(`⬇️ ${song.title} imanuka...`);
     };
 
     // ========== USER SUBMIT SONG ==========
@@ -1112,10 +1098,7 @@
     window.sendMessage = function() {
         const email = document.getElementById('contactEmail').value.trim();
         const message = document.getElementById('contactMessage').value.trim();
-        if (!email || !message) { 
-            alert(translations[currentLang].emailPlaceholder); 
-            return; 
-        }
+        if (!email || !message) { alert(translations[currentLang].emailPlaceholder); return; }
         const msgs = JSON.parse(localStorage.getItem('contactMessages') || '[]');
         msgs.push({ email, message, time: new Date().toLocaleString() });
         localStorage.setItem('contactMessages', JSON.stringify(msgs));
@@ -1140,36 +1123,19 @@
         const term = document.getElementById('searchInput').value.toLowerCase();
         if (!term) { displayAllSongs(); return; }
         
-        const filtered = allSongs.filter(s => 
-            s.title.toLowerCase().includes(term) || 
-            s.section.toLowerCase().includes(term)
-        );
-        
+        const filtered = allSongs.filter(s => s.title.toLowerCase().includes(term) || s.section.toLowerCase().includes(term));
         const container = document.getElementById('sectionsContainer');
         if (filtered.length === 0) {
-            container.innerHTML = `<div class="section active">
-                <h2>Ubushakashatsi: "${term}"</h2>
-                <div class="no-songs-message">
-                    <div class="icon">🔍</div>
-                    <p><strong>Nta ndirimbo zihuye</strong></p>
-                    <p>Ongera ugerageze n'ijambo ribi</p>
-                </div>
-            </div>`;
+            container.innerHTML = `<div class="section active"><h2>Ubushakashatsi: "${term}"</h2><div class="no-songs-message"><div class="icon">🔍</div><p><strong>Nta ndirimbo zihuye</strong></p></div></div>`;
         } else {
             let html = `<div class="section active"><h2>Ubushakashatsi: "${term}" (${filtered.length})</h2><div class="songs-list">`;
             filtered.forEach(song => {
-                html += `<div class="song">
-                    <div class="song-header"><h3 class="song-title">${song.title}</h3></div>
-                    <div class="song-meta">
-                        <span>${song.section}</span>
-                        <span>${song.fileSize || ''}</span>
-                        <span>🔽 ${song.downloadCount || 0}</span>
-                    </div>
+                html += `<div class="song"><div class="song-header"><h3 class="song-title">${song.title}</h3></div>
+                    <div class="song-meta"><span>${song.section}</span><span>${song.fileSize || ''}</span><span>🔽 ${song.downloadCount || 0}</span></div>
                     <div class="song-actions">
                         <button class="preview-btn" onclick="previewFile('${song.id}')">👁️ ${translations[currentLang].preview}</button>
                         <button class="download-btn" onclick="downloadSong('${song.id}')">⬇️ ${translations[currentLang].download}</button>
-                    </div>
-                </div>`;
+                    </div></div>`;
             });
             html += `</div></div>`;
             container.innerHTML = html;
@@ -1200,45 +1166,11 @@
 
     // ========== INITIALIZATION ==========
     window.onload = function() {
-        // Sample songs with sheet music
         if (!localStorage.getItem('catholicSongs')) {
             const sampleSongs = [
-                {
-                    id: 'sample-1',
-                    title: 'Imana nisingizwe mu ijuru (Sample Audio)',
-                    section: 'Imana nisingizwe mu ijuru',
-                    fileUrl: 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3',
-                    fileName: 'sample-music.mp3',
-                    fileType: 'mp3',
-                    fileSize: '512 KB',
-                    dateAdded: '12/02/2026',
-                    downloadCount: 5,
-                    uploadedBy: 'admin'
-                },
-                {
-                    id: 'sample-2',
-                    title: 'Zaburi ya 23 - Sheet Music',
-                    section: 'Zaburi',
-                    fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-                    fileName: 'zaburi-23.pdf',
-                    fileType: 'pdf',
-                    fileSize: '45 KB',
-                    dateAdded: '12/02/2026',
-                    downloadCount: 3,
-                    uploadedBy: 'admin'
-                },
-                {
-                    id: 'sample-3',
-                    title: 'Mariya umubyeyi - Musical Notes',
-                    section: 'Bikiramariya',
-                    fileUrl: 'https://www.w3schools.com/w3images/fjords.jpg',
-                    fileName: 'mariya-notes.jpg',
-                    fileType: 'jpg',
-                    fileSize: '120 KB',
-                    dateAdded: '12/02/2026',
-                    downloadCount: 2,
-                    uploadedBy: 'admin'
-                }
+                { id: 'sample-1', title: 'Imana nisingizwe mu ijuru (Audio)', section: 'Imana nisingizwe mu ijuru', fileUrl: 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3', fileName: 'sample.mp3', fileType: 'mp3', fileSize: '512 KB', dateAdded: '12/02/2026', downloadCount: 5, uploadedBy: 'admin' },
+                { id: 'sample-2', title: 'Zaburi ya 23 - Sheet Music', section: 'Zaburi', fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', fileName: 'zaburi.pdf', fileType: 'pdf', fileSize: '45 KB', dateAdded: '12/02/2026', downloadCount: 3, uploadedBy: 'admin' },
+                { id: 'sample-3', title: 'Mariya umubyeyi - Musical Notes', section: 'Bikiramariya', fileUrl: 'https://www.w3schools.com/w3images/fjords.jpg', fileName: 'mariya.jpg', fileType: 'jpg', fileSize: '120 KB', dateAdded: '12/02/2026', downloadCount: 2, uploadedBy: 'admin' }
             ];
             localStorage.setItem('catholicSongs', JSON.stringify(sampleSongs));
         }
