@@ -259,7 +259,7 @@
             color: #4b0082;
         }
         
-        /* ===== COMPACT BOTTOM SECTION - FIXED: NO DUPLICATION ===== */
+        /* ===== COMPACT BOTTOM SECTION ===== */
         .bottom-section {
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
@@ -353,7 +353,7 @@
             padding: 30px;
             border-radius: 25px;
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             max-height: 85vh;
             overflow-y: auto;
@@ -443,6 +443,23 @@
             gap: 8px;
         }
         
+        /* ===== FILE PREVIEW ===== */
+        .preview-iframe {
+            width: 100%;
+            height: 70vh;
+            border: none;
+            border-radius: 10px;
+        }
+        .preview-audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .preview-image {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 10px;
+        }
+        
         @media (max-width: 768px) {
             header h1 { font-size: 1.8em; }
             .search-box { flex-direction: column; }
@@ -515,10 +532,9 @@
 <!-- ===== SONGS CONTAINER ===== -->
 <div id="sectionsContainer"></div>
 
-<!-- ===== BOTTOM SECTION - FIXED: ONLY THREE CARDS, NO DUPLICATION ===== -->
+<!-- ===== BOTTOM SECTION ===== -->
 <div class="bottom-section">
     <div class="bottom-container">
-        <!-- Admin Login Card -->
         <div class="bottom-card">
             <h3 id="adminCardTitle">🔐 Admin</h3>
             <p id="adminCardDesc">Injira nka admin ushyireho indirimbo</p>
@@ -527,8 +543,6 @@
             </button>
             <div class="small-info">Ushobora gucunga indirimbo</div>
         </div>
-        
-        <!-- Contact Us Card -->
         <div class="bottom-card">
             <h3 id="contactCardTitle">📞 Twandikire</h3>
             <p id="contactCardDesc">Ufite ikibazo? Ohereza ubutumwa</p>
@@ -537,8 +551,6 @@
             </button>
             <div class="small-info" id="contactInfoText">📧 gaspardgasangwa76@gmail.com</div>
         </div>
-
-        <!-- User Upload Card -->
         <div class="bottom-card">
             <h3 id="userUploadTitle">🎵 Shyiramo</h3>
             <p id="userUploadDesc">Shyiramo indirimbo yawe ihite igaragara</p>
@@ -618,7 +630,7 @@
     </div>
 </div>
 
-<!-- ===== FILE PREVIEW MODAL ===== -->
+<!-- ===== FILE PREVIEW MODAL - FIXED FOR ALL FORMATS ===== -->
 <div id="previewModal" class="modal">
     <div class="modal-content" style="max-width: 900px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -928,8 +940,7 @@
             musicDiv.innerHTML = `
                 <div class="musical-notes">🎼 ♪ ♫ ♩</div>
                 <p style="margin-bottom:20px; color:#4b0082;"><strong>Inoti z'indirimbo (PDF)</strong></p>
-                <iframe src="https://docs.google.com/viewer?url=${encodeURIComponent(fileUrl)}&embedded=true" 
-                        style="width:100%; height:600px; border:none; border-radius:10px;"></iframe>
+                <iframe src="${fileUrl}" style="width:100%; height:600px; border:none; border-radius:10px;"></iframe>
             `;
         } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExt)) {
             musicDiv.innerHTML = `
@@ -964,7 +975,7 @@
         document.getElementById('sheetMusicContainer').innerHTML = '';
     };
 
-    // ========== PREVIEW FILE ==========
+    // ========== FIXED: PREVIEW FILE - NO 400 ERROR ==========
     window.previewFile = function(songId) {
         const song = allSongs.find(s => s.id === songId);
         if (!song) { alert("Indirimbo ntabwo iboneka!"); return; }
@@ -982,6 +993,7 @@
         const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
         const fileUrl = song.fileUrl;
         
+        // For blob URLs, they work directly
         if (fileExt === 'mp3') {
             const audio = document.createElement('audio');
             audio.controls = true;
@@ -992,8 +1004,9 @@
             audio.appendChild(source);
             container.appendChild(audio);
         } else if (fileExt === 'pdf') {
+            // Use direct URL for PDF
             const iframe = document.createElement('iframe');
-            iframe.src = `https://docs.google.com/viewer?url=${encodeURIComponent(fileUrl)}&embedded=true`;
+            iframe.src = fileUrl;
             iframe.style.width = '100%';
             iframe.style.height = '70vh';
             iframe.style.border = 'none';
@@ -1024,7 +1037,7 @@
         document.getElementById('previewContainer').innerHTML = '';
     };
 
-    // ========== DOWNLOAD SONG ==========
+    // ========== FIXED: DOWNLOAD SONG ==========
     window.downloadSong = function(songId) {
         const song = allSongs.find(s => s.id === songId);
         if (!song) { alert("Indirimbo ntabwo iboneka!"); return; }
@@ -1032,6 +1045,7 @@
         song.downloadCount = (song.downloadCount || 0) + 1;
         localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
         
+        // Create a download link
         const a = document.createElement('a');
         a.href = song.fileUrl;
         a.download = song.fileName || `${song.title}.${song.fileType || 'mp3'}`;
@@ -1055,6 +1069,7 @@
         if (!file) { alert(t.fileRequired); return; }
         if (!email) { alert(t.emailRequired); return; }
         
+        // Create blob URL
         const fileUrl = URL.createObjectURL(file);
         const songId = 'song-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         
@@ -1166,11 +1181,45 @@
 
     // ========== INITIALIZATION ==========
     window.onload = function() {
+        // Sample songs with working URLs
         if (!localStorage.getItem('catholicSongs')) {
             const sampleSongs = [
-                { id: 'sample-1', title: 'Imana nisingizwe mu ijuru (Audio)', section: 'Imana nisingizwe mu ijuru', fileUrl: 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3', fileName: 'sample.mp3', fileType: 'mp3', fileSize: '512 KB', dateAdded: '12/02/2026', downloadCount: 5, uploadedBy: 'admin' },
-                { id: 'sample-2', title: 'Zaburi ya 23 - Sheet Music', section: 'Zaburi', fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', fileName: 'zaburi.pdf', fileType: 'pdf', fileSize: '45 KB', dateAdded: '12/02/2026', downloadCount: 3, uploadedBy: 'admin' },
-                { id: 'sample-3', title: 'Mariya umubyeyi - Musical Notes', section: 'Bikiramariya', fileUrl: 'https://www.w3schools.com/w3images/fjords.jpg', fileName: 'mariya.jpg', fileType: 'jpg', fileSize: '120 KB', dateAdded: '12/02/2026', downloadCount: 2, uploadedBy: 'admin' }
+                { 
+                    id: 'sample-1', 
+                    title: 'Imana nisingizwe mu ijuru (Audio)', 
+                    section: 'Imana nisingizwe mu ijuru', 
+                    fileUrl: 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3', 
+                    fileName: 'sample.mp3', 
+                    fileType: 'mp3', 
+                    fileSize: '512 KB', 
+                    dateAdded: '12/02/2026', 
+                    downloadCount: 5, 
+                    uploadedBy: 'admin' 
+                },
+                { 
+                    id: 'sample-2', 
+                    title: 'Zaburi ya 23 - Sheet Music', 
+                    section: 'Zaburi', 
+                    fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', 
+                    fileName: 'zaburi.pdf', 
+                    fileType: 'pdf', 
+                    fileSize: '45 KB', 
+                    dateAdded: '12/02/2026', 
+                    downloadCount: 3, 
+                    uploadedBy: 'admin' 
+                },
+                { 
+                    id: 'sample-3', 
+                    title: 'Mariya umubyeyi - Musical Notes', 
+                    section: 'Bikiramariya', 
+                    fileUrl: 'https://www.w3schools.com/w3images/fjords.jpg', 
+                    fileName: 'mariya.jpg', 
+                    fileType: 'jpg', 
+                    fileSize: '120 KB', 
+                    dateAdded: '12/02/2026', 
+                    downloadCount: 2, 
+                    uploadedBy: 'admin' 
+                }
             ];
             localStorage.setItem('catholicSongs', JSON.stringify(sampleSongs));
         }
