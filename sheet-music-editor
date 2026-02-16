@@ -1,0 +1,221 @@
+// sheet-music-editor.js
+// This file handles sheet music creation and display
+
+class SheetMusicManager {
+    constructor() {
+        this.sheetMusicData = JSON.parse(localStorage.getItem('sheetMusicData') || '{}');
+    }
+
+    // Create musical notation from simple text input
+    createNotation(songId, notationText) {
+        const parsedNotation = this.parseNotation(notationText);
+        this.sheetMusicData[songId] = {
+            notation: parsedNotation,
+            created: new Date().toISOString(),
+            views: 0
+        };
+        localStorage.setItem('sheetMusicData', JSON.stringify(this.sheetMusicData));
+        return parsedNotation;
+    }
+
+    // Parse simple notation format
+    parseNotation(text) {
+        const lines = text.split('\n');
+        const measures = [];
+        let currentMeasure = [];
+
+        lines.forEach(line => {
+            if (line.trim() === '') return;
+            
+            // Parse chords and lyrics
+            const chordMatch = line.match(/\[(.*?)\]/g);
+            if (chordMatch) {
+                const chords = chordMatch.map(c => c.replace(/[\[\]]/g, ''));
+                currentMeasure.push({ type: 'chord', content: chords });
+            } else {
+                // Regular lyric line
+                const words = line.split(' ');
+                words.forEach(word => {
+                    if (word.length > 0) {
+                        currentMeasure.push({ type: 'lyric', content: word });
+                    }
+                });
+            }
+
+            // Every 4 items is a measure
+            if (currentMeasure.length >= 4) {
+                measures.push([...currentMeasure]);
+                currentMeasure = [];
+            }
+        });
+
+        if (currentMeasure.length > 0) {
+            measures.push(currentMeasure);
+        }
+
+        return measures;
+    }
+
+    // Generate ABC notation (standard music notation format)
+    generateABC(songId, title, key = 'C') {
+        const song = this.sheetMusicData[songId];
+        if (!song) return '';
+
+        let abcNotation = `X:1\n`;
+        abcNotation += `T:${title}\n`;
+        abcNotation += `M:4/4\n`;
+        abcNotation += `L:1/8\n`;
+        abcNotation += `K:${key}\n`;
+        abcNotation += `|: `;
+
+        // Add notes based on parsed notation
+        song.notation.forEach((measure, index) => {
+            measure.forEach(item => {
+                if (item.type === 'chord') {
+                    abcNotation += `"${item.content.join('')}" `;
+                } else {
+                    // Convert lyrics to note placeholders
+                    abcNotation += 'z2 ';
+                }
+            });
+            if (index < song.notation.length - 1) {
+                abcNotation += '| ';
+            }
+        });
+
+        abcNotation += ':|';
+        return abcNotation;
+    }
+
+    // Render sheet music as HTML
+    renderSheetMusic(songId, songTitle) {
+        const song = this.sheetMusicData[songId];
+        if (!song) return '<p>Nta noti zihari</p>';
+
+        let html = `
+            <div class="sheet-music-display">
+                <h4 style="color: #4b0082; margin-bottom: 20px;">${songTitle}</h4>
+                <div class="staff-container">
+        `;
+
+        song.notation.forEach((measure, mIndex) => {
+            html += `<div class="measure">`;
+            html += `<div class="music-staff" style="height: 60px; background-image: repeating-linear-gradient(180deg, transparent, transparent 9px, #999 10px);"></div>`;
+            
+            measure.forEach((item, iIndex) => {
+                if (item.type === 'chord') {
+                    html += `<div class="chord">${item.content.join(' ')}</div>`;
+                } else {
+                    html += `<span class="lyric">${item.content}</span> `;
+                }
+            });
+            
+            html += `</div>`;
+        });
+
+        html += `
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button onclick="downloadSheetMusic('${songId}')" class="bottom-action-btn">
+                        ⬇️ Download Sheet Music (ABC)
+                    </button>
+                </div>
+            </div>
+        `;
+
+        return html;
+    }
+}
+
+// Initialize the sheet music manager
+const sheetMusicManager = new SheetMusicManager();
+
+// Function to display sheet music
+window.displaySheetMusic = function(songId) {
+    const song = allSongs.find(s => s.id === songId);
+    if (!song) return;
+
+    const container = document.getElementById('sheetMusicContainer');
+    
+    // Check if we have notation data
+    if (!sheetMusicManager.sheetMusicData[songId]) {
+        // Create sample notation if none exists
+        const sampleNotation = `[C]A-[G]men [Am]Mu-[F]kama
+[C]U-[G]mwi-[C]ne [F]I-[G]ma-[C]na
+[F]Ni-[G]we [C]Mu-[Am]re-[Dm]zi [G7]wan-[C]je`;
+        
+        sheetMusicManager.createNotation(songId, sampleNotation);
+    }
+
+    // Increment view count
+    if (sheetMusicManager.sheetMusicData[songId]) {
+        sheetMusicManager.sheetMusicData[songId].views = 
+            (sheetMusicManager.sheetMusicData[songId].views || 0) + 1;
+    }
+
+    // Render the sheet music
+    container.innerHTML = sheetMusicManager.renderSheetMusic(songId, song.title);
+    
+    // Show the modal
+    document.getElementById('sheetMusicModal').style.display = 'flex';
+};
+
+// Function to download sheet music
+window.downloadSheetMusic = function(songId) {
+    const song = allSongs.find(s => s.id === songId);
+    if (!song) return;
+
+    const abcNotation = sheetMusicManager.generateABC(songId, song.title);
+    
+    const blob = new Blob([abcNotation], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${song.title.replace(/\s+/g, '_')}.abc`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+};
+
+// Add sheet music input to user upload
+window.showSheetMusicInput = function() {
+    const modal = document.getElementById('userUploadModal');
+    const content = modal.querySelector('.modal-content');
+    
+    // Check if input already exists
+    if (!document.getElementById('sheetMusicTextarea')) {
+        const sheetMusicDiv = document.createElement('div');
+        sheetMusicDiv.innerHTML = `
+            <h4 style="color: #4b0082; margin-top: 15px;">Inoti z'indirimbo (Optional)</h4>
+            <p style="font-size: 12px; color: #666;">Andika inoti z'indirimbo ukoresheje [Chord] Amagambo</p>
+            <textarea id="sheetMusicTextarea" placeholder="Example:&#10;[C]A-[G]men [Am]Mu-[F]kama&#10;[C]U-[G]mwi-[C]ne [F]I-[G]ma-[C]na" rows="3" style="width:100%; padding:10px;"></textarea>
+        `;
+        
+        // Insert before the submit button
+        const submitBtn = content.querySelector('div[style*="margin-top:20px"]');
+        content.insertBefore(sheetMusicDiv, submitBtn);
+    }
+};
+
+// Modify the submitUserSong function to include sheet music
+const originalSubmitUserSong = window.submitUserSong;
+window.submitUserSong = function() {
+    // Call original function first
+    originalSubmitUserSong();
+    
+    // Add sheet music data if provided
+    const sheetMusicText = document.getElementById('sheetMusicTextarea')?.value;
+    const newSongId = allSongs[allSongs.length - 1]?.id;
+    
+    if (sheetMusicText && newSongId) {
+        sheetMusicManager.createNotation(newSongId, sheetMusicText);
+    }
+};
+
+// Hook into showUserUploadModal
+const originalShowUserUploadModal = window.showUserUploadModal;
+window.showUserUploadModal = function() {
+    originalShowUserUploadModal();
+    window.showSheetMusicInput();
+};
