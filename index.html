@@ -17,12 +17,6 @@
     
     <title>INDIRIMBO ZA GATOLIKA</title>
     
-    <!-- PWA META TAGS -->
-    <meta name="theme-color" content="#4b0082">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="./manifest.json">
-    <link rel="icon" href="./icons/icon-192.png">
-    
     <style>
         /* ===== ORIGINAL STYLES - FULLY PRESERVED ===== */
         body {
@@ -262,6 +256,96 @@
             color: #4b0082;
         }
         
+        /* ===== SHEET MUSIC STYLES ===== */
+        .sheet-music-display {
+            background: #fff9f0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .music-staff {
+            background-image: repeating-linear-gradient(
+                180deg,
+                transparent,
+                transparent 19px,
+                #333 20px
+            );
+            height: 100px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .music-note {
+            font-size: 40px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .staff-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 20px 0;
+            background: #fff;
+            border-radius: 10px;
+        }
+
+        .music-score {
+            display: inline-block;
+            background: white;
+            padding: 20px;
+            border-left: 2px solid #4b0082;
+        }
+
+        .tablature {
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .chord-sheet {
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4b0082;
+        }
+
+        .chord {
+            color: #4b0082;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .lyric {
+            color: #333;
+            margin-left: 5px;
+        }
+
+        .measure {
+            display: inline-block;
+            border-right: 1px solid #999;
+            padding-right: 15px;
+            margin-right: 15px;
+            vertical-align: top;
+        }
+
+        .measure:last-child {
+            border-right: none;
+        }
+        
         /* ===== COMPACT BOTTOM SECTION ===== */
         .bottom-section {
             background: linear-gradient(135deg, #2c3e50, #34495e);
@@ -396,39 +480,6 @@
             cursor: pointer;
         }
         
-        /* ===== SHEET MUSIC STYLES ===== */
-        .sheet-music-container {
-            background: #f9f6f0;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 20px;
-            border: 1px solid #e0d6c0;
-            text-align: center;
-        }
-        .musical-notes {
-            font-size: 48px;
-            color: #4b0082;
-            margin-bottom: 20px;
-        }
-        .staff-lines {
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, #999 20px);
-            height: 100px;
-            width: 100%;
-            margin: 20px 0;
-        }
-        .note-symbol {
-            font-size: 36px;
-            color: #2c3e50;
-            margin: 0 10px;
-            display: inline-block;
-        }
-        .sheet-image {
-            max-width: 100%;
-            max-height: 70vh;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
         /* ===== ADMIN NOTIFICATION ===== */
         .admin-notification {
             position: fixed;
@@ -472,95 +523,6 @@
             .bottom-container { flex-direction: column; align-items: center; }
             .bottom-card { width: 100%; max-width: 300px; }
         }
-        /* Add to your existing styles */
-.sheet-music-display {
-    background: #fff9f0;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    margin: 20px 0;
-}
-
-.music-staff {
-    background-image: repeating-linear-gradient(
-        180deg,
-        transparent,
-        transparent 19px,
-        #333 20px
-    );
-    height: 100px;
-    margin: 30px 0;
-    position: relative;
-}
-
-.music-note {
-    font-size: 40px;
-    display: inline-block;
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.staff-container {
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 20px 0;
-    background: #fff;
-    border-radius: 10px;
-}
-
-.music-score {
-    display: inline-block;
-    background: white;
-    padding: 20px;
-    border-left: 2px solid #4b0082;
-}
-
-.tablature {
-    font-family: 'Courier New', monospace;
-    white-space: pre;
-    background: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-    line-height: 1.5;
-    font-size: 14px;
-}
-
-.chord-sheet {
-    text-align: left;
-    font-family: 'Courier New', monospace;
-    background: #f8f8f8;
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 4px solid #4b0082;
-}
-
-.chord {
-    color: #4b0082;
-    font-weight: bold;
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.lyric {
-    color: #333;
-    margin-left: 5px;
-}
-
-.measure {
-    display: inline-block;
-    border-right: 1px solid #999;
-    padding-right: 15px;
-    margin-right: 15px;
-    vertical-align: top;
-}
-
-.measure:last-child {
-    border-right: none;
-}
     </style>
 </head>
 <body>
@@ -573,10 +535,10 @@
 
 <!-- ===== LANGUAGE SWITCHER ===== -->
 <div class="lang-switch" id="globalLangSwitch">
-    <button class="lang-btn" data-lang="rw" onclick="window.setLanguage('rw')">Kinyarwanda</button>
-    <button class="lang-btn" data-lang="fr" onclick="window.setLanguage('fr')">Français</button>
-    <button class="lang-btn" data-lang="sw" onclick="window.setLanguage('sw')">Kiswahili</button>
-    <button class="lang-btn" data-lang="en" onclick="window.setLanguage('en')">English</button>
+    <button class="lang-btn" data-lang="rw" onclick="setLanguage('rw')">Kinyarwanda</button>
+    <button class="lang-btn" data-lang="fr" onclick="setLanguage('fr')">Français</button>
+    <button class="lang-btn" data-lang="sw" onclick="setLanguage('sw')">Kiswahili</button>
+    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">English</button>
 </div>
 
 <!-- ===== HEADER ===== -->
@@ -699,6 +661,17 @@
             <option>Other More songs</option>
         </select>
         <input type="file" id="userSongFile" accept=".mp3,.pdf,.jpg,.jpeg,.png,.gif">
+        
+        <!-- New Sheet Music Input Section -->
+        <div class="sheet-music-input" style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            <h4 style="color: #4b0082; margin: 0 0 10px 0;">🎼 Inoti z'indirimbo (Optional)</h4>
+            <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                Andika inoti z'indirimbo ukoresheje [Chord] Amagambo<br>
+                Example: <code>[C]A-[G]men [Am]Mu-[F]kama</code>
+            </p>
+            <textarea id="sheetMusicTextarea" placeholder="Shyiramo inoti z'indirimbo hano..." rows="3" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:5px;"></textarea>
+        </div>
+        
         <input type="email" id="userEmail" placeholder="Imeyili yawe">
         <textarea id="userComments" placeholder="Igitekerezo (byaba biri)" rows="2"></textarea>
         <div style="margin-top:20px;">
@@ -734,12 +707,6 @@
             <button class="close-btn" onclick="closePreviewModal()" id="closePreviewBtn">Funga</button>
         </div>
     </div>
-</div>
-
-<!-- ===== PWA NOTIFICATION ===== -->
-<div id="pwaNotification" style="display:none; position:fixed; bottom:20px; right:20px; background:#4b0082; color:white; padding:12px 20px; border-radius:10px; z-index:10000;">
-    <span id="pwaMessage"></span>
-    <button onclick="this.parentElement.style.display='none'" style="margin-left:12px; padding:4px 12px; background:white; color:#4b0082; border:none; border-radius:5px; cursor:pointer;">OK</button>
 </div>
 
 <script>
@@ -784,11 +751,13 @@
             previewTitle: "🔍 Reba indirimbo",
             closePreview: "Funga",
             adminNotification: "🔔 Hari user ukoze upload!",
-            download: "Download",
+            download: "Kumanura",
             preview: "Reba",
             sheetMusic: "Inoti",
             noSongsTitle: "Nta ndirimbo zihari",
-            noSongsMessage: "Nta ndirimbo zirimo muri iki gice. Shyiramo bwa mbere!"
+            noSongsMessage: "Nta ndirimbo zirimo muri iki gice. Shyiramo bwa mbere!",
+            sheetMusicSaved: "Inoti z'indirimbo zarabitswe!",
+            sheetMusicLabel: "Inoti z'indirimbo (Optional)"
         },
         fr: {
             appTitle: "CHANTS CATHOLIQUES",
@@ -833,7 +802,9 @@
             preview: "Aperçu",
             sheetMusic: "Partition",
             noSongsTitle: "Aucun chant",
-            noSongsMessage: "Aucun chant dans cette section. Soyez le premier à ajouter!"
+            noSongsMessage: "Aucun chant dans cette section. Soyez le premier à ajouter!",
+            sheetMusicSaved: "Partition enregistrée!",
+            sheetMusicLabel: "Partition (Optionnel)"
         },
         sw: {
             appTitle: "NYIMBO ZA KIKATOLIKI",
@@ -878,7 +849,9 @@
             preview: "Hakiki",
             sheetMusic: "Noti za muziki",
             noSongsTitle: "Hakuna nyimbo",
-            noSongsMessage: "Hakuna nyimbo katika sehemu hii. Kuwa wa kwanza kupakia!"
+            noSongsMessage: "Hakuna nyimbo katika sehemu hii. Kuwa wa kwanza kupakia!",
+            sheetMusicSaved: "Noti za muziki zimehifadhiwa!",
+            sheetMusicLabel: "Noti za muziki (Si lazima)"
         },
         en: {
             appTitle: "CATHOLIC HYMNS",
@@ -923,40 +896,50 @@
             preview: "Preview",
             sheetMusic: "Sheet Music",
             noSongsTitle: "No hymns",
-            noSongsMessage: "No hymns in this section. Be the first to upload!"
+            noSongsMessage: "No hymns in this section. Be the first to upload!",
+            sheetMusicSaved: "Sheet music saved!",
+            sheetMusicLabel: "Sheet Music (Optional)"
         }
     };
 
     // ========== GLOBAL VARIABLES ==========
     let currentLang = localStorage.getItem('preferredLang') || 'rw';
     let allSongs = [];
+    let sheetMusicData = {};
 
-    // ========== FIXED: LANGUAGE SETTER ==========
+    // Load sheet music data
+    function loadSheetMusicData() {
+        const saved = localStorage.getItem('sheetMusicData');
+        if (saved) {
+            try {
+                sheetMusicData = JSON.parse(saved);
+            } catch (e) {
+                sheetMusicData = {};
+            }
+        }
+    }
+
+    // Save sheet music data
+    function saveSheetMusicData() {
+        localStorage.setItem('sheetMusicData', JSON.stringify(sheetMusicData));
+    }
+
+    // ========== LANGUAGE FUNCTIONS ==========
     window.setLanguage = function(lang) {
         currentLang = lang;
         localStorage.setItem('preferredLang', lang);
         applyTranslations();
-        // Update active class on language buttons
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            if (btn.dataset.lang === lang) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+            btn.classList.toggle('active', btn.dataset.lang === lang);
         });
-        // Refresh display with new language
-        displayAllSongs();
     };
 
-    // ========== APPLY TRANSLATIONS ==========
     function applyTranslations() {
         const t = translations[currentLang];
         document.getElementById('appTitle').innerText = t.appTitle;
-        document.getElementById('songCount').innerHTML = t.songCount + (navigator.onLine ? '' : ' (Offline)');
+        document.getElementById('songCount').innerHTML = t.songCount;
         document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-        if (document.getElementById('sectionFilter')) {
-            document.getElementById('sectionFilter').options[0].text = t.filterPlaceholder;
-        }
+        document.getElementById('sectionFilter').options[0].text = t.filterPlaceholder;
         document.getElementById('resetBtn').innerText = t.reset;
         document.getElementById('adminCardTitle').innerHTML = t.adminCardTitle;
         document.getElementById('adminCardDesc').innerText = t.adminCardDesc;
@@ -977,9 +960,7 @@
         document.getElementById('userUploadModalTitle').innerText = t.userModalTitle;
         document.getElementById('userUploadModalDesc').innerText = t.userModalDesc;
         document.getElementById('userSongTitle').placeholder = t.songTitlePlaceholder;
-        if (document.getElementById('userSongSection')) {
-            document.getElementById('userSongSection').options[0].text = t.sectionPlaceholder;
-        }
+        document.getElementById('userSongSection').options[0].text = t.sectionPlaceholder;
         document.getElementById('userEmail').placeholder = t.emailPlaceholder2;
         document.getElementById('userComments').placeholder = t.commentsPlaceholder;
         document.getElementById('submitSongBtn').innerText = t.submitBtn;
@@ -989,14 +970,142 @@
         document.getElementById('notificationMessage').innerText = t.adminNotification;
     }
 
-    // ========== LOAD SONGS ==========
+    // ========== SHEET MUSIC FUNCTIONS ==========
+    function parseSheetMusic(text) {
+        if (!text || text.trim() === '') return [];
+        
+        const lines = text.split('\n');
+        const measures = [];
+        let currentMeasure = [];
+
+        lines.forEach(line => {
+            if (line.trim() === '') return;
+            
+            const chordMatches = line.match(/\[(.*?)\]/g);
+            if (chordMatches) {
+                const chords = chordMatches.map(c => c.replace(/[\[\]]/g, ''));
+                currentMeasure.push({ type: 'chord', content: chords });
+            } else {
+                const words = line.split(' ');
+                words.forEach(word => {
+                    if (word.length > 0) {
+                        currentMeasure.push({ type: 'lyric', content: word });
+                    }
+                });
+            }
+
+            if (currentMeasure.length >= 4) {
+                measures.push([...currentMeasure]);
+                currentMeasure = [];
+            }
+        });
+
+        if (currentMeasure.length > 0) {
+            measures.push(currentMeasure);
+        }
+
+        return measures;
+    }
+
+    function renderSheetMusic(songId, songTitle) {
+        const songData = sheetMusicData[songId];
+        const t = translations[currentLang];
+        
+        if (!songData || !songData.notation || songData.notation.length === 0) {
+            return `
+                <div class="sheet-music-display">
+                    <h4 style="color: #4b0082; margin-bottom: 20px;">${songTitle}</h4>
+                    <div class="music-note">🎼</div>
+                    <p style="color: #666; margin: 20px 0;">Nta noti z'indirimbo zihari</p>
+                    <p style="font-size: 14px; color: #999;">
+                        Ushobora kongeramo inoti mu gihe ushyiraho indirimbo
+                    </p>
+                </div>
+            `;
+        }
+
+        let html = `
+            <div class="sheet-music-display">
+                <h4 style="color: #4b0082; margin-bottom: 20px;">${songTitle}</h4>
+                <div class="staff-container">
+        `;
+
+        songData.notation.forEach((measure, mIndex) => {
+            html += `<div class="measure">`;
+            html += `<div class="music-staff" style="height: 60px; background-image: repeating-linear-gradient(180deg, transparent, transparent 9px, #999 10px);"></div>`;
+            
+            measure.forEach((item, iIndex) => {
+                if (item.type === 'chord') {
+                    html += `<div class="chord">${item.content.join(' ')}</div>`;
+                } else {
+                    html += `<span class="lyric">${item.content}</span> `;
+                }
+            });
+            
+            html += `</div>`;
+        });
+
+        html += `
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button onclick="downloadSheetMusic('${songId}')" class="bottom-action-btn">
+                        ⬇️ ${t.download} Sheet Music
+                    </button>
+                </div>
+            </div>
+        `;
+
+        return html;
+    }
+
+    window.showSheetMusic = function(songId) {
+        const song = allSongs.find(s => s.id === songId);
+        if (!song) return;
+
+        const container = document.getElementById('sheetMusicContainer');
+        container.innerHTML = renderSheetMusic(songId, song.title);
+        
+        document.getElementById('sheetMusicModal').style.display = 'flex';
+    };
+
+    window.closeSheetMusicModal = function() {
+        document.getElementById('sheetMusicModal').style.display = 'none';
+    };
+
+    window.downloadSheetMusic = function(songId) {
+        const song = allSongs.find(s => s.id === songId);
+        const songData = sheetMusicData[songId];
+        
+        if (!song || !songData) return;
+
+        let content = `Title: ${song.title}\n`;
+        content += `Section: ${song.section}\n`;
+        content += `Date: ${new Date().toLocaleDateString()}\n`;
+        content += `\n--- Sheet Music ---\n\n`;
+        
+        songData.rawText?.split('\n').forEach(line => {
+            content += line + '\n';
+        });
+
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${song.title.replace(/\s+/g, '_')}_sheet_music.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    // ========== LOAD AND DISPLAY SONGS ==========
     function loadSongs() {
         allSongs = JSON.parse(localStorage.getItem('catholicSongs') || '[]');
+        loadSheetMusicData();
         displayAllSongs();
         updateSongCount();
     }
 
-    // ========== DISPLAY SONGS ==========
     function displayAllSongs() {
         const container = document.getElementById('sectionsContainer');
         if (!container) return;
@@ -1027,13 +1136,12 @@
                     <div class="icon">🎵</div>
                     <p><strong>${translations[currentLang].noSongsTitle}</strong></p>
                     <p>${translations[currentLang].noSongsMessage}</p>
-                    <p style="font-size: 14px; margin-top: 20px; color: #4b0082;">
-                        👆 Kanda "Shyiramo" hepfo utangize!
-                    </p>
                 </div>`;
             } else {
                 html += `<div class="songs-list">`;
                 sectionSongs.forEach(song => {
+                    const hasSheetMusic = sheetMusicData[song.id] ? true : false;
+                    
                     html += `<div class="song" id="song-${song.id}">`;
                     html += `<div class="song-header">`;
                     html += `<h3 class="song-title">${song.title}</h3>`;
@@ -1043,16 +1151,23 @@
                     html += `<span class="song-section">${song.section}</span>`;
                     html += `<span class="song-size">${song.fileSize || ''}</span>`;
                     html += `<span class="download-count">🔽 ${song.downloadCount || 0}</span>`;
+                    if (hasSheetMusic) {
+                        html += `<span style="background: #8e44ad; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px;">🎼 Inoti</span>`;
+                    }
                     if (song.uploadedBy === 'user') {
                         html += `<span style="background: #ffc107; color: #000; padding: 3px 10px; border-radius: 12px; font-size: 12px;">👤 User</span>`;
                     }
                     html += `</div>`;
                     html += `<div class="song-actions">`;
                     
+                    // Always show sheet music button if there's sheet music
+                    if (hasSheetMusic) {
+                        html += `<button class="sheet-music-btn" onclick="showSheetMusic('${song.id}')"><span>🎼</span> ${translations[currentLang].sheetMusic}</button>`;
+                    }
+                    
+                    // Show preview for files
                     const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
-                    if (fileExt === 'pdf' || fileExt === 'jpg' || fileExt === 'jpeg' || fileExt === 'png' || fileExt === 'gif') {
-                        html += `<button class="sheet-music-btn" onclick="showSheetMusic('${song.id}')"><span>🎵</span> ${translations[currentLang].sheetMusic || 'Inoti'}</button>`;
-                    } else {
+                    if (fileExt === 'pdf' || fileExt === 'jpg' || fileExt === 'jpeg' || fileExt === 'png' || fileExt === 'gif' || fileExt === 'mp3') {
                         html += `<button class="preview-btn" onclick="previewFile('${song.id}')"><span>👁️</span> ${translations[currentLang].preview}</button>`;
                     }
                     
@@ -1069,7 +1184,7 @@
         if (allSections.length > 0) showSection(allSections[0]);
     }
 
-    // ========== CREATE SECTION NAVIGATION ==========
+    // ========== SECTION NAVIGATION ==========
     function createNavigation() {
         const sections = [
             'Gutangira', 'Nyagasani Tubabarire', 'Imana nisingizwe mu ijuru',
@@ -1099,69 +1214,7 @@
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         const section = document.getElementById(`section-${sectionName.replace(/\s+/g, '-')}`);
         if (section) section.classList.add('active');
-        document.querySelectorAll('#sectionNav button').forEach(btn => {
-            btn.classList.toggle('active-section', btn.textContent === sectionName);
-        });
     }
-
-    // ========== SHEET MUSIC ==========
-    window.showSheetMusic = function(songId) {
-        const song = allSongs.find(s => s.id === songId);
-        if (!song) { alert("Indirimbo ntabwo iboneka!"); return; }
-        
-        const container = document.getElementById('sheetMusicContainer');
-        container.innerHTML = '';
-        
-        const titleEl = document.createElement('h4');
-        titleEl.style.marginBottom = '20px';
-        titleEl.style.color = '#4b0082';
-        titleEl.style.fontSize = '24px';
-        titleEl.textContent = song.title;
-        container.appendChild(titleEl);
-        
-        const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
-        const fileUrl = song.fileUrl;
-        const musicDiv = document.createElement('div');
-        musicDiv.className = 'sheet-music-container';
-        
-        if (fileExt === 'pdf') {
-            musicDiv.innerHTML = `
-                <div class="musical-notes">🎼 ♪ ♫ ♩</div>
-                <p style="margin-bottom:20px; color:#4b0082;"><strong>Inoti z'indirimbo (PDF)</strong></p>
-                <iframe src="${fileUrl}" style="width:100%; height:600px; border:none; border-radius:10px;"></iframe>
-            `;
-        } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExt)) {
-            musicDiv.innerHTML = `
-                <div class="musical-notes">🎼 ♪ ♫ ♩</div>
-                <p style="margin-bottom:20px; color:#4b0082;"><strong>Inoti z'indirimbo</strong></p>
-                <img src="${fileUrl}" alt="${song.title}" class="sheet-image">
-            `;
-        } else {
-            musicDiv.innerHTML = `
-                <div class="musical-notes">🎼 ♪ ♫ ♩ ♪ ♫ ♩</div>
-                <div style="background:#e6e0d0; padding:30px; border-radius:15px; margin:20px 0;">
-                    <div style="font-size:36px; color:#4b0082; margin-bottom:20px;">${song.title}</div>
-                    <div class="staff-lines"></div>
-                    <div style="display:flex; justify-content:center; gap:15px; margin:20px 0;">
-                        <span class="note-symbol">♪</span> <span class="note-symbol">♫</span> <span class="note-symbol">♩</span>
-                        <span class="note-symbol">♪</span> <span class="note-symbol">♫</span> <span class="note-symbol">♩</span>
-                    </div>
-                    <p style="color:#666;">Inoti z'iyi ndirimbo zirahari. Kanda Download kugirango uzibone.</p>
-                </div>
-                <button onclick="downloadSong('${song.id}'); closeSheetMusicModal();" 
-                        style="background:#4CAF50; color:white; border:none; padding:12px 30px; border-radius:50px; font-size:16px; cursor:pointer; margin-top:20px;">
-                    ⬇️ Download Sheet Music
-                </button>
-            `;
-        }
-        container.appendChild(musicDiv);
-        document.getElementById('sheetMusicModal').style.display = 'flex';
-    };
-
-    window.closeSheetMusicModal = function() {
-        document.getElementById('sheetMusicModal').style.display = 'none';
-        document.getElementById('sheetMusicContainer').innerHTML = '';
-    };
 
     // ========== PREVIEW FILE ==========
     window.previewFile = function(songId) {
@@ -1210,7 +1263,7 @@
                     <p>Ntago ushobora kureba iyi fayilo muri browser.</p>
                     <button onclick="downloadSong('${song.id}'); closePreviewModal();" 
                             style="background:#4CAF50; color:white; border:none; padding:12px 30px; border-radius:50px; margin-top:20px; cursor:pointer;">
-                        ⬇️ Download
+                        ⬇️ ${translations[currentLang].download}
                     </button>
                 </div>
             `;
@@ -1248,6 +1301,7 @@
         const section = document.getElementById('userSongSection').value;
         const file = document.getElementById('userSongFile').files[0];
         const email = document.getElementById('userEmail').value.trim();
+        const sheetMusicText = document.getElementById('sheetMusicTextarea').value.trim();
         
         if (!title) { alert(t.titleRequired); return; }
         if (!section) { alert(t.sectionRequired); return; }
@@ -1276,6 +1330,16 @@
         allSongs.push(newSong);
         localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
         
+        // Save sheet music if provided
+        if (sheetMusicText) {
+            sheetMusicData[songId] = {
+                rawText: sheetMusicText,
+                notation: parseSheetMusic(sheetMusicText),
+                created: new Date().toISOString()
+            };
+            saveSheetMusicData();
+        }
+        
         document.getElementById('adminNotification').style.display = 'flex';
         setTimeout(() => { document.getElementById('adminNotification').style.display = 'none'; }, 5000);
         
@@ -1289,11 +1353,13 @@
     window.showContactModal = function() {
         document.getElementById('contactModal').style.display = 'flex';
     };
+    
     window.closeContactModal = function() {
         document.getElementById('contactModal').style.display = 'none';
         document.getElementById('contactEmail').value = '';
         document.getElementById('contactMessage').value = '';
     };
+    
     window.sendMessage = function() {
         const email = document.getElementById('contactEmail').value.trim();
         const message = document.getElementById('contactMessage').value.trim();
@@ -1308,6 +1374,7 @@
     window.showUserUploadModal = function() {
         document.getElementById('userUploadModal').style.display = 'flex';
     };
+    
     window.closeUserUploadModal = function() {
         document.getElementById('userUploadModal').style.display = 'none';
         document.getElementById('userSongTitle').value = '';
@@ -1315,6 +1382,7 @@
         document.getElementById('userSongFile').value = '';
         document.getElementById('userEmail').value = '';
         document.getElementById('userComments').value = '';
+        document.getElementById('sheetMusicTextarea').value = '';
     };
 
     // ========== SEARCH & FILTER ==========
@@ -1358,7 +1426,9 @@
         const el = document.getElementById('songCount');
         if (el) {
             let text = `${translations[currentLang].songCount} | Indirimbo: ${allSongs.length}`;
-            if (!navigator.onLine) text += ' (Offline)';
+            if (Object.keys(sheetMusicData).length > 0) {
+                text += ` | Inoti: ${Object.keys(sheetMusicData).length}`;
+            }
             el.innerHTML = text;
         }
     }
@@ -1391,34 +1461,28 @@
                     dateAdded: '12/02/2026', 
                     downloadCount: 3, 
                     uploadedBy: 'admin' 
-                },
-                { 
-                    id: 'sample-3', 
-                    title: 'Mariya umubyeyi - Musical Notes', 
-                    section: 'Bikiramariya', 
-                    fileUrl: 'https://www.w3schools.com/w3images/fjords.jpg', 
-                    fileName: 'mariya.jpg', 
-                    fileType: 'jpg', 
-                    fileSize: '120 KB', 
-                    dateAdded: '12/02/2026', 
-                    downloadCount: 2, 
-                    uploadedBy: 'admin' 
                 }
             ];
             localStorage.setItem('catholicSongs', JSON.stringify(sampleSongs));
+            
+            // Add sample sheet music
+            const sampleSheetMusic = {
+                'sample-2': {
+                    rawText: '[C]A-[G]men [Am]Mu-[F]kama\n[C]U-[G]mwi-[C]ne [F]I-[G]ma-[C]na',
+                    notation: parseSheetMusic('[C]A-[G]men [Am]Mu-[F]kama\n[C]U-[G]mwi-[C]ne [F]I-[G]ma-[C]na'),
+                    created: new Date().toISOString()
+                }
+            };
+            localStorage.setItem('sheetMusicData', JSON.stringify(sampleSheetMusic));
         }
         
         loadSongs();
         createNavigation();
         applyTranslations();
         
-        // Set active language button based on stored language
+        // Set active language button
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            if (btn.dataset.lang === currentLang) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+            btn.classList.toggle('active', btn.dataset.lang === currentLang);
         });
         
         setTimeout(() => {
@@ -1427,9 +1491,5 @@
         }, 100);
     };
 </script>
-    <!-- Add this line before the closing body tag -->
-<script src="sheet-music-editor.js"></script>
 </body>
 </html>
-
-
