@@ -472,6 +472,95 @@
             .bottom-container { flex-direction: column; align-items: center; }
             .bottom-card { width: 100%; max-width: 300px; }
         }
+        /* Add to your existing styles */
+.sheet-music-display {
+    background: #fff9f0;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.music-staff {
+    background-image: repeating-linear-gradient(
+        180deg,
+        transparent,
+        transparent 19px,
+        #333 20px
+    );
+    height: 100px;
+    margin: 30px 0;
+    position: relative;
+}
+
+.music-note {
+    font-size: 40px;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.staff-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px 0;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.music-score {
+    display: inline-block;
+    background: white;
+    padding: 20px;
+    border-left: 2px solid #4b0082;
+}
+
+.tablature {
+    font-family: 'Courier New', monospace;
+    white-space: pre;
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.chord-sheet {
+    text-align: left;
+    font-family: 'Courier New', monospace;
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #4b0082;
+}
+
+.chord {
+    color: #4b0082;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.lyric {
+    color: #333;
+    margin-left: 5px;
+}
+
+.measure {
+    display: inline-block;
+    border-right: 1px solid #999;
+    padding-right: 15px;
+    margin-right: 15px;
+    vertical-align: top;
+}
+
+.measure:last-child {
+    border-right: none;
+}
     </style>
 </head>
 <body>
@@ -1340,3 +1429,4 @@
 </script>
 </body>
 </html>
+
