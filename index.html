@@ -80,6 +80,9 @@
             cursor: pointer;
             transition: 0.2s;
         }
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
         .lang-btn.active {
             background: white;
             color: #4b0082;
@@ -481,10 +484,10 @@
 
 <!-- ===== LANGUAGE SWITCHER ===== -->
 <div class="lang-switch" id="globalLangSwitch">
-    <button class="lang-btn" data-lang="rw" onclick="setLanguage('rw')">Kinyarwanda</button>
-    <button class="lang-btn" data-lang="fr" onclick="setLanguage('fr')">Français</button>
-    <button class="lang-btn" data-lang="sw" onclick="setLanguage('sw')">Kiswahili</button>
-    <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">English</button>
+    <button class="lang-btn" data-lang="rw" onclick="window.setLanguage('rw')">Kinyarwanda</button>
+    <button class="lang-btn" data-lang="fr" onclick="window.setLanguage('fr')">Français</button>
+    <button class="lang-btn" data-lang="sw" onclick="window.setLanguage('sw')">Kiswahili</button>
+    <button class="lang-btn" data-lang="en" onclick="window.setLanguage('en')">English</button>
 </div>
 
 <!-- ===== HEADER ===== -->
@@ -630,7 +633,7 @@
     </div>
 </div>
 
-<!-- ===== FILE PREVIEW MODAL - FIXED FOR ALL FORMATS ===== -->
+<!-- ===== FILE PREVIEW MODAL ===== -->
 <div id="previewModal" class="modal">
     <div class="modal-content" style="max-width: 900px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -698,6 +701,96 @@
             noSongsTitle: "Nta ndirimbo zihari",
             noSongsMessage: "Nta ndirimbo zirimo muri iki gice. Shyiramo bwa mbere!"
         },
+        fr: {
+            appTitle: "CHANTS CATHOLIQUES",
+            songCount: "RECHERCHER UN CHANT PAR NOM OU SECTION",
+            searchPlaceholder: "Rechercher un chant...",
+            filterPlaceholder: "-- Filtrer par section --",
+            reset: "Réinitialiser",
+            adminCardTitle: "🔐 Admin",
+            adminCardDesc: "Connectez-vous en tant qu'admin",
+            adminBtnText: "Connexion",
+            contactCardTitle: "📞 Contact",
+            contactCardDesc: "Des questions? Envoyez-nous un message",
+            contactBtnText: "Envoyer",
+            contactInfo: "📧 gaspardgasangwa76@gmail.com",
+            modalTitle: "Contactez-nous",
+            emailPlaceholder: "Votre email",
+            messagePlaceholder: "Votre message",
+            send: "Envoyer",
+            close: "Fermer",
+            messageSent: "Message envoyé! Merci.",
+            userUploadTitle: "🎵 Ajouter",
+            userUploadDesc: "Ajoutez votre chant, il apparaît instantanément",
+            userUploadBtnText: "Ajouter",
+            userUploadHint: "⏱️ Apparaît dans la section choisie",
+            userModalTitle: "📤 Ajouter un chant",
+            userModalDesc: "Remplissez, apparaît instantanément!",
+            songTitlePlaceholder: "Titre du chant",
+            sectionPlaceholder: "-- Choisissez la section --",
+            emailPlaceholder2: "Votre email",
+            commentsPlaceholder: "Commentaire (optionnel)",
+            submitBtn: "Soumettre",
+            cancelBtn: "Annuler",
+            submitSuccess: "Votre chant a été ajouté! Il est visible maintenant.",
+            fileRequired: "Choisissez un fichier!",
+            titleRequired: "Entrez le titre!",
+            sectionRequired: "Choisissez la section!",
+            emailRequired: "Entrez votre email!",
+            previewTitle: "🔍 Aperçu",
+            closePreview: "Fermer",
+            adminNotification: "🔔 Un utilisateur a ajouté un chant!",
+            download: "Télécharger",
+            preview: "Aperçu",
+            sheetMusic: "Partition",
+            noSongsTitle: "Aucun chant",
+            noSongsMessage: "Aucun chant dans cette section. Soyez le premier à ajouter!"
+        },
+        sw: {
+            appTitle: "NYIMBO ZA KIKATOLIKI",
+            songCount: "TAFUTA WIMBO KWA JINA AU SEHEMU YA MISA",
+            searchPlaceholder: "Tafuta wimbo...",
+            filterPlaceholder: "-- Chuja kwa sehemu --",
+            reset: "Weka upya",
+            adminCardTitle: "🔐 Admin",
+            adminCardDesc: "Ingia kama admin",
+            adminBtnText: "Ingia",
+            contactCardTitle: "📞 Wasiliana",
+            contactCardDesc: "Maswali? Tutumie ujumbe",
+            contactBtnText: "Tuma",
+            contactInfo: "📧 gaspardgasangwa76@gmail.com",
+            modalTitle: "Wasiliana",
+            emailPlaceholder: "Barua pepe yako",
+            messagePlaceholder: "Ujumbe wako",
+            send: "Tuma",
+            close: "Funga",
+            messageSent: "Ujumbe wako umetumwa! Asante.",
+            userUploadTitle: "🎵 Pakia",
+            userUploadDesc: "Pakia wimbo wako, unaonekana mara moja",
+            userUploadBtnText: "Pakia",
+            userUploadHint: "⏱️ Inaonekana katika sehemu uliyochagua",
+            userModalTitle: "📤 Pakia wimbo",
+            userModalDesc: "Jaza fomu, inaonekana mara moja!",
+            songTitlePlaceholder: "Jina la wimbo",
+            sectionPlaceholder: "-- Chagua sehemu ya misa --",
+            emailPlaceholder2: "Barua pepe yako",
+            commentsPlaceholder: "Maoni (si lazima)",
+            submitBtn: "Wasilisha",
+            cancelBtn: "Ghairi",
+            submitSuccess: "Wimbo wako umepakiwa! Unaonekana sasa.",
+            fileRequired: "Chagua faili!",
+            titleRequired: "Andika jina la wimbo!",
+            sectionRequired: "Chagua sehemu!",
+            emailRequired: "Andika barua pepe yako!",
+            previewTitle: "🔍 Hakiki",
+            closePreview: "Funga",
+            adminNotification: "🔔 Mtumiaji amepakia wimbo!",
+            download: "Pakua",
+            preview: "Hakiki",
+            sheetMusic: "Noti za muziki",
+            noSongsTitle: "Hakuna nyimbo",
+            noSongsMessage: "Hakuna nyimbo katika sehemu hii. Kuwa wa kwanza kupakia!"
+        },
         en: {
             appTitle: "CATHOLIC HYMNS",
             songCount: "SEARCH HYMNS BY NAME OR MASS SECTION",
@@ -749,16 +842,22 @@
     let currentLang = localStorage.getItem('preferredLang') || 'rw';
     let allSongs = [];
 
-    // ========== LANGUAGE SETTER ==========
-    function setLanguage(lang) {
+    // ========== FIXED: LANGUAGE SETTER ==========
+    window.setLanguage = function(lang) {
         currentLang = lang;
         localStorage.setItem('preferredLang', lang);
         applyTranslations();
+        // Update active class on language buttons
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.lang === lang);
+            if (btn.dataset.lang === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
         });
+        // Refresh display with new language
         displayAllSongs();
-    }
+    };
 
     // ========== APPLY TRANSLATIONS ==========
     function applyTranslations() {
@@ -975,7 +1074,7 @@
         document.getElementById('sheetMusicContainer').innerHTML = '';
     };
 
-    // ========== FIXED: PREVIEW FILE - NO 400 ERROR ==========
+    // ========== PREVIEW FILE ==========
     window.previewFile = function(songId) {
         const song = allSongs.find(s => s.id === songId);
         if (!song) { alert("Indirimbo ntabwo iboneka!"); return; }
@@ -993,7 +1092,6 @@
         const fileExt = song.fileName ? song.fileName.split('.').pop().toLowerCase() : '';
         const fileUrl = song.fileUrl;
         
-        // For blob URLs, they work directly
         if (fileExt === 'mp3') {
             const audio = document.createElement('audio');
             audio.controls = true;
@@ -1004,7 +1102,6 @@
             audio.appendChild(source);
             container.appendChild(audio);
         } else if (fileExt === 'pdf') {
-            // Use direct URL for PDF
             const iframe = document.createElement('iframe');
             iframe.src = fileUrl;
             iframe.style.width = '100%';
@@ -1037,7 +1134,7 @@
         document.getElementById('previewContainer').innerHTML = '';
     };
 
-    // ========== FIXED: DOWNLOAD SONG ==========
+    // ========== DOWNLOAD SONG ==========
     window.downloadSong = function(songId) {
         const song = allSongs.find(s => s.id === songId);
         if (!song) { alert("Indirimbo ntabwo iboneka!"); return; }
@@ -1045,7 +1142,6 @@
         song.downloadCount = (song.downloadCount || 0) + 1;
         localStorage.setItem('catholicSongs', JSON.stringify(allSongs));
         
-        // Create a download link
         const a = document.createElement('a');
         a.href = song.fileUrl;
         a.download = song.fileName || `${song.title}.${song.fileType || 'mp3'}`;
@@ -1069,7 +1165,6 @@
         if (!file) { alert(t.fileRequired); return; }
         if (!email) { alert(t.emailRequired); return; }
         
-        // Create blob URL
         const fileUrl = URL.createObjectURL(file);
         const songId = 'song-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         
@@ -1228,8 +1323,13 @@
         createNavigation();
         applyTranslations();
         
+        // Set active language button based on stored language
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.lang === currentLang);
+            if (btn.dataset.lang === currentLang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
         });
         
         setTimeout(() => {
